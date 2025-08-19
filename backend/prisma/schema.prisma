@@ -1,0 +1,216 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+  MODERATOR
+}
+
+enum AnnouncementCategory {
+  AVISOS
+  EVENTOS
+  DISCUSION_ACADEMICA
+  GENERAL
+}
+
+enum AnnouncementStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  MODERATED
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+  DISMISSED
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  firstName String
+  lastName  String
+  role      Role     @default(STUDENT)
+  career    String?
+  interests String[]
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Autenticación
+  hashedPassword String
+  refreshTokens  RefreshToken[]
+
+  // Relaciones
+  announcements Announcement[]
+  comments      Comment[]
+  reactions     Reaction[]
+  reports       Report[]
+  notifications Notification[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+model Announcement {
+  id          String               @id @default(uuid())
+  title       String
+  content     String
+  category    AnnouncementCategory
+  status      AnnouncementStatus   @default(PUBLISHED)
+  tags        String[]
+  authorId    String
+  isPublic    Boolean              @default(true)
+  isPinned    Boolean              @default(false)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  publishedAt DateTime?
+
+  // Relaciones
+  author    User       @relation(fields: [authorId], references: [id])
+  comments  Comment[]
+  reactions Reaction[]
+  reports   Report[]
+
+  @@map("announcements")
+}
+
+model Comment {
+  id             String   @id @default(uuid())
+  content        String
+  authorId       String
+  announcementId String
+  parentId       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relaciones
+  author       User         @relation(fields: [authorId], references: [id])
+  announcement Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  parent       Comment?     @relation("CommentReplies", fields: [parentId], references: [id])
+  replies      Comment[]    @relation("CommentReplies")
+  reactions    Reaction[]
+  reports      Report[]
+
+  @@map("comments")
+}
+
+model Reaction {
+  id             String  @id @default(uuid())
+  type           String  // 'like', 'dislike', 'love', etc.
+  userId         String
+  announcementId String?
+  commentId      String?
+  createdAt      DateTime @default(now())
+
+  // Relaciones
+  user         User          @relation(fields: [userId], references: [id])
+  announcement Announcement? @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  comment      Comment?      @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  // Un usuario solo puede reaccionar una vez por contenido
+  @@unique([userId, announcementId])
+  @@unique([userId, commentId])
+  @@map("reactions")
+}
+
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  startDate   DateTime
+  endDate     DateTime?
+  location    String?
+  isVirtual   Boolean   @default(false)
+  meetingUrl  String?
+  maxAttendees Int?
+  organizer   String
+  tags        String[]
+  isPublic    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("events")
+}
+
+model Community {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String
+  responsible String
+  email       String
+  isApproved  Boolean  @default(false)
+  website     String?
+  socialLinks Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("communities")
+}
+
+model Report {
+  id             String       @id @default(uuid())
+  reason         String
+  description    String?
+  status         ReportStatus @default(PENDING)
+  reporterId     String
+  announcementId String?
+  commentId      String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  reviewedAt     DateTime?
+  reviewedBy     String?
+
+  // Relaciones
+  reporter     User          @relation(fields: [reporterId], references: [id])
+  announcement Announcement? @relation(fields: [announcementId], references: [id])
+  comment      Comment?      @relation(fields: [commentId], references: [id])
+
+  @@map("reports")
+}
+
+model Notification {
+  id        String             @id @default(uuid())
+  type      String
+  title     String
+  message   String
+  data      Json?
+  status    NotificationStatus @default(PENDING)
+  userId    String
+  createdAt DateTime           @default(now())
+  sentAt    DateTime?
+
+  // Relaciones
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}
