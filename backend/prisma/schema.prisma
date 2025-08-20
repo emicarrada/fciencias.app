@@ -16,6 +16,20 @@ enum Role {
   MODERATOR
 }
 
+enum Career {
+  ACTUARIA
+  BIOLOGIA
+  CIENCIAS_AMBIENTALES
+  CIENCIAS_COMPUTACION
+  CIENCIAS_TIERRA
+  FISICA
+  FISICA_BIOMEDICA
+  MANEJO_ZONAS_COSTERAS
+  MATEMATICAS
+  MATEMATICAS_APLICADAS
+  NEUROCIENCIAS
+}
+
 enum AnnouncementCategory {
   AVISOS
   EVENTOS
@@ -49,9 +63,15 @@ model User {
   firstName String
   lastName  String
   role      Role     @default(STUDENT)
-  career    String?
+  career    Career?
+  semester  Int?     // Semestre actual (1-10+)
   interests String[]
   isActive  Boolean  @default(true)
+  isEmailVerified Boolean @default(false)
+  emailVerificationToken String?
+  passwordResetToken String?
+  passwordResetExpires DateTime?
+  lastLoginAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
