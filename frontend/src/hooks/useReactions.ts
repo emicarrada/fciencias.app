@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export type ReactionType = 'like' | 'love' | 'interesting' | 'useful' | 'relevant' | 'mind-blown' | 'brilliant';
+export type ReactionType = 'like' | 'dislike' | 'love' | 'surprised' | 'laugh';
 
 interface ReactionData {
   count: number;
@@ -35,12 +35,10 @@ const updateReaction = async (
     success: true,
     reactions: {
       like: { count: Math.floor(Math.random() * 50), isActive: false },
+      dislike: { count: Math.floor(Math.random() * 15), isActive: false },
       love: { count: Math.floor(Math.random() * 30), isActive: false },
-      interesting: { count: Math.floor(Math.random() * 20), isActive: false },
-      useful: { count: Math.floor(Math.random() * 25), isActive: false },
-      relevant: { count: Math.floor(Math.random() * 15), isActive: false },
-      'mind-blown': { count: Math.floor(Math.random() * 10), isActive: false },
-      brilliant: { count: Math.floor(Math.random() * 12), isActive: false },
+      surprised: { count: Math.floor(Math.random() * 20), isActive: false },
+      laugh: { count: Math.floor(Math.random() * 25), isActive: false },
       [reactionType]: { 
         count: Math.floor(Math.random() * 50) + (isActive ? 1 : 0), 
         isActive 
@@ -54,12 +52,10 @@ export const useReactions = ({
   contentType,
   initialReactions = {
     like: { count: 0, isActive: false },
+    dislike: { count: 0, isActive: false },
     love: { count: 0, isActive: false },
-    interesting: { count: 0, isActive: false },
-    useful: { count: 0, isActive: false },
-    relevant: { count: 0, isActive: false },
-    'mind-blown': { count: 0, isActive: false },
-    brilliant: { count: 0, isActive: false },
+    surprised: { count: 0, isActive: false },
+    laugh: { count: 0, isActive: false },
   },
   userId,
 }: UseReactionsProps) => {

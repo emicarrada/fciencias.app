@@ -15,12 +15,10 @@ const demoAnnouncements = [
     time: "hace 2 horas",
     reactions: {
       like: { count: 15, isActive: false },
+      dislike: { count: 2, isActive: false },
       love: { count: 8, isActive: false },
-      interesting: { count: 12, isActive: true },
-      useful: { count: 6, isActive: false },
-      relevant: { count: 4, isActive: false },
-      'mind-blown': { count: 2, isActive: false },
-      brilliant: { count: 3, isActive: false },
+      surprised: { count: 12, isActive: true },
+      laugh: { count: 6, isActive: false },
     }
   },
   {
@@ -31,12 +29,10 @@ const demoAnnouncements = [
     time: "hace 4 horas",
     reactions: {
       like: { count: 23, isActive: true },
+      dislike: { count: 1, isActive: false },
       love: { count: 15, isActive: false },
-      interesting: { count: 7, isActive: false },
-      useful: { count: 9, isActive: false },
-      relevant: { count: 11, isActive: false },
-      'mind-blown': { count: 5, isActive: false },
-      brilliant: { count: 8, isActive: false },
+      surprised: { count: 7, isActive: false },
+      laugh: { count: 9, isActive: false },
     }
   }
 ];
@@ -96,8 +92,8 @@ export default function ReactionsDemo() {
             🔥 Botones Individuales
           </h2>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {(['like', 'love', 'interesting', 'useful', 'relevant', 'mind-blown', 'brilliant'] as ReactionType[]).map((type, index) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {(['like', 'dislike', 'love', 'surprised', 'laugh'] as ReactionType[]).map((type, index) => (
               <motion.div
                 key={type}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -135,7 +131,7 @@ export default function ReactionsDemo() {
                 size="md"
               />
               <ReactionButton
-                type="brilliant"
+                type="laugh"
                 count={8}
                 isActive={false}
                 onClick={() => {}}

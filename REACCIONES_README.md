@@ -10,12 +10,10 @@
 
 ### 🎯 **Tipos de Reacciones Académicas**
 1. **👍 Me gusta** (`like`) - Para contenido que agrada
-2. **❤️ Me encanta** (`love`) - Para contenido que emociona
-3. **💡 Interesante** (`interesting`) - Para contenido que sorprende
-4. **⭐ Útil** (`useful`) - Para contenido práctico
-5. **📚 Relevante** (`relevant`) - Para contenido importante
-6. **🤯 Increíble** (`mind-blown`) - Para contenido impactante
-7. **✨ Brillante** (`brilliant`) - Para contenido excepcional
+2. **👎 No me gusta** (`dislike`) - Para contenido que no agrada  
+3. **❤️ Me encanta** (`love`) - Para contenido que emociona
+4. **😮 Sorprendido** (`surprised`) - Para contenido que sorprende
+5. **😂 Me divierte** (`laugh`) - Para contenido divertido
 
 ### 🚀 **Componentes Implementados**
 

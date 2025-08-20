@@ -3,33 +3,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ReactionType } from '@/components/ui/ReactionButton';
-import { 
-  HeartIcon, 
-  HandThumbUpIcon, 
-  LightBulbIcon,
-  StarIcon,
-  BookOpenIcon 
-} from '@heroicons/react/24/solid';
-import { Sparkles, Brain } from 'lucide-react';
+import { LikeIcon, DislikeIcon, LoveIcon, SurprisedIcon, LaughIcon } from './ReactionIcons';
 
 const reactionIcons = {
-  like: HandThumbUpIcon,
-  love: HeartIcon,
-  interesting: LightBulbIcon,
-  useful: StarIcon,
-  relevant: BookOpenIcon,
-  'mind-blown': Brain,
-  brilliant: Sparkles,
+  like: LikeIcon,
+  dislike: DislikeIcon,
+  love: LoveIcon,
+  surprised: SurprisedIcon,
+  laugh: LaughIcon,
 };
 
 const reactionColors = {
   like: 'text-blue-500',
+  dislike: 'text-gray-500',
   love: 'text-red-500',
-  interesting: 'text-yellow-500',
-  useful: 'text-green-500',
-  relevant: 'text-purple-500',
-  'mind-blown': 'text-pink-500',
-  brilliant: 'text-amber-500',
+  surprised: 'text-orange-500',
+  laugh: 'text-yellow-500',
 };
 
 interface ReactionStatsProps {

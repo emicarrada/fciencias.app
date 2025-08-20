@@ -13,7 +13,7 @@ interface QuickReactionPickerProps {
 }
 
 const allReactionTypes: ReactionType[] = [
-  'like', 'love', 'interesting', 'useful', 'relevant', 'mind-blown', 'brilliant'
+  'like', 'dislike', 'love', 'surprised', 'laugh'
 ];
 
 export default function QuickReactionPicker({ 

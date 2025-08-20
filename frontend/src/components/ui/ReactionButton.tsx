@@ -2,23 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  HeartIcon, 
-  HandThumbUpIcon, 
-  LightBulbIcon,
-  StarIcon,
-  BookOpenIcon 
-} from '@heroicons/react/24/outline';
-import { 
-  HeartIcon as HeartSolid, 
-  HandThumbUpIcon as ThumbUpSolid, 
-  LightBulbIcon as LightBulbSolid,
-  StarIcon as StarSolid,
-  BookOpenIcon as BookOpenSolid 
-} from '@heroicons/react/24/solid';
-import { Sparkles, Zap, Target, Brain } from 'lucide-react';
+import { LikeIcon, DislikeIcon, LoveIcon, SurprisedIcon, LaughIcon } from './ReactionIcons';
 
-export type ReactionType = 'like' | 'love' | 'interesting' | 'useful' | 'relevant' | 'mind-blown' | 'brilliant';
+export type ReactionType = 'like' | 'dislike' | 'love' | 'surprised' | 'laugh';
 
 interface ReactionButtonProps {
   type: ReactionType;
@@ -32,66 +18,48 @@ interface ReactionButtonProps {
 const reactionConfig = {
   like: {
     label: 'Me gusta',
-    icon: HandThumbUpIcon,
-    iconSolid: ThumbUpSolid,
+    icon: LikeIcon,
+    iconSolid: LikeIcon,
     color: 'text-blue-500',
     bgColor: 'bg-blue-50',
     hoverColor: 'hover:bg-blue-100',
     particle: '👍',
   },
+  dislike: {
+    label: 'No me gusta',
+    icon: DislikeIcon,
+    iconSolid: DislikeIcon,
+    color: 'text-gray-500',
+    bgColor: 'bg-gray-50',
+    hoverColor: 'hover:bg-gray-100',
+    particle: '👎',
+  },
   love: {
     label: 'Me encanta',
-    icon: HeartIcon,
-    iconSolid: HeartSolid,
+    icon: LoveIcon,
+    iconSolid: LoveIcon,
     color: 'text-red-500',
     bgColor: 'bg-red-50',
     hoverColor: 'hover:bg-red-100',
     particle: '❤️',
   },
-  interesting: {
-    label: 'Interesante',
-    icon: LightBulbIcon,
-    iconSolid: LightBulbSolid,
+  surprised: {
+    label: 'Sorprendido',
+    icon: SurprisedIcon,
+    iconSolid: SurprisedIcon,
+    color: 'text-orange-500',
+    bgColor: 'bg-orange-50',
+    hoverColor: 'hover:bg-orange-100',
+    particle: '�',
+  },
+  laugh: {
+    label: 'Me divierte',
+    icon: LaughIcon,
+    iconSolid: LaughIcon,
     color: 'text-yellow-500',
     bgColor: 'bg-yellow-50',
     hoverColor: 'hover:bg-yellow-100',
-    particle: '💡',
-  },
-  useful: {
-    label: 'Útil',
-    icon: StarIcon,
-    iconSolid: StarSolid,
-    color: 'text-green-500',
-    bgColor: 'bg-green-50',
-    hoverColor: 'hover:bg-green-100',
-    particle: '⭐',
-  },
-  relevant: {
-    label: 'Relevante',
-    icon: BookOpenIcon,
-    iconSolid: BookOpenSolid,
-    color: 'text-purple-500',
-    bgColor: 'bg-purple-50',
-    hoverColor: 'hover:bg-purple-100',
-    particle: '📚',
-  },
-  'mind-blown': {
-    label: 'Increíble',
-    icon: Brain,
-    iconSolid: Brain,
-    color: 'text-pink-500',
-    bgColor: 'bg-pink-50',
-    hoverColor: 'hover:bg-pink-100',
-    particle: '🤯',
-  },
-  brilliant: {
-    label: 'Brillante',
-    icon: Sparkles,
-    iconSolid: Sparkles,
-    color: 'text-amber-500',
-    bgColor: 'bg-amber-50',
-    hoverColor: 'hover:bg-amber-100',
-    particle: '✨',
+    particle: '😂',
   },
 };
 
