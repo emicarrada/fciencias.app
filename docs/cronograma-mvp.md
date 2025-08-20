@@ -49,3 +49,67 @@
 
 - **Días 1-3:** Páginas de registro/login con validación institucional
 - **Días 4-5:** Perfil de usuario básico
+
+### Semana 9: Feed de Anuncios y Dashboard
+
+- **Días 1-2:** Dashboard principal con navegación
+- **Días 3-5:** Feed de anuncios con filtros y categorías
+
+### Semana 10: Eventos y Comunidades Frontend
+
+- **Días 1-2:** Páginas de eventos con calendario
+- **Días 3-4:** Directorio de comunidades
+- **Día 5:** Integración con backend y pruebas
+
+## Fase 4: Integración y Pruebas (2 semanas)
+
+### Semana 11: Integración completa
+
+- **Días 1-2:** Conexión completa frontend-backend
+- **Días 3-4:** Pruebas de integración
+- **Día 5:** Corrección de bugs críticos
+
+### Semana 12: Preparación para producción
+
+- **Días 1-2:** Optimización de rendimiento
+- **Días 3-4:** Configuración de despliegue
+- **Día 5:** Documentación final y entrega MVP
+
+## Entregables MVP
+
+### Funcionalidades Core
+- [x] Sistema de autenticación institucional
+- [ ] CRUD de anuncios con categorías
+- [ ] Sistema básico de eventos
+- [ ] Directorio de comunidades
+- [ ] Perfiles de usuario
+- [ ] Feed principal personalizado
+
+### Criterios de Aceptación
+- [ ] Registro/login con email @ciencias.unam.mx
+- [ ] Crear, ver y filtrar anuncios
+- [ ] Ver calendario de eventos
+- [ ] Explorar comunidades académicas
+- [ ] Interfaz responsive y accesible
+- [ ] API documentada con Swagger
+
+## Estado Actual (19 Agosto 2025)
+
+### ✅ Completado
+- Configuración de entorno y base de datos
+- Modelo de datos completo (Prisma)
+- Sistema de autenticación JWT
+- Endpoints de auth funcionando
+- Estructura base del frontend
+
+### 🔄 En Progreso
+- Corrección de guards de autenticación
+- Implementación de módulos backend
+
+### ❌ Pendiente
+- Módulo de anuncios (backend)
+- Módulo de eventos (backend)  
+- Módulo de comunidades (backend)
+- Páginas de auth (frontend)
+- Dashboard y feed (frontend)
+- Integración frontend-backend
