@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'fciencias.app', 'api.fciencias.app'],
   },
   async rewrites() {
     return [
@@ -11,6 +11,13 @@ const nextConfig = {
       },
     ];
   },
+  // Configuración para Docker
+  output: 'standalone',
+  // Configuración para producción
+  compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
 };
 
 export default nextConfig;

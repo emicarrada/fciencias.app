@@ -93,7 +93,7 @@
 - [ ] Interfaz responsive y accesible
 - [ ] API documentada con Swagger
 
-## Estado Actual (19 Agosto 2025)
+## Estado Actual (29 Agosto 2025)
 
 ### ✅ Completado
 - Configuración de entorno y base de datos
@@ -101,15 +101,32 @@
 - Sistema de autenticación JWT
 - Endpoints de auth funcionando
 - Estructura base del frontend
+- **Módulos Backend Implementados:**
+  - ✅ **AnnouncementsModule**: CRUD completo, filtros, reacciones
+  - ✅ **EventsModule**: CRUD completo, calendario, filtros por fecha
+  - ✅ **CommunitiesModule**: CRUD completo, directorio, aprobaciones
+  - ✅ **UsersModule**: Gestión de usuarios y perfiles
+  - ✅ **AuthModule**: Autenticación completa con JWT
+- **Frontend:**
+  - ✅ **Sistema de reacciones**: Implementado y funcional
+  - ✅ **Componentes base**: ReactionButton optimizado
 
-### 🔄 En Progreso
-- Corrección de guards de autenticación
-- Implementación de módulos backend
+### 🔄 En Progreso  
+- **Frontend MVP**: Páginas principales del dashboard
+- **Integración Frontend-Backend**: Conectar componentes con APIs
 
-### ❌ Pendiente
-- Módulo de anuncios (backend)
-- Módulo de eventos (backend)  
-- Módulo de comunidades (backend)
-- Páginas de auth (frontend)
-- Dashboard y feed (frontend)
-- Integración frontend-backend
+### ❌ Pendiente (Próximas tareas)
+- **Frontend Pages:**
+  - [ ] Páginas de autenticación (login/registro)
+  - [ ] Dashboard principal y feed de anuncios
+  - [ ] Página de eventos con calendario
+  - [ ] Directorio de comunidades
+  - [ ] Panel de administración
+- **Integraciones:**
+  - [ ] Conectar reacciones con backend
+  - [ ] Sistema de notificaciones (módulo vacío)
+  - [ ] Reportes y moderación (módulo vacío)
+- **Deployment:**
+  - [ ] Configuración de producción
+  - [ ] Testing end-to-end
+  - [ ] Documentación API (Swagger)
