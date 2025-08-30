@@ -97,7 +97,7 @@ export const generateAvatarFromInitials = (name: string, themeColor: string) => 
   const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2);
   return {
     initials,
-    backgroundColor: getThemeColor(themeColor),
+    backgroundColor: themeColor,
     textColor: '#FFFFFF'
   };
 };

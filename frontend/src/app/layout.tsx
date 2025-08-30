@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 import Providers from '@/components/Providers';
+import Footer from '@/components/layout/Footer';
 import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <Providers>
-          <div id="root">{children}</div>
+          <div className="min-h-screen flex flex-col">
+            <div id="root" className="flex-1">{children}</div>
+            <Footer />
+          </div>
           <Toaster
             position="top-right"
             toastOptions={{
