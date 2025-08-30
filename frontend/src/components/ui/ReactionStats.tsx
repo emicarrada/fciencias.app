@@ -3,14 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ReactionType } from '@/components/ui/ReactionButton';
-import { LikeIcon, DislikeIcon, LoveIcon, SurprisedIcon, LaughIcon } from './ReactionIcons';
 
 const reactionIcons = {
-  like: LikeIcon,
-  dislike: DislikeIcon,
-  love: LoveIcon,
-  surprised: SurprisedIcon,
-  laugh: LaughIcon,
+  like: '👍',
+  dislike: '👎',
+  love: '❤️',
+  surprised: '😲',
+  laugh: '😂',
 };
 
 const reactionColors = {
@@ -64,7 +63,7 @@ export default function ReactionStats({
           >
             {/* Icono y label */}
             <div className="flex items-center gap-2 min-w-0 flex-1">
-              <Icon className={`w-4 h-4 ${reactionColors[reactionType]} flex-shrink-0`} />
+              <span className={`text-lg flex-shrink-0`}>{Icon}</span>
               <span className={`${compact ? 'text-xs' : 'text-sm'} text-gray-700 truncate`}>
                 {reactionType.charAt(0).toUpperCase() + reactionType.slice(1).replace('-', ' ')}
               </span>

@@ -58,9 +58,9 @@ export const AnnouncementCard: React.FC<AnnouncementCardProps> = ({
     initialReactions: {
       like: { count: Math.floor(Math.random() * 15), isActive: false },
       love: { count: Math.floor(Math.random() * 8), isActive: false },
-      interesting: { count: Math.floor(Math.random() * 12), isActive: false },
-      useful: { count: Math.floor(Math.random() * 10), isActive: false },
-      relevant: { count: Math.floor(Math.random() * 6), isActive: false },
+      dislike: { count: Math.floor(Math.random() * 3), isActive: false },
+      surprised: { count: Math.floor(Math.random() * 5), isActive: false },
+      laugh: { count: Math.floor(Math.random() * 10), isActive: false },
     },
     userId: 'current-user-id', // Replace with actual user ID
   });
