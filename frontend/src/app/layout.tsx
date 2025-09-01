@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Providers from '@/components/Providers';
 import Footer from '@/components/layout/Footer';
 import '../styles/globals.css';
@@ -17,6 +18,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const analyticsEnabled = process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true';
+
   return (
     <html lang="es">
       <body className={inter.className}>
@@ -50,6 +54,7 @@ export default function RootLayout({
             }}
           />
         </Providers>
+        {analyticsEnabled && gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );

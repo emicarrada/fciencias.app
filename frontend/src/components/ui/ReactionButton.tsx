@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { trackEvent } from '@/hooks/useGoogleAnalytics';
 
 export type ReactionType = 'like' | 'dislike' | 'love' | 'surprised' | 'laugh';
 
@@ -11,6 +12,8 @@ interface ReactionButtonProps {
   onClick: () => void;
   disabled?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  contentId?: string; // For analytics tracking
+  contentType?: 'announcement' | 'event' | 'comment'; // For analytics tracking
 }
 
 const reactionConfig = {
@@ -59,13 +62,24 @@ export const ReactionButton: React.FC<ReactionButtonProps> = ({
   onClick,
   disabled = false,
   size = 'md',
+  contentId,
+  contentType = 'announcement',
 }) => {
   const config = reactionConfig[type];
   const sizeClass = sizeConfig[size];
 
+  const handleClick = () => {
+    onClick();
+    
+    // Track analytics event
+    if (contentId && process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true') {
+      trackEvent.announcementReaction(type, contentId);
+    }
+  };
+
   return (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled}
       className={`
         inline-flex items-center gap-1.5 rounded-full border transition-colors duration-200
@@ -88,6 +102,8 @@ interface ReactionGroupProps {
   onReaction: (type: ReactionType) => void;
   size?: 'sm' | 'md' | 'lg';
   disabled?: boolean;
+  contentId?: string; // For analytics tracking
+  contentType?: 'announcement' | 'event' | 'comment'; // For analytics tracking
 }
 
 export const ReactionGroup: React.FC<ReactionGroupProps> = ({
@@ -95,6 +111,8 @@ export const ReactionGroup: React.FC<ReactionGroupProps> = ({
   onReaction,
   size = 'md',
   disabled = false,
+  contentId,
+  contentType = 'announcement',
 }) => {
   const reactionTypes: ReactionType[] = ['like', 'dislike', 'love', 'surprised', 'laugh'];
   
@@ -109,6 +127,8 @@ export const ReactionGroup: React.FC<ReactionGroupProps> = ({
           onClick={() => onReaction(type)}
           size={size}
           disabled={disabled}
+          contentId={contentId}
+          contentType={contentType}
         />
       ))}
     </div>

@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ReactionGroup } from './ReactionButton';
 import { useReactions } from '../../hooks/useReactions';
+import ClientOnly from '../ClientOnly';
 import { 
   UserIcon, 
   CalendarIcon, 
@@ -46,6 +47,18 @@ export const AnnouncementCard: React.FC<AnnouncementCardProps> = ({
   onComment,
   className = '',
 }) => {
+  // Generate deterministic values based on ID to avoid hydration mismatch
+  const getInitialReactions = () => {
+    const idNum = parseInt(id) || 1;
+    return {
+      like: { count: (idNum * 3) % 15, isActive: false },
+      love: { count: (idNum * 2) % 8, isActive: false },
+      dislike: { count: idNum % 3, isActive: false },
+      surprised: { count: (idNum * 4) % 5, isActive: false },
+      laugh: { count: (idNum * 5) % 10, isActive: false },
+    };
+  };
+
   const {
     reactions,
     handleReaction,
@@ -55,13 +68,7 @@ export const AnnouncementCard: React.FC<AnnouncementCardProps> = ({
   } = useReactions({
     contentId: id,
     contentType: 'announcement',
-    initialReactions: {
-      like: { count: Math.floor(Math.random() * 15), isActive: false },
-      love: { count: Math.floor(Math.random() * 8), isActive: false },
-      dislike: { count: Math.floor(Math.random() * 3), isActive: false },
-      surprised: { count: Math.floor(Math.random() * 5), isActive: false },
-      laugh: { count: Math.floor(Math.random() * 10), isActive: false },
-    },
+    initialReactions: getInitialReactions(),
     userId: 'current-user-id', // Replace with actual user ID
   });
 
@@ -164,17 +171,27 @@ export const AnnouncementCard: React.FC<AnnouncementCardProps> = ({
         <div className="flex items-center justify-between">
           {/* Reactions */}
           <div className="flex items-center space-x-4">
-            <ReactionGroup
-              reactions={reactions}
-              onReaction={handleReaction}
-              size="sm"
-              disabled={isLoading}
-            />
-            {totalReactions > 0 && (
-              <span className="text-sm text-gray-500">
-                {totalReactions} {totalReactions === 1 ? 'reacción' : 'reacciones'}
-              </span>
-            )}
+            <ClientOnly fallback={
+              <div className="flex gap-2">
+                <div className="w-12 h-6 bg-gray-200 rounded-full animate-pulse"></div>
+                <div className="w-12 h-6 bg-gray-200 rounded-full animate-pulse"></div>
+                <div className="w-12 h-6 bg-gray-200 rounded-full animate-pulse"></div>
+              </div>
+            }>
+              <ReactionGroup
+                reactions={reactions}
+                onReaction={handleReaction}
+                size="sm"
+                disabled={isLoading}
+                contentId={id}
+                contentType="announcement"
+              />
+              {totalReactions > 0 && (
+                <span className="text-sm text-gray-500">
+                  {totalReactions} {totalReactions === 1 ? 'reacción' : 'reacciones'}
+                </span>
+              )}
+            </ClientOnly>
           </div>
 
           {/* Action Buttons */}

@@ -139,6 +139,8 @@ export default function ReactionsDemo() {
                       isActive={announcement.reactions[type].isActive}
                       onClick={() => handleReaction(announcement.id, type)}
                       size="md"
+                      contentId={announcement.id.toString()}
+                      contentType="announcement"
                     />
                   ))}
                 </div>
