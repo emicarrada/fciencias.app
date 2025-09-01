@@ -1,12 +1,22 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col items-center justify-center space-y-3 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+          {/* Logo pequeño */}
+          <Image
+            src="/logo-fciencias.png"
+            alt="Facultad de Ciencias UNAM"
+            width={120}
+            height={35}
+            className="h-6 w-auto opacity-60"
+          />
+          
           {/* Disclaimer principal */}
           <p className="text-sm text-gray-600 font-medium">
             Red social <span className="font-bold text-red-600">NO supervisada</span> por la UNAM

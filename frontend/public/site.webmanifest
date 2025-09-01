@@ -1,0 +1,32 @@
+{
+  "name": "FcienciasApp - Red Social Académica",
+  "short_name": "FcienciasApp",
+  "description": "Red social académica para la comunidad de la Facultad de Ciencias de la UNAM",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png", 
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "1563x1563",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "social"],
+  "lang": "es-MX",
+  "scope": "/",
+  "prefer_related_applications": false
+}

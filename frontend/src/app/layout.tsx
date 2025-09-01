@@ -1,16 +1,57 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Providers from '@/components/Providers';
+import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import '../styles/globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
-
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   title: 'FcienciasApp - Red Social Académica',
   description: 'Red social académica para la comunidad de la Facultad de Ciencias de la UNAM',
+  keywords: ['UNAM', 'Facultad de Ciencias', 'comunidad académica', 'estudiantes', 'investigación'],
+  authors: [{ name: 'Facultad de Ciencias UNAM' }],
+  creator: 'Facultad de Ciencias UNAM',
+  publisher: 'Facultad de Ciencias UNAM',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '1563x1563', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/favicon.png', sizes: '1563x1563', type: 'image/png' },
+    ],
+  },
+  manifest: '/site.webmanifest',
+  openGraph: {
+    type: 'website',
+    locale: 'es_MX',
+    url: '/',
+    title: 'FcienciasApp - Red Social Académica',
+    description: 'Red social académica para la comunidad de la Facultad de Ciencias de la UNAM',
+    siteName: 'FcienciasApp',
+    images: [
+      {
+        url: '/logo-fciencias.png',
+        width: 956,
+        height: 276,
+        alt: 'Logo Facultad de Ciencias UNAM',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FcienciasApp - Red Social Académica',
+    description: 'Red social académica para la comunidad de la Facultad de Ciencias de la UNAM',
+    images: ['/logo-fciencias.png'],
+  },
 };
 
 export default function RootLayout({
@@ -23,10 +64,11 @@ export default function RootLayout({
 
   return (
     <html lang="es">
-      <body className={inter.className}>
+      <body className="font-body">
         <Providers>
           <div className="min-h-screen flex flex-col">
-            <div id="root" className="flex-1">{children}</div>
+            <Header />
+            <main id="root" className="flex-1">{children}</main>
             <Footer />
           </div>
           <Toaster

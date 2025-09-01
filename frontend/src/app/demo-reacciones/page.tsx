@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { ReactionButton, ReactionType } from '@/components/ui/ReactionButton';
+import { PostCard } from '@/components/ui/Card';
 
 const demoAnnouncements = [
   {
@@ -93,40 +94,35 @@ export default function ReactionsDemo() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6 sm:py-8">
+    <div className="min-h-screen bg-secondary-50 py-6 sm:py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-heading font-bold text-text-primary mb-4">
             Sistema de Reacciones - FCiencias.app
           </h1>
-          <p className="text-sm sm:text-base text-gray-600">
-            Haz clic en las reacciones para interactuar con las publicaciones
+          <p className="text-sm sm:text-base font-body text-text-muted">
+            Interactúa con las publicaciones usando nuestro sistema de reacciones
           </p>
         </div>
 
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-6">
           {announcements.map((announcement) => (
-            <div key={announcement.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
-              {/* Header del anuncio */}
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span className="text-blue-600 font-semibold text-xs sm:text-sm">
-                    {announcement.author.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-sm sm:text-base">{announcement.author}</h3>
-                  <p className="text-xs sm:text-sm text-gray-500">{announcement.time}</p>
-                </div>
-              </div>
-
+            <PostCard
+              key={announcement.id}
+              author={{
+                name: announcement.author,
+                time: announcement.time
+              }}
+            >
               {/* Contenido del anuncio */}
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
-                {announcement.title}
-              </h2>
-              <p className="text-sm sm:text-base text-gray-700 mb-4">
-                {announcement.content}
-              </p>
+              <div>
+                <h2 className="text-lg sm:text-xl font-heading font-semibold text-text-primary mb-3">
+                  {announcement.title}
+                </h2>
+                <p className="text-sm sm:text-base font-body text-text-muted leading-relaxed mb-4">
+                  {announcement.content}
+                </p>
+              </div>
 
               {/* Reacciones */}
               <div className="border-t border-gray-100 pt-4">
@@ -145,20 +141,32 @@ export default function ReactionsDemo() {
                   ))}
                 </div>
               </div>
-            </div>
+            </PostCard>
           ))}
         </div>
 
         {/* Footer explicativo */}
-        <div className="mt-8 sm:mt-12 bg-blue-50 rounded-lg p-4 sm:p-6">
-          <h3 className="text-base sm:text-lg font-semibold text-blue-900 mb-2">
-            ¿Cómo funciona?
+        <div className="mt-8 sm:mt-12 bg-primary-50 rounded-xl p-6 sm:p-8 border border-primary-200">
+          <h3 className="text-base sm:text-lg font-heading font-semibold text-primary-800 mb-4">
+            💡 ¿Cómo funciona el sistema de reacciones?
           </h3>
-          <ul className="text-blue-700 space-y-1 text-sm sm:text-base">
-            <li>• Solo puedes tener una reacción activa por publicación</li>
-            <li>• Al hacer clic en una reacción, se activa y cambia de color</li>
-            <li>• Si haces clic en la misma reacción, se desactiva</li>
-            <li>• El contador se actualiza automáticamente</li>
+          <ul className="text-primary-700 space-y-2 text-sm sm:text-base font-body">
+            <li className="flex items-start">
+              <span className="text-accent-green-500 mr-2">✓</span>
+              Solo puedes tener una reacción activa por publicación
+            </li>
+            <li className="flex items-start">
+              <span className="text-accent-green-500 mr-2">✓</span>
+              Al hacer clic en una reacción, se activa y cambia de color
+            </li>
+            <li className="flex items-start">
+              <span className="text-accent-green-500 mr-2">✓</span>
+              Si haces clic en la misma reacción, se desactiva
+            </li>
+            <li className="flex items-start">
+              <span className="text-accent-green-500 mr-2">✓</span>
+              El contador se actualiza automáticamente en tiempo real
+            </li>
           </ul>
         </div>
       </div>
