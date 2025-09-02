@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "name": "fciencias-app",
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/.next",
   "installCommand": "cd frontend && npm install",
   "framework": "nextjs",
+  "rootDirectory": "frontend",
   "rewrites": [
     {
       "source": "/api/v1/(.*)",
