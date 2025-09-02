@@ -1,5 +1,122 @@
-// Onboarding flow para personalización sin imágenes
+// Onboarding flow types and data structures
 
+export interface OnboardingData {
+  email: string;
+  fullName: string;
+  username: string;
+  career: string;
+  avatarColor: string;
+}
+
+export interface Career {
+  id: string;
+  name: string;
+  shortName: string;
+  icon: string;
+  description: string;
+  color: string;
+}
+
+export interface AvatarColor {
+  id: string;
+  name: string;
+  bg: string;
+  text: string;
+}
+
+// Career options for FCiencias
+export const CAREERS: Career[] = [
+  {
+    id: 'matematicas',
+    name: 'Matemáticas',
+    shortName: 'MAT',
+    icon: '📐',
+    description: 'Matemáticas puras y aplicadas',
+    color: 'blue'
+  },
+  {
+    id: 'fisica',
+    name: 'Física',
+    shortName: 'FIS',
+    icon: '⚛️',
+    description: 'Física teórica y experimental',
+    color: 'purple'
+  },
+  {
+    id: 'actuaria',
+    name: 'Actuaría',
+    shortName: 'ACT',
+    icon: '📊',
+    description: 'Ciencias actuariales y financieras',
+    color: 'green'
+  },
+  {
+    id: 'computacion',
+    name: 'Ciencias de la Computación',
+    shortName: 'CC',
+    icon: '💻',
+    description: 'Programación y sistemas computacionales',
+    color: 'indigo'
+  },
+  {
+    id: 'biologia',
+    name: 'Biología',
+    shortName: 'BIO',
+    icon: '🧬',
+    description: 'Ciencias biológicas y biomédicas',
+    color: 'emerald'
+  },
+  {
+    id: 'ciencias-tierra',
+    name: 'Ciencias de la Tierra',
+    shortName: 'CT',
+    icon: '🌍',
+    description: 'Geología, meteorología y geofísica',
+    color: 'amber'
+  },
+  {
+    id: 'quimica',
+    name: 'Química',
+    shortName: 'QUI',
+    icon: '🧪',
+    description: 'Química teórica y aplicada',
+    color: 'red'
+  },
+  {
+    id: 'matematicas-aplicadas',
+    name: 'Matemáticas Aplicadas',
+    shortName: 'MA',
+    icon: '📈',
+    description: 'Matemáticas aplicadas a la computación',
+    color: 'teal'
+  },
+  {
+    id: 'neurobiologia',
+    name: 'Neurobiología',
+    shortName: 'NB',
+    icon: '🧠',
+    description: 'Neurociencias y biología del comportamiento',
+    color: 'rose'
+  }
+];
+
+// Avatar color options
+export const AVATAR_COLORS: AvatarColor[] = [
+  { id: 'blue', name: 'Azul Océano', bg: 'bg-blue-500', text: 'text-white' },
+  { id: 'indigo', name: 'Índigo Profundo', bg: 'bg-indigo-500', text: 'text-white' },
+  { id: 'purple', name: 'Púrpura Real', bg: 'bg-purple-500', text: 'text-white' },
+  { id: 'pink', name: 'Rosa Coral', bg: 'bg-pink-500', text: 'text-white' },
+  { id: 'red', name: 'Rojo Fuego', bg: 'bg-red-500', text: 'text-white' },
+  { id: 'orange', name: 'Naranja Vibrante', bg: 'bg-orange-500', text: 'text-white' },
+  { id: 'yellow', name: 'Amarillo Sol', bg: 'bg-yellow-500', text: 'text-black' },
+  { id: 'green', name: 'Verde Esmeralda', bg: 'bg-green-500', text: 'text-white' },
+  { id: 'teal', name: 'Verde Azulado', bg: 'bg-teal-500', text: 'text-white' },
+  { id: 'cyan', name: 'Cian Cristal', bg: 'bg-cyan-500', text: 'text-white' },
+  { id: 'gray', name: 'Gris Elegante', bg: 'bg-gray-500', text: 'text-white' },
+  { id: 'slate', name: 'Pizarra', bg: 'bg-slate-500', text: 'text-white' },
+];
+
+// Legacy types for compatibility (old onboarding system)
 export const ONBOARDING_STEPS = [
   {
     step: 1,

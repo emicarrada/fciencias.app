@@ -160,6 +160,17 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* Debug/Test Section - Solo para desarrollo */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed bottom-4 right-4 z-50">
+          <Link href="/test-onboarding">
+            <Button variant="primary" className="shadow-lg">
+              🧪 Probar Onboarding
+            </Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
