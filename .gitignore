@@ -56,3 +56,4 @@ coverage/
 *.tgz
 *.tar.gz
 .cache/
+.vercel

@@ -14,7 +14,7 @@ interface AuthState {
 
 interface AuthActions {
   login: (credentials: LoginRequest) => Promise<void>;
-  register: (userData: RegisterRequest) => Promise<void>;
+  register: (userData: RegisterRequest) => Promise<{ message: string; email: string }>;
   logout: () => void;
   clearError: () => void;
   setUser: (user: User | null) => void;
@@ -64,18 +64,14 @@ export const useAuthStore = create<AuthStore>()(
         try {
           set({ isLoading: true, error: null });
           
-          const authResponse: AuthResponse = await authApi.register(userData);
-          
-          // Guardar tokens en localStorage
-          localStorage.setItem('accessToken', authResponse.accessToken);
-          localStorage.setItem('refreshToken', authResponse.refreshToken);
+          const response = await authApi.register(userData);
           
           set({
-            user: authResponse.user,
-            isAuthenticated: true,
             isLoading: false,
             error: null,
           });
+          
+          return response;
         } catch (error: any) {
           const errorMessage = error.response?.data?.message || 'Error al registrar usuario';
           set({

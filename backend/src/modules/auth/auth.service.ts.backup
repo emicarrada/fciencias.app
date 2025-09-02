@@ -146,6 +146,10 @@ export class AuthService {
   }
 
   async verifyEmail(token: string): Promise<AuthResponse> {
+    // Verificar el token
+    const { email, valid } = await this.tokenService.verifyEmailToken(token);
+
+  async verifyEmail(token: string): Promise<AuthResponse> {
     const { email, valid } = await this.tokenService.verifyEmailToken(token);
     
     if (!valid) {

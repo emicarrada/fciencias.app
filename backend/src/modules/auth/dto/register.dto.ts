@@ -1,16 +1,6 @@
 import { IsEmail, IsString, IsOptional, IsEnum, IsInt, MinLength, MaxLength, Matches, Min, Max } from 'class-validator';
 import { Transform } from 'class-transformer';
-
-export enum Career {
-  ACTUARIA = 'ACTUARIA',
-  BIOLOGIA = 'BIOLOGIA',
-  CIENCIAS_COMPUTACION = 'CIENCIAS_COMPUTACION',
-  CIENCIAS_TIERRA = 'CIENCIAS_TIERRA',
-  FISICA = 'FISICA',
-  MATEMATICAS = 'MATEMATICAS',
-  MATEMATICAS_APLICADAS = 'MATEMATICAS_APLICADAS',
-  OTRO = 'OTRO'
-}
+import { Career } from '@prisma/client';
 
 export class RegisterDto {
   @IsEmail({}, { message: 'Debe ser un email válido' })
