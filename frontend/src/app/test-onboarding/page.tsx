@@ -88,7 +88,7 @@ export default function TestOnboardingPage() {
                   <div className="text-center">
                     <div className={`
                       w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg
-                      ${getAvatarClasses(userData.avatarColor)}
+                      ${getAvatarClasses(userData.avatarColor || 'blue')}
                     `}>
                       <span className="text-2xl font-heading font-bold text-white">
                         {userData.fullName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
@@ -97,7 +97,7 @@ export default function TestOnboardingPage() {
                     <h3 className="text-lg font-heading font-semibold text-primary-800">
                       {userData.fullName}
                     </h3>
-                    <p className="text-primary-600 font-body">@{userData.username}</p>
+                    <p className="text-primary-600 font-body">@{userData.username || 'usuario'}</p>
                     <p className="text-primary-600 font-body text-sm">{userData.email}</p>
                     <div className="mt-3 inline-block px-3 py-1 bg-primary-200 text-primary-800 rounded-full text-sm font-body font-medium">
                       {userData.career}
