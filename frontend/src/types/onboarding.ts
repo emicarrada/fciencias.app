@@ -3,9 +3,13 @@
 export interface OnboardingData {
   email: string;
   fullName: string;
-  username: string;
+  username?: string;
   career: string;
-  avatarColor: string;
+  avatarColor?: string;
+  interests: string[];
+  goals: string[];
+  experience?: string;
+  joinReason?: string;
 }
 
 export interface Career {
