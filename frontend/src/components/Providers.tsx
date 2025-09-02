@@ -1,7 +1,7 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode, Suspense } from 'react';
 import AnalyticsTracker from './AnalyticsTracker';
 
 interface ProvidersProps {
@@ -23,7 +23,9 @@ export default function Providers({ children }: ProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AnalyticsTracker />
+      <Suspense fallback={null}>
+        <AnalyticsTracker />
+      </Suspense>
       {children}
     </QueryClientProvider>
   );
