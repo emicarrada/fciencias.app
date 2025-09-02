@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { OnboardingData } from '@/types/onboarding';
-import { Career } from '@/types/auth';
+import { Career, CAREER_LABELS } from '@/types/auth';
 
 interface OnboardingIntegrationProps {
   onComplete: (data: OnboardingData) => void;
@@ -80,7 +80,7 @@ export const OnboardingIntegration: React.FC<OnboardingIntegrationProps> = ({ on
   const [formData, setFormData] = useState<OnboardingData>({
     fullName: '',
     email: '',
-    career: '' as Career,
+    career: '',
     interests: [],
     goals: [],
     experience: '',
@@ -88,24 +88,16 @@ export const OnboardingIntegration: React.FC<OnboardingIntegrationProps> = ({ on
   });
 
   const careers: Career[] = [
-    'ACTUARIA',
-    'BIOLOGIA',
-    'CIENCIAS_COMPUTACION',
-    'CIENCIAS_TIERRA',
-    'FISICA',
-    'MATEMATICAS',
-    'MATEMATICAS_APLICADAS'
+    Career.ACTUARIA,
+    Career.BIOLOGIA,
+    Career.CIENCIAS_COMPUTACION,
+    Career.CIENCIAS_TIERRA,
+    Career.FISICA,
+    Career.MATEMATICAS,
+    Career.MATEMATICAS_APLICADAS
   ];
 
-  const careerLabels: Record<Career, string> = {
-    'ACTUARIA': 'Actuaría',
-    'BIOLOGIA': 'Biología',
-    'CIENCIAS_COMPUTACION': 'Ciencias de la Computación',
-    'CIENCIAS_TIERRA': 'Ciencias de la Tierra',
-    'FISICA': 'Física',
-    'MATEMATICAS': 'Matemáticas',
-    'MATEMATICAS_APLICADAS': 'Matemáticas Aplicadas'
-  };
+  const careerLabels = CAREER_LABELS;
 
   const interests = [
     'Investigación', 'Programación', 'Matemáticas', 'Física',
