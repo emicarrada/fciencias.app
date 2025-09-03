@@ -65,8 +65,10 @@ enum TokenType {
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
+  username  String?  @unique // Nombre de usuario único opcional
   firstName String
   lastName  String
+  avatarColor String? @default("blue") // Color del avatar personalizable
   role      Role     @default(STUDENT)
   career    Career?
   semester  Int?     // Semestre actual (1-10+)

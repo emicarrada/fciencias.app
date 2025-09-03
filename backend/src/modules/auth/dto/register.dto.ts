@@ -30,6 +30,23 @@ export class RegisterDto {
   password: string;
 
   @IsOptional()
+  @IsString({ message: 'El nombre de usuario debe ser un texto' })
+  @MinLength(3, { message: 'El nombre de usuario debe tener al menos 3 caracteres' })
+  @MaxLength(20, { message: 'El nombre de usuario no puede exceder 20 caracteres' })
+  @Matches(/^[a-zA-Z0-9_]+$/, {
+    message: 'El nombre de usuario solo puede contener letras, números y guiones bajos'
+  })
+  @Transform(({ value }) => value?.toLowerCase().trim())
+  username?: string;
+
+  @IsOptional()
+  @IsString({ message: 'El color del avatar debe ser un texto' })
+  @Matches(/^(blue|green|red|purple|orange|pink|yellow|indigo|gray)$/, {
+    message: 'Color de avatar no válido'
+  })
+  avatarColor?: string;
+
+  @IsOptional()
   @IsEnum(Career, { message: 'Carrera no válida' })
   career?: Career;
 

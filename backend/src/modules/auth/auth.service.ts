@@ -34,7 +34,7 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto): Promise<{ message: string; email: string }> {
-    const { email, password, firstName, lastName, career, semester, interests } = registerDto;
+    const { email, password, firstName, lastName, username, avatarColor, career, semester, interests } = registerDto;
 
     // Validar email institucional
     if (!isInstitutionalEmail(email)) {
@@ -66,6 +66,16 @@ export class AuthService {
       }
     }
 
+    // Verificar si el username ya existe (si se proporciona)
+    if (username) {
+      const existingUsername = await this.prisma.user.findUnique({
+        where: { username }
+      });
+      if (existingUsername) {
+        throw new ConflictException('El nombre de usuario ya está en uso');
+      }
+    }
+
     // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -75,6 +85,8 @@ export class AuthService {
         email,
         firstName,
         lastName,
+        username,
+        avatarColor: avatarColor || 'blue',
         hashedPassword,
         career,
         semester,

@@ -7,25 +7,16 @@ export class EmailService {
   private transporter: nodemailer.Transporter;
 
   constructor(private configService: ConfigService) {
-    // Para desarrollo, usar un transportador que imprima en consola
-    if (configService.get('NODE_ENV') === 'development') {
-      this.transporter = nodemailer.createTransport({
-        streamTransport: true,
-        newline: 'unix',
-        buffer: true
-      });
-    } else {
-      // Configuración para producción (usando Gmail SMTP)
-      this.transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        auth: {
-          user: this.configService.get('EMAIL_USER'),
-          pass: this.configService.get('EMAIL_PASS'),
-        },
-      });
-    }
+    // Configuración para Gmail SMTP (funciona en desarrollo y producción)
+    this.transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: this.configService.get('EMAIL_USER'),
+        pass: this.configService.get('EMAIL_PASS'),
+      },
+    });
   }
 
   async sendVerificationEmail(email: string, token: string): Promise<void> {
