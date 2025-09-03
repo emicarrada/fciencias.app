@@ -4,30 +4,33 @@ fciencias.app es una red social académica y colaborativa creada por y para estu
 
 ## 🚀 Desarrollo Rápido
 
-### Configuración Inicial (Solo primera vez)
+### Configuración Inicial
 
 ```bash
-# Clonar y configurar el proyecto
-make setup
+# Instalar dependencias del backend
+cd backend && npm install
+
+# Instalar dependencias del frontend
+cd ../frontend && npm install
+
+# Configurar base de datos (desde backend/)
+cd ../backend && npx prisma migrate dev
 ```
 
 ### Desarrollo Diario
 
 ```bash
-# Iniciar servicios de desarrollo
-make dev
+# Iniciar backend (terminal 1)
+cd backend && npm run start:dev
 
-# En otra terminal - Iniciar backend
-make dev-backend
-
-# En otra terminal - Iniciar frontend  
-make dev-frontend
+# Iniciar frontend (terminal 2)
+cd frontend && npm run dev
 ```
 
 ### URLs de Desarrollo
 
 - **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:4000
+- **Backend API**: http://localhost:4001
 - **Documentación API**: http://localhost:4000/docs
 - **Base de Datos (PGAdmin)**: http://localhost:5050
 - **Email Testing (MailHog)**: http://localhost:8025
