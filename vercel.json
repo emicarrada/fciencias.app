@@ -4,16 +4,23 @@
     {
       "src": "frontend/package.json",
       "use": "@vercel/next"
+    },
+    {
+      "src": "backend/package.json",
+      "use": "@vercel/node"
     }
   ],
   "rewrites": [
     {
       "source": "/api/v1/(.*)",
-      "destination": "https://api.fciencias.app/api/v1/$1"
+      "destination": "/backend/src/main.js?route=$1"
     },
     {
       "source": "/(.*)",
       "destination": "/frontend/$1"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
