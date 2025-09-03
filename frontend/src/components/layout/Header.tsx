@@ -28,10 +28,6 @@ export default function Header({ className = '' }: HeaderProps) {
                 className="h-8 w-auto filter brightness-0 invert"
                 priority
               />
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-heading font-bold text-text-inverse">FcienciasApp</h1>
-                <p className="text-xs font-body text-primary-200">Red Social Académica</p>
-              </div>
             </motion.div>
           </Link>
 

@@ -10,12 +10,12 @@
   
   /* Configuración de tipografía personalizada */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'CODE', 'Poppins', system-ui, sans-serif;
+    font-family: 'Helvetica Neue', 'Poppins', system-ui, sans-serif;
     font-weight: 700;
   }
   
   .font-heading {
-    font-family: 'CODE', 'Poppins', system-ui, sans-serif;
+    font-family: 'Helvetica Neue', 'Poppins', system-ui, sans-serif;
   }
   
   .font-body {

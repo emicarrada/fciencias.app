@@ -64,7 +64,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Poppins', 'Inter', 'sans-serif'],
-        heading: ['CODE', 'Poppins', 'sans-serif'],
+        heading: ['Helvetica Neue', 'Poppins', 'sans-serif'],
         body: ['Poppins', 'Inter', 'sans-serif'],
       },
       animation: {
