@@ -1,30 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
 
 // Create Express app
 const app = express();
-
-// Initialize Prisma with production database
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL || "postgresql://postgres:RkddRZutC6P7FhkL@db.hlwysacschgrebvxomjs.supabase.co:5432/postgres"
-    }
-  }
-});
 
 // Enable CORS
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://fciencias.app',
-    'https://fciencias-app.vercel.app',
-    'https://fciencias-b6gp0kpx2-cristopher-carradas-projects.vercel.app'
+    'https://fciencias-app.vercel.app'
   ],
   credentials: true,
 }));
@@ -32,33 +17,40 @@ app.use(cors({
 // Parse JSON
 app.use(express.json());
 
-// Email transporter
-const transporter = nodemailer.createTransporter({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER || 'fciencias.app@gmail.com',
-    pass: process.env.EMAIL_PASS || 'fjrd mcls xhaw wlry'
-  }
-});
-
-// Generate avatar colors
-const avatarColors = [
-  '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
-  '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
-];
-
-function getRandomAvatarColor() {
-  return avatarColors[Math.floor(Math.random() * avatarColors.length)];
-}
-
 // Health check
 app.get('/', (req, res) => {
-  res.json({ message: 'FcienciasApp Backend API', status: 'running', timestamp: new Date().toISOString() });
+  res.json({ 
+    message: 'FcienciasApp Backend API', 
+    status: 'running', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'production'
+  });
 });
 
 app.get('/api/v1/health', (req, res) => {
-  res.json({ message: 'FcienciasApp Backend API', status: 'running', timestamp: new Date().toISOString() });
+  res.json({ 
+    message: 'FcienciasApp Backend API', 
+    status: 'running', 
+    timestamp: new Date().toISOString(),
+    database: process.env.DATABASE_URL ? 'configured' : 'not configured'
+  });
 });
+
+// Initialize database connection only when needed
+let prisma = null;
+async function initializePrisma() {
+  if (!prisma) {
+    const { PrismaClient } = require('@prisma/client');
+    prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL
+        }
+      }
+    });
+  }
+  return prisma;
+}
 
 // Auth routes
 app.post('/api/v1/auth/register', async (req, res) => {
@@ -67,8 +59,24 @@ app.post('/api/v1/auth/register', async (req, res) => {
     
     console.log('Registration attempt for:', email);
     
+    // Initialize database
+    const db = await initializePrisma();
+    const bcrypt = require('bcrypt');
+    const crypto = require('crypto');
+    const nodemailer = require('nodemailer');
+    
+    // Generate avatar colors
+    const avatarColors = [
+      '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+      '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+    ];
+    
+    function getRandomAvatarColor() {
+      return avatarColors[Math.floor(Math.random() * avatarColors.length)];
+    }
+    
     // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await db.user.findUnique({
       where: { email }
     });
     
@@ -86,7 +94,7 @@ app.post('/api/v1/auth/register', async (req, res) => {
     const username = email.split('@')[0] + Math.floor(Math.random() * 1000);
     
     // Create user
-    const user = await prisma.user.create({
+    const user = await db.user.create({
       data: {
         email,
         hashedPassword,
@@ -102,7 +110,7 @@ app.post('/api/v1/auth/register', async (req, res) => {
     });
     
     // Create verification token
-    await prisma.verificationToken.create({
+    await db.verificationToken.create({
       data: {
         userId: user.id,
         token: verificationToken,
@@ -112,10 +120,18 @@ app.post('/api/v1/auth/register', async (req, res) => {
     });
     
     // Send verification email
+    const transporter = nodemailer.createTransporter({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+    
     const verificationUrl = `${process.env.FRONTEND_URL || 'https://fciencias.app'}/auth/verify-email?token=${verificationToken}`;
     
     await transporter.sendMail({
-      from: process.env.EMAIL_USER || 'fciencias.app@gmail.com',
+      from: process.env.EMAIL_USER,
       to: email,
       subject: 'Verifica tu cuenta - fciencias.app',
       html: `
@@ -161,8 +177,11 @@ app.get('/api/v1/auth/verify-email', async (req, res) => {
       return res.status(400).json({ message: 'Token de verificación requerido' });
     }
     
+    // Initialize database
+    const db = await initializePrisma();
+    
     // Find verification token
-    const verificationToken = await prisma.verificationToken.findFirst({
+    const verificationToken = await db.verificationToken.findFirst({
       where: {
         token,
         type: 'EMAIL_VERIFICATION',
@@ -180,13 +199,13 @@ app.get('/api/v1/auth/verify-email', async (req, res) => {
     }
     
     // Update user as verified
-    await prisma.user.update({
+    await db.user.update({
       where: { id: verificationToken.userId },
       data: { isEmailVerified: true }
     });
     
     // Delete verification token
-    await prisma.verificationToken.delete({
+    await db.verificationToken.delete({
       where: { id: verificationToken.id }
     });
     
@@ -198,6 +217,7 @@ app.get('/api/v1/auth/verify-email', async (req, res) => {
   }
 });
 
+// CORS preflight handlers
 app.options('/api/v1/auth/register', (req, res) => {
   res.header('Access-Control-Allow-Origin', req.headers.origin);
   res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
