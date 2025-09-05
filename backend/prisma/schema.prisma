@@ -28,6 +28,7 @@ enum Career {
   MATEMATICAS
   MATEMATICAS_APLICADAS
   NEUROCIENCIAS
+  QUIMICA
 }
 
 enum AnnouncementCategory {

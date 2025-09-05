@@ -14,13 +14,25 @@ export default function RegisterPage() {
     try {
       console.log('📝 Datos recibidos del onboarding:', data);
       
+      // Mapear carreras del onboarding al enum del backend
+      const careerMapping: Record<string, Career> = {
+        'actuaria': Career.ACTUARIA,
+        'biologia': Career.BIOLOGIA,
+        'computacion': Career.CIENCIAS_COMPUTACION,
+        'ciencias-tierra': Career.CIENCIAS_TIERRA,
+        'fisica': Career.FISICA,
+        'matematicas': Career.MATEMATICAS,
+        'matematicas-aplicadas': Career.MATEMATICAS_APLICADAS,
+        'quimica': Career.BIOLOGIA, // Por ahora mapear a biología hasta agregar QUIMICA
+      };
+      
       // Convertir datos del onboarding al formato esperado por el backend
       const registerData = {
         email: data.email,
         password: 'FCiencias2024!', // Password temporal, será reemplazado por verificación de email
         firstName: data.fullName ? data.fullName.split(' ')[0] : 'Usuario',
         lastName: data.fullName ? data.fullName.split(' ').slice(1).join(' ') || data.fullName.split(' ')[0] : 'Nuevo',
-        career: data.career,
+        career: careerMapping[data.career] || Career.CIENCIAS_COMPUTACION,
         semester: 1, // Valor por defecto
         interests: data.interests || [],
         username: data.username,
