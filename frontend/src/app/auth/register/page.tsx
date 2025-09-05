@@ -12,23 +12,30 @@ export default function RegisterPage() {
 
   const handleOnboardingComplete = async (data: any) => {
     try {
+      console.log('📝 Datos recibidos del onboarding:', data);
+      
       // Convertir datos del onboarding al formato esperado por el backend
       const registerData = {
         email: data.email,
         password: 'FCiencias2024!', // Password temporal, será reemplazado por verificación de email
-        firstName: data.fullName.split(' ')[0],
-        lastName: data.fullName.split(' ').slice(1).join(' ') || data.fullName.split(' ')[0],
-        career: data.career as Career,
-        semester: 1, // Valor por defecto, se puede personalizar después
+        firstName: data.fullName ? data.fullName.split(' ')[0] : 'Usuario',
+        lastName: data.fullName ? data.fullName.split(' ').slice(1).join(' ') || data.fullName.split(' ')[0] : 'Nuevo',
+        career: data.career,
+        semester: 1, // Valor por defecto
+        interests: data.interests || [],
         username: data.username,
-        avatarColor: data.avatarColor,
+        avatarColor: data.avatarColor || '#4ECDC4',
       };
+      
+      console.log('🚀 Datos para enviar al backend:', registerData);
 
       const response = await registerUser(registerData);
       toast.success('¡Cuenta creada exitosamente! 🎉');
       router.push('/auth/verify-email?email=' + encodeURIComponent(response.email));
-    } catch (error) {
-      toast.error('Error al crear la cuenta');
+    } catch (error: any) {
+      console.error('❌ Error en registro:', error);
+      const errorMessage = error?.response?.data?.message || error?.message || 'Error al crear la cuenta';
+      toast.error(errorMessage);
     }
   };
 
