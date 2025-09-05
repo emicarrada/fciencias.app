@@ -6,21 +6,18 @@
       "use": "@vercel/next"
     },
     {
-      "src": "backend/api/index.js",
+      "src": "backend/package.json",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/v1/(.*)",
-      "dest": "/backend/api/index.js"
+      "dest": "/backend/api/index.js?$1"
     },
     {
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
