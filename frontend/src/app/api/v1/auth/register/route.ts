@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { initializePrisma, sendVerificationEmail, validatePassword, validateEmail, hashPassword, generateVerificationToken, mapCareerIdToEnum } from "@/lib/api-utils";
+import { NextRequest, NextResponse } from 'next/server';
+import { initializePrisma, sendVerificationEmail, validatePassword, validateEmail, hashPassword, generateVerificationToken, mapCareerIdToEnum } from '@/lib/api-utils';
+import { Career } from '@prisma/client';
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,19 +11,19 @@ export async function POST(request: NextRequest) {
     if (!name || !email || !password || !careerId) {
       return NextResponse.json({ 
         success: false,
-        message: "Faltan campos requeridos (name, email, password, careerId)" 
+        message: 'Faltan campos requeridos (name, email, password, careerId)' 
       }, { status: 400 });
     }
 
     // Dividir nombre en firstName y lastName
-    const nameParts = name.trim().split(" ");
-    const firstName = nameParts[0] || "";
-    const lastName = nameParts.slice(1).join(" ") || "Usuario";
+    const nameParts = name.trim().split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || nameParts[0] || 'Usuario';
 
     if (!validateEmail(email)) {
       return NextResponse.json({ 
         success: false,
-        message: "Formato de email inválido" 
+        message: 'Formato de email inválido' 
       }, { status: 400 });
     }
 
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
     if (!career) {
       return NextResponse.json({ 
         success: false,
-        message: "Carrera inválida" 
+        message: 'Carrera inválida' 
       }, { status: 400 });
     }
 
@@ -54,34 +55,33 @@ export async function POST(request: NextRequest) {
       if (existingUser.isEmailVerified) {
         return NextResponse.json({ 
           success: false,
-          message: "Ya existe una cuenta con este correo electrónico" 
-        }, { status: 409 });
+          message: 'Este email ya está registrado y verificado' 
+        }, { status: 400 });
       } else {
-        // Usuario existe pero no verificado, reenviar email
-        const token = generateVerificationToken();
+        // Usuario existe pero no verificado, reenviar verificación
+        const verificationToken = generateVerificationToken();
         
-        // Actualizar el token de verificación
         await db.verificationToken.deleteMany({
           where: { 
             email: email,
-            type: "EMAIL_VERIFICATION"
-          }
-        });
-        
-        await db.verificationToken.create({
-          data: {
-            email: email,
-            token,
-            type: "EMAIL_VERIFICATION",
-            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 horas
+            type: 'EMAIL_VERIFICATION'
           }
         });
 
-        await sendVerificationEmail(email, token);
+        await db.verificationToken.create({
+          data: {
+            email,
+            token: verificationToken,
+            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 horas
+            type: 'EMAIL_VERIFICATION'
+          }
+        });
+
+        await sendVerificationEmail(email, verificationToken);
         
         return NextResponse.json({
           success: true,
-          message: "Se ha reenviado el correo de verificación",
+          message: 'Se ha reenviado el correo de verificación',
           email
         });
       }
@@ -97,69 +97,51 @@ export async function POST(request: NextRequest) {
         lastName,
         email,
         hashedPassword,
-        career: career as any, // Type assertion para el enum
-        isEmailVerified: false,
-      },
+        career: career as Career,
+        role: 'STUDENT',
+        avatarColor: getRandomAvatarColor(),
+        isEmailVerified: false
+      }
     });
 
-    // Generar token de verificación
-    const token = generateVerificationToken();
+    // Crear token de verificación
+    const verificationToken = generateVerificationToken();
     
     await db.verificationToken.create({
       data: {
-        email: email,
-        token,
-        type: "EMAIL_VERIFICATION",
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 horas
+        email,
+        token: verificationToken,
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 horas
+        type: 'EMAIL_VERIFICATION'
       }
     });
 
     // Enviar email de verificación
-    const emailResult = await sendVerificationEmail(email, token);
-    
-    if (!emailResult.success) {
-      console.error("❌ Error enviando email de verificación:", emailResult.error);
-      // No fallar el registro por error de email
-    }
+    await sendVerificationEmail(email, verificationToken);
+
+    console.log(`✅ Usuario registrado: ${email}`);
 
     return NextResponse.json({
       success: true,
-      message: "Usuario registrado exitosamente. Revisa tu correo para verificar la cuenta.",
-      user: {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        career: user.career
-      }
-    });
+      message: 'Usuario registrado exitosamente. Revisa tu correo para verificar tu cuenta.',
+      userId: user.id,
+      email: user.email
+    }, { status: 201 });
 
-  } catch (error: any) {
-    console.error("❌ Error en registro:", error);
+  } catch (error) {
+    console.error('Error en registro:', error);
     
-    // Manejar errores específicos de Prisma
-    if (error.code === "P2002") {
-      return NextResponse.json({ 
-        success: false,
-        message: "Ya existe una cuenta con este correo electrónico" 
-      }, { status: 409 });
-    }
-    
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: false,
-      message: "Error interno del servidor" 
+      message: 'Error interno del servidor'
     }, { status: 500 });
   }
 }
 
-// Options for CORS preflight
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  });
+function getRandomAvatarColor(): string {
+  const colors = [
+    '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+    '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
 }

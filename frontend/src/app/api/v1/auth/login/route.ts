@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { initializePrisma, isInstitutionalEmail, comparePassword } from '@/lib/api-utils';
+import { initializePrisma, comparePassword, validateEmail } from '@/lib/api-utils';
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,8 +10,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Email y contraseña son requeridos' }, { status: 400 });
     }
 
-    if (!isInstitutionalEmail(email)) {
-      return NextResponse.json({ message: 'Credenciales inválidas' }, { status: 401 });
+    if (!validateEmail(email)) {
+      return NextResponse.json({ message: 'Formato de email inválido' }, { status: 400 });
     }
 
     const db = await initializePrisma();
