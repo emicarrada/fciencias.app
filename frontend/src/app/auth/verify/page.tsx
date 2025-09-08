@@ -35,7 +35,7 @@ function VerifyContent() {
       }
 
       try {
-        const response = await fetch(`/api/auth/verify?token=${token}`, {
+        const response = await fetch(`/api/v1/auth/verify?token=${token}`, {
           method: 'GET',
         });
 

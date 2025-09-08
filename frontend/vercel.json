@@ -1,7 +1,4 @@
 {
   "version": 2,
-  "framework": "nextjs",
-  "env": {
-    "NEXT_PUBLIC_API_URL": "https://fciencias.app/api/v1"
-  }
+  "framework": "nextjs"
 }

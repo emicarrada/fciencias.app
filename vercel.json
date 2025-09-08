@@ -1,19 +1,10 @@
 {
   "version": 2,
-  "framework": "nextjs",
-  "buildCommand": "cd frontend && npm run build",
-  "devCommand": "cd frontend && npm run dev",
-  "installCommand": "cd frontend && npm install",
-  "outputDirectory": "frontend/.next",
-  "routes": [
+  "redirects": [
     {
-      "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "source": "/www/(.*)",
+      "destination": "/$1",
+      "permanent": true
     }
-  ],
-  "env": {
-    "DATABASE_URL": "@database_url",
-    "NEXT_PUBLIC_APP_URL": "https://fciencias.app",
-    "NEXT_PUBLIC_ENV": "production"
-  }
+  ]
 }

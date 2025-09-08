@@ -5,20 +5,45 @@ import { Career } from '@prisma/client';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, password, careerId } = body;
+    
+    // Acepta tanto el formato anterior (name, careerId) como el nuevo (firstName, lastName, career)
+    const { 
+      name, 
+      firstName, 
+      lastName, 
+      email, 
+      password, 
+      career,
+      careerId 
+    } = body;
 
-    // Validaciones básicas
-    if (!name || !email || !password || !careerId) {
+    // Determinar firstName y lastName
+    let finalFirstName: string;
+    let finalLastName: string;
+    
+    if (firstName && lastName) {
+      // Formato nuevo del frontend
+      finalFirstName = firstName;
+      finalLastName = lastName;
+    } else if (name) {
+      // Formato anterior con name completo
+      const nameParts = name.trim().split(' ');
+      finalFirstName = nameParts[0] || '';
+      finalLastName = nameParts.slice(1).join(' ') || nameParts[0] || 'Usuario';
+    } else {
       return NextResponse.json({ 
         success: false,
-        message: 'Faltan campos requeridos (name, email, password, careerId)' 
+        message: 'Faltan campos requeridos (name o firstName/lastName, email, password, career o careerId)' 
       }, { status: 400 });
     }
 
-    // Dividir nombre en firstName y lastName
-    const nameParts = name.trim().split(' ');
-    const firstName = nameParts[0] || '';
-    const lastName = nameParts.slice(1).join(' ') || nameParts[0] || 'Usuario';
+    // Validaciones básicas
+    if (!email || !password || (!career && !careerId)) {
+      return NextResponse.json({ 
+        success: false,
+        message: 'Faltan campos requeridos (name o firstName/lastName, email, password, career o careerId)' 
+      }, { status: 400 });
+    }
 
     if (!validateEmail(email)) {
       return NextResponse.json({ 
@@ -36,11 +61,25 @@ export async function POST(request: NextRequest) {
     }
 
     // Validar carrera
-    const career = mapCareerIdToEnum(careerId);
-    if (!career) {
+    let finalCareer: Career;
+    
+    if (career) {
+      // El frontend envía el career directamente como enum
+      finalCareer = career as Career;
+    } else if (careerId) {
+      // Formato anterior con careerId
+      const mappedCareer = mapCareerIdToEnum(careerId);
+      if (!mappedCareer) {
+        return NextResponse.json({ 
+          success: false,
+          message: 'Carrera inválida' 
+        }, { status: 400 });
+      }
+      finalCareer = mappedCareer as Career;
+    } else {
       return NextResponse.json({ 
         success: false,
-        message: 'Carrera inválida' 
+        message: 'Se requiere career o careerId' 
       }, { status: 400 });
     }
 
@@ -93,11 +132,11 @@ export async function POST(request: NextRequest) {
     // Crear usuario
     const user = await db.user.create({
       data: {
-        firstName,
-        lastName,
+        firstName: finalFirstName,
+        lastName: finalLastName,
         email,
         hashedPassword,
-        career: career as Career,
+        career: finalCareer,
         role: 'STUDENT',
         avatarColor: getRandomAvatarColor(),
         isEmailVerified: false

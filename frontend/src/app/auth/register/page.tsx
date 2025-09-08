@@ -33,10 +33,6 @@ export default function RegisterPage() {
         firstName: data.fullName ? data.fullName.split(' ')[0] : 'Usuario',
         lastName: data.fullName ? data.fullName.split(' ').slice(1).join(' ') || data.fullName.split(' ')[0] : 'Nuevo',
         career: careerMapping[data.career] || Career.CIENCIAS_COMPUTACION,
-        semester: 1, // Valor por defecto
-        interests: data.interests || [],
-        username: data.username,
-        avatarColor: data.avatarColor || '#4ECDC4',
       };
       
       console.log('🚀 Datos para enviar al backend:', registerData);

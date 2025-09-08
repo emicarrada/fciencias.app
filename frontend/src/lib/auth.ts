@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AuthResponse, LoginRequest, RegisterRequest } from '@/types/auth';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4001/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '/api/v1';
 
 // Configurar axios
 const api = axios.create({
