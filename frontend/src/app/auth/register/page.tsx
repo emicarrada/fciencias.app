@@ -29,7 +29,7 @@ export default function RegisterPage() {
       // Convertir datos del onboarding al formato esperado por el backend
       const registerData = {
         email: data.email,
-        password: 'FCiencias2024!', // Password temporal, será reemplazado por verificación de email
+        password: data.password, // Usar la contraseña que eligió el usuario
         firstName: data.fullName ? data.fullName.split(' ')[0] : 'Usuario',
         lastName: data.fullName ? data.fullName.split(' ').slice(1).join(' ') || data.fullName.split(' ')[0] : 'Nuevo',
         career: careerMapping[data.career] || Career.CIENCIAS_COMPUTACION,

@@ -46,13 +46,23 @@ export async function sendVerificationEmail(email: string, token: string) {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1F2937;">¡Bienvenido a FCiencias UNAM! 🎓</h2>
         
-        <p>Hemos recibido tu solicitud de registro. Para completar el proceso, verifica tu correo electrónico haciendo clic en el siguiente enlace:</p>
+        <p>Tu cuenta ha sido creada exitosamente. Para completar el proceso y activar tu cuenta, verifica tu correo electrónico haciendo clic en el siguiente enlace:</p>
         
         <div style="text-align: center; margin: 30px 0;">
           <a href="${verificationUrl}" 
              style="background-color: #3B82F6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: bold;">
             Verificar correo electrónico
           </a>
+        </div>
+        
+        <div style="background-color: #F3F4F6; padding: 16px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="color: #1F2937; margin-top: 0;">🔐 Información importante sobre tu cuenta:</h3>
+          <ul style="color: #4B5563; margin: 10px 0; padding-left: 20px;">
+            <li>Tu contraseña está segura y encriptada en nuestros servidores</li>
+            <li>Nunca enviaremos tu contraseña por email</li>
+            <li>Guarda tu contraseña en un lugar seguro</li>
+            <li>Después de verificar tu email, podrás iniciar sesión con tu correo y contraseña</li>
+          </ul>
         </div>
         
         <p><strong>¿Por qué verificamos tu correo?</strong></p>
