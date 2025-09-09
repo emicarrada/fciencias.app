@@ -3,17 +3,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { EyeIcon, EyeSlashIcon, KeyIcon } from '@heroicons/react/24/outline';
-import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 
 interface PasswordStepProps {
-  onNext: (data: { password: string }) => void;
-  onBack: () => void;
-  initialData?: { password?: string };
+  data?: { password: string };
+  onChange: (data: { password: string }, valid: boolean) => void;
+  onValidityChange?: (valid: boolean) => void;
 }
 
-export function PasswordStep({ onNext, onBack, initialData }: PasswordStepProps) {
-  const [password, setPassword] = useState(initialData?.password || '');
+export function PasswordStep({ data, onChange, onValidityChange }: PasswordStepProps) {
+  const [password, setPassword] = useState(data?.password || '');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -22,7 +21,7 @@ export function PasswordStep({ onNext, onBack, initialData }: PasswordStepProps)
 
   useEffect(() => {
     validatePassword();
-  }, [password, confirmPassword]);
+  }, [password, confirmPassword, onChange, onValidityChange]);
 
   const validatePassword = () => {
     const newErrors: string[] = [];
@@ -48,13 +47,12 @@ export function PasswordStep({ onNext, onBack, initialData }: PasswordStepProps)
     }
 
     setErrors(newErrors);
-    setIsValid(password.length > 0 && confirmPassword.length > 0 && newErrors.length === 0);
-  };
-
-  const handleNext = () => {
-    if (isValid) {
-      onNext({ password });
-    }
+    const valid = password.length > 0 && confirmPassword.length > 0 && newErrors.length === 0;
+    setIsValid(valid);
+    
+    // Notificar cambios al OnboardingFlow
+    onChange({ password }, valid);
+    onValidityChange?.(valid);
   };
 
   const getPasswordStrength = () => {
@@ -210,30 +208,6 @@ export function PasswordStep({ onNext, onBack, initialData }: PasswordStepProps)
             </div>
           </div>
         </div>
-      </motion.div>
-
-      {/* Navegación */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="flex justify-between items-center mt-8"
-      >
-        <Button
-          variant="ghost"
-          onClick={onBack}
-          className="px-6 py-3"
-        >
-          Atrás
-        </Button>
-        
-        <Button
-          onClick={handleNext}
-          disabled={!isValid}
-          className="px-8 py-3"
-        >
-          Continuar
-        </Button>
       </motion.div>
     </div>
   );
