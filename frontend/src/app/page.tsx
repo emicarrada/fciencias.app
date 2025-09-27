@@ -24,7 +24,7 @@ export default function HomePage() {
       <div className="relative overflow-hidden" style={{ backgroundColor: '#041737' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
           <div className="text-center">
-            {/* Logo Principal */}
+            {/* Imagen Principal */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -32,42 +32,31 @@ export default function HomePage() {
               className="mb-8"
             >
               <Image
-                src="/logo-fciencias.png"
-                alt="Facultad de Ciencias UNAM"
-                width={400}
-                height={116}
-                className="mx-auto h-20 sm:h-24 lg:h-28 w-auto filter brightness-0 invert"
+                src="/fciencias - manual de marca.png"
+                alt="FCiencias - Manual de Marca"
+                width={500}
+                height={334}
+                className="mx-auto h-24 sm:h-32 md:h-40 lg:h-48 xl:h-56 w-auto max-w-full"
                 priority
+                unoptimized
               />
             </motion.div>
 
-            {/* Título */}
+            {/* Texto Principal */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-3xl sm:text-4xl lg:text-6xl font-heading font-bold text-text-inverse mb-6"
+              className="text-2xl sm:text-3xl lg:text-5xl font-heading font-bold text-text-inverse mb-6"
             >
-              Bienvenido a{' '}
-              <span className="text-accent-green-400">FCiencias.app</span>
+              La red social de la Facultad de Ciencias UNAM
             </motion.h1>
-
-            {/* Subtítulo */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-lg sm:text-xl lg:text-2xl text-primary-100 mb-8 max-w-3xl mx-auto font-body"
-            >
-              La red social académica oficial de la{' '}
-              <strong>Facultad de Ciencias de la UNAM</strong>
-            </motion.p>
 
             {/* Botones de acción */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
               className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-12"
             >
               <Link href="/auth/register">

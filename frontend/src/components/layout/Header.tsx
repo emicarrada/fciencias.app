@@ -21,43 +21,15 @@ export default function Header({ className = '' }: HeaderProps) {
               className="flex items-center space-x-3"
             >
               <Image
-                src="/logo-fciencias.png"
-                alt="Facultad de Ciencias UNAM"
-                width={120}
-                height={35}
-                className="h-8 w-auto filter brightness-0 invert"
+                src="/favicon.png"
+                alt="FCiencias.app"
+                width={48}
+                height={48}
+                className="h-12 w-12 rounded"
                 priority
               />
             </motion.div>
           </Link>
-
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            <Link 
-              href="/dashboard" 
-              className="text-text-inverse hover:text-primary-200 px-3 py-2 rounded-md text-sm font-body font-medium transition-colors min-h-[44px] flex items-center"
-            >
-              📊 Dashboard
-            </Link>
-            <Link 
-              href="/anuncios" 
-              className="text-text-inverse hover:text-primary-200 px-3 py-2 rounded-md text-sm font-body font-medium transition-colors min-h-[44px] flex items-center"
-            >
-              📢 Anuncios
-            </Link>
-            <Link 
-              href="/eventos" 
-              className="text-text-inverse hover:text-primary-200 px-3 py-2 rounded-md text-sm font-body font-medium transition-colors min-h-[44px] flex items-center"
-            >
-              📅 Eventos
-            </Link>
-            <Link 
-              href="/comunidades" 
-              className="text-text-inverse hover:text-primary-200 px-3 py-2 rounded-md text-sm font-body font-medium transition-colors min-h-[44px] flex items-center"
-            >
-              👥 Comunidades
-            </Link>
-          </nav>
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
