@@ -22,21 +22,21 @@ export default function HomePage() {
     <div className="min-h-screen bg-secondary-50">
       {/* Hero Section */}
       <div className="relative overflow-hidden" style={{ backgroundColor: '#041737' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 xl:py-24">
           <div className="text-center">
             {/* Imagen Principal */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="mb-8"
+              className="mb-6 sm:mb-8"
             >
               <Image
                 src="/fciencias - manual de marca.png"
                 alt="FCiencias - Manual de Marca"
                 width={500}
                 height={334}
-                className="mx-auto h-24 sm:h-32 md:h-40 lg:h-48 xl:h-56 w-auto max-w-full"
+                className="mx-auto h-20 sm:h-24 md:h-32 lg:h-40 xl:h-48 w-auto max-w-[90%] sm:max-w-full object-contain"
                 priority
                 unoptimized
               />
@@ -47,29 +47,10 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-2xl sm:text-3xl lg:text-5xl font-heading font-bold text-text-inverse mb-6"
+              className="text-2xl sm:text-3xl lg:text-5xl font-heading font-bold text-text-inverse mb-12"
             >
-              La red social de la Facultad de Ciencias UNAM
+              La Facultad de Ciencias en un solo lugar
             </motion.h1>
-
-            {/* Botones de acción */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-12"
-            >
-              <Link href="/auth/register">
-                <Button size="lg" className="w-full sm:w-auto px-8 py-3 text-lg bg-accent-green-500 hover:bg-accent-green-600 text-white border-0 shadow-lg hover:shadow-xl min-h-[44px]">
-                  🚀 Únete ahora
-                </Button>
-              </Link>
-              <Link href="/demo-reacciones">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 py-3 text-lg border-2 border-primary-200 text-text-inverse hover:bg-primary-600 hover:border-primary-600 min-h-[44px]">
-                  👀 Ver demo
-                </Button>
-              </Link>
-            </motion.div>
           </div>
         </div>
       </div>

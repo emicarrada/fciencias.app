@@ -23,25 +23,25 @@ export default function Header({ className = '' }: HeaderProps) {
               <Image
                 src="/favicon.png"
                 alt="FCiencias.app"
-                width={48}
-                height={48}
-                className="h-12 w-12 rounded"
+                width={56}
+                height={56}
+                className="h-14 w-14 rounded"
                 priority
               />
             </motion.div>
           </Link>
 
           {/* User Menu */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-8">
             <Link 
               href="/auth/login"
-              className="text-text-inverse hover:text-primary-200 px-4 py-2 rounded-md text-sm font-body font-medium transition-colors min-h-[44px] flex items-center border border-primary-600 hover:border-primary-500"
+              className="text-white hover:text-[#D59F0F] text-lg font-heading font-semibold transition-colors duration-300 cursor-pointer"
             >
               Iniciar Sesión
             </Link>
             <Link 
               href="/auth/register"
-              className="bg-accent-green-500 hover:bg-accent-green-600 text-white px-6 py-2 rounded-md text-sm font-body font-medium transition-colors min-h-[44px] flex items-center shadow-md hover:shadow-lg"
+              className="text-white hover:text-accent-green-500 text-lg font-heading font-semibold transition-colors duration-300 cursor-pointer"
             >
               Registrarse
             </Link>
