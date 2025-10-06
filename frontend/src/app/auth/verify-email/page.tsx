@@ -8,7 +8,7 @@ import { EnvelopeIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
-  const email = searchParams.get('email');
+  const email = searchParams?.get('email') || '';
   const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => {
