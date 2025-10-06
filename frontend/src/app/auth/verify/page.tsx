@@ -21,7 +21,7 @@ function VerifyContent() {
   const [result, setResult] = useState<VerificationResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const token = searchParams.get('token');
+  const token = searchParams?.get('token') || null;
 
   useEffect(() => {
     const verifyEmail = async () => {
