@@ -98,29 +98,8 @@ export function CompleteOnboarding({ onComplete, onCancel }: CompleteOnboardingP
         <XMarkIcon className="w-6 h-6 text-white" />
       </motion.button>
 
-      {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-40 pt-8 pb-4">
-        <div className="text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl font-heading font-bold text-white mb-2"
-          >
-            Únete a FCiencias.app
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg font-body text-primary-100"
-          >
-            Conecta con la comunidad académica de la Facultad de Ciencias
-          </motion.p>
-        </div>
-      </div>
-
       {/* Onboarding Flow */}
-      <div className="pt-32">
+      <div className="pt-20">
         <OnboardingFlow
           steps={onboardingSteps}
           onComplete={handleOnboardingComplete}
