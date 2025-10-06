@@ -21,7 +21,7 @@ export default function RegisterPage() {
         'fisica': Career.FISICA,
         'matematicas': Career.MATEMATICAS,
         'matematicas-aplicadas': Career.MATEMATICAS_APLICADAS,
-        'quimica': Career.BIOLOGIA, // Por ahora mapear a biología hasta agregar QUIMICA
+        
       };
       
       // Convertir datos del onboarding al formato esperado por el backend
