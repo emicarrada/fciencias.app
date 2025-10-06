@@ -71,25 +71,25 @@ export function ProfileStep({ data, onChange, onValidityChange }: ProfileStepPro
   }, [fullName, username, usernameError, onChange, onValidityChange, validateFullName, validateUsername, checkUsernameAvailability]);
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-sm mx-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-6"
       >
-        <div className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <UserIcon className="w-12 h-12 text-primary-600" />
+        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <UserIcon className="w-8 h-8 text-blue-600" />
         </div>
-        <h3 className="text-xl font-heading font-semibold text-text-primary mb-2">
+        <h3 className="text-lg font-bold text-gray-900 mb-2 font-sans">
           Tu Identidad en FCiencias
         </h3>
-        <p className="text-text-muted font-body">
+        <p className="text-sm text-gray-600 font-sans">
           Cuéntanos cómo te llamas y elige tu nombre de usuario único
         </p>
       </motion.div>
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {/* Full Name */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -97,24 +97,24 @@ export function ProfileStep({ data, onChange, onValidityChange }: ProfileStepPro
           transition={{ delay: 0.2 }}
           className="space-y-2"
         >
-          <label className="block text-sm font-body font-medium text-text-primary">
+          <label className="block text-sm font-semibold text-gray-900 font-sans">
             Nombre completo
           </label>
-          <Input
+          <input
             type="text"
             placeholder="Ej: María González López"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className={`${
+            className={`w-full text-base px-4 py-3 border rounded-xl focus:ring-2 focus:outline-none transition-all font-sans placeholder-gray-400 ${
               fullName.length > 0 && validateFullName(fullName) 
-                ? 'border-accent-green-500 focus:ring-accent-green-500' 
+                ? 'border-green-300 focus:ring-green-500' 
                 : fullName.length > 0 
-                ? 'border-accent-red-500 focus:ring-accent-red-500' 
-                : ''
+                ? 'border-red-300 focus:ring-red-500' 
+                : 'border-gray-300 focus:ring-blue-500'
             }`}
           />
           {fullName.length > 0 && !validateFullName(fullName) && (
-            <p className="text-accent-red-500 text-sm font-body">
+            <p className="text-red-500 text-sm font-sans">
               Ingresa tu nombre completo (solo letras y espacios)
             </p>
           )}
@@ -127,38 +127,38 @@ export function ProfileStep({ data, onChange, onValidityChange }: ProfileStepPro
           transition={{ delay: 0.3 }}
           className="space-y-2"
         >
-          <label className="block text-sm font-body font-medium text-text-primary">
+          <label className="block text-sm font-semibold text-gray-900 font-sans">
             Nombre de usuario
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <AtSymbolIcon className="h-5 w-5 text-gray-400" />
             </div>
-            <Input
+            <input
               type="text"
               placeholder="tu_nombre_usuario"
               value={username}
               onChange={(e) => setUsername(e.target.value.toLowerCase())}
-              className={`pl-10 ${
+              className={`w-full text-base px-4 py-3 pl-10 border rounded-xl focus:ring-2 focus:outline-none transition-all font-sans placeholder-gray-400 ${
                 username.length > 0 && validateUsername(username) && !usernameError
-                  ? 'border-accent-green-500 focus:ring-accent-green-500' 
+                  ? 'border-green-300 focus:ring-green-500' 
                   : username.length > 0 || usernameError
-                  ? 'border-accent-red-500 focus:ring-accent-red-500' 
-                  : ''
+                  ? 'border-red-300 focus:ring-red-500' 
+                  : 'border-gray-300 focus:ring-blue-500'
               }`}
             />
             
             {/* Loading indicator */}
             {isCheckingUsername && (
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-600"></div>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
               </div>
             )}
             
             {/* Success indicator */}
             {username.length > 0 && validateUsername(username) && !usernameError && !isCheckingUsername && (
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                <div className="w-5 h-5 bg-accent-green-500 rounded-full flex items-center justify-center">
+                <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                   <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
@@ -168,16 +168,16 @@ export function ProfileStep({ data, onChange, onValidityChange }: ProfileStepPro
           </div>
           
           {usernameError && (
-            <p className="text-accent-red-500 text-sm font-body">{usernameError}</p>
+            <p className="text-red-500 text-sm font-sans">{usernameError}</p>
           )}
           
           {username.length > 0 && !validateUsername(username) && !usernameError && (
-            <p className="text-accent-red-500 text-sm font-body">
+            <p className="text-red-500 text-sm font-sans">
               2-30 caracteres, puede incluir letras, números, puntos, guiones y guión bajo
             </p>
           )}
           
-          <p className="text-text-muted text-xs font-body">
+          <p className="text-gray-600 text-xs font-sans">
             Tu nombre de usuario será tu identificador único en FCiencias.app
           </p>
         </motion.div>
@@ -188,20 +188,20 @@ export function ProfileStep({ data, onChange, onValidityChange }: ProfileStepPro
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl p-6 border border-primary-200"
+            className="bg-blue-50 rounded-xl p-4 border border-blue-200"
           >
-            <h4 className="font-heading font-semibold text-primary-800 mb-3">
+            <h4 className="font-semibold text-blue-800 mb-3 text-sm font-sans">
               Vista previa de tu perfil
             </h4>
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-primary-200 rounded-full flex items-center justify-center">
-                <span className="text-primary-700 font-heading font-bold text-lg">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center">
+                <span className="text-blue-700 font-bold text-sm font-sans">
                   {fullName.split(' ').map(n => n[0]).join('').slice(0, 2)}
                 </span>
               </div>
               <div>
-                <p className="font-body font-semibold text-primary-800">{fullName}</p>
-                <p className="font-body text-primary-600">@{username}</p>
+                <p className="font-semibold text-blue-800 font-sans text-sm">{fullName}</p>
+                <p className="font-sans text-blue-600 text-xs">@{username}</p>
               </div>
             </div>
           </motion.div>

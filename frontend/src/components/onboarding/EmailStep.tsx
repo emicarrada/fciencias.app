@@ -36,15 +36,15 @@ export function EmailStep({ data, onChange, onValidityChange }: EmailStepProps) 
   }, [email, onChange, onValidityChange]);
 
   return (
-    <div className="max-w-2xl mx-auto text-center">
+    <div className="max-w-sm mx-auto text-center">
       {/* Icon */}
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-        className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-8"
+        className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6"
       >
-        <EnvelopeIcon className="w-12 h-12 text-primary-600" />
+        <EnvelopeIcon className="w-8 h-8 text-blue-600" />
       </motion.div>
 
       {/* Description */}
@@ -52,14 +52,13 @@ export function EmailStep({ data, onChange, onValidityChange }: EmailStepProps) 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="mb-8"
+        className="mb-6"
       >
-        <h3 className="text-xl font-heading font-semibold text-text-primary mb-4">
+        <h3 className="text-lg font-bold text-gray-900 mb-2 font-sans">
           Correo Institucional
         </h3>
-        <p className="text-text-muted font-body leading-relaxed">
-          Para garantizar que eres parte de la comunidad de la Facultad de Ciencias,
-          necesitamos tu correo institucional oficial.
+        <p className="text-sm text-gray-600 font-sans leading-relaxed">
+          Usa tu correo de @ciencias.unam.mx para verificar que eres parte de la comunidad.
         </p>
       </motion.div>
 
@@ -71,15 +70,15 @@ export function EmailStep({ data, onChange, onValidityChange }: EmailStepProps) 
         className="space-y-4"
       >
         <div className="relative">
-          <Input
+          <input
             type="email"
             placeholder="tu.nombre@ciencias.unam.mx"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={`text-center text-lg px-6 py-4 ${
-              error ? 'border-accent-red-500 focus:ring-accent-red-500' : 
-              isValid ? 'border-accent-green-500 focus:ring-accent-green-500' : ''
-            }`}
+            className={`w-full text-center text-base px-4 py-3 border rounded-xl focus:ring-2 focus:outline-none transition-all font-sans ${
+              error ? 'border-red-300 focus:ring-red-500' : 
+              isValid ? 'border-green-300 focus:ring-green-500' : 'border-gray-300 focus:ring-blue-500'
+            } placeholder-gray-400`}
             autoFocus
           />
           
@@ -87,10 +86,10 @@ export function EmailStep({ data, onChange, onValidityChange }: EmailStepProps) 
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2"
             >
-              <div className="w-6 h-6 bg-accent-green-500 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -102,7 +101,7 @@ export function EmailStep({ data, onChange, onValidityChange }: EmailStepProps) 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-accent-red-500 text-sm font-body"
+            className="text-red-500 text-sm font-sans"
           >
             {error}
           </motion.p>
@@ -114,18 +113,17 @@ export function EmailStep({ data, onChange, onValidityChange }: EmailStepProps) 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="mt-8 bg-primary-50 rounded-xl p-6 border border-primary-200"
+        className="mt-6 bg-blue-50 rounded-xl p-4 border border-blue-100"
       >
         <div className="flex items-start space-x-3">
-          <AcademicCapIcon className="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" />
+          <AcademicCapIcon className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
           <div className="text-left">
-            <h4 className="font-heading font-semibold text-primary-800 mb-1">
+            <h4 className="font-semibold text-blue-900 mb-1 text-sm font-sans">
               ¿Por qué necesitamos tu correo institucional?
             </h4>
-            <p className="text-sm font-body text-primary-700 leading-relaxed">
+            <p className="text-xs font-sans text-blue-700 leading-relaxed">
               Tu correo de @ciencias.unam.mx nos ayuda a verificar que eres parte de nuestra 
-              comunidad académica y te da acceso a funciones exclusivas para estudiantes y 
-              personal de la facultad.
+              comunidad académica.
             </p>
           </div>
         </div>

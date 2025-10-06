@@ -72,15 +72,15 @@ export function PasswordStep({ data, onChange, onValidityChange }: PasswordStepP
   const strength = getPasswordStrength();
 
   return (
-    <div className="max-w-2xl mx-auto text-center">
+    <div className="max-w-sm mx-auto text-center">
       {/* Icono */}
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: 'spring', stiffness: 150 }}
-        className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-8"
+        className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6"
       >
-        <KeyIcon className="w-12 h-12 text-primary-600" />
+        <KeyIcon className="w-8 h-8 text-blue-600" />
       </motion.div>
 
       {/* Contenido */}
@@ -88,13 +88,13 @@ export function PasswordStep({ data, onChange, onValidityChange }: PasswordStepP
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="mb-8"
+        className="mb-6"
       >
-        <h3 className="text-xl font-heading font-semibold text-text-primary mb-4">
+        <h3 className="text-lg font-bold text-gray-900 mb-2 font-sans">
           Crea tu Contraseña
         </h3>
-        <p className="text-text-muted font-body leading-relaxed">
-          Elige una contraseña segura para proteger tu cuenta. Asegúrate de que sea única y fácil de recordar para ti.
+        <p className="text-sm text-gray-600 font-sans leading-relaxed">
+          Elige una contraseña segura para proteger tu cuenta.
         </p>
       </motion.div>
 
@@ -103,16 +103,16 @@ export function PasswordStep({ data, onChange, onValidityChange }: PasswordStepP
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="space-y-6"
+        className="space-y-4"
       >
         {/* Campo de contraseña */}
         <div className="relative">
-          <Input
+          <input
             type={showPassword ? 'text' : 'password'}
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="text-left pr-12"
+            className="w-full text-left text-base px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all font-sans pr-12 placeholder-gray-400"
           />
           <button
             type="button"
@@ -129,12 +129,12 @@ export function PasswordStep({ data, onChange, onValidityChange }: PasswordStepP
 
         {/* Campo de confirmación */}
         <div className="relative">
-          <Input
+          <input
             type={showConfirmPassword ? 'text' : 'password'}
             placeholder="Confirmar contraseña"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="text-left pr-12"
+            className="w-full text-left text-base px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all font-sans pr-12 placeholder-gray-400"
           />
           <button
             type="button"
@@ -153,8 +153,8 @@ export function PasswordStep({ data, onChange, onValidityChange }: PasswordStepP
         {password && (
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-text-muted">Seguridad:</span>
-              <span className={`font-medium ${
+              <span className="text-gray-600 font-sans">Seguridad:</span>
+              <span className={`font-semibold font-sans ${
                 strength.level === 'weak' ? 'text-red-600' :
                 strength.level === 'medium' ? 'text-yellow-600' :
                 strength.level === 'good' ? 'text-blue-600' :
@@ -178,13 +178,13 @@ export function PasswordStep({ data, onChange, onValidityChange }: PasswordStepP
 
         {/* Lista de errores */}
         {errors.length > 0 && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <p className="text-sm font-medium text-red-800 mb-2">Tu contraseña debe tener:</p>
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+            <p className="text-sm font-semibold text-red-800 mb-2 font-sans">Tu contraseña debe tener:</p>
             <ul className="text-sm text-red-700 space-y-1">
               {errors.map((error, index) => (
                 <li key={index} className="flex items-center space-x-2">
                   <span className="w-1 h-1 bg-red-500 rounded-full"></span>
-                  <span>{error}</span>
+                  <span className="font-sans">{error}</span>
                 </li>
               ))}
             </ul>
@@ -192,14 +192,14 @@ export function PasswordStep({ data, onChange, onValidityChange }: PasswordStepP
         )}
 
         {/* Consejos de seguridad */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
           <div className="flex items-start space-x-3">
             <KeyIcon className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div className="text-left">
-              <h4 className="font-heading font-semibold text-blue-800 mb-1">
+              <h4 className="font-semibold text-blue-800 mb-1 text-sm font-sans">
                 Consejos para una contraseña segura:
               </h4>
-              <ul className="text-sm text-blue-700 space-y-1">
+              <ul className="text-xs text-blue-700 space-y-1 font-sans">
                 <li>• Usa una combinación única que solo tú conozcas</li>
                 <li>• Evita información personal obvia</li>
                 <li>• Considera usar una frase memorable</li>

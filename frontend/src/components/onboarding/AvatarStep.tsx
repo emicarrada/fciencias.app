@@ -33,20 +33,20 @@ export function AvatarStep({ data, onChange, onValidityChange }: AvatarStepProps
   const selectedColorObj = AVATAR_COLORS.find(c => c.id === selectedColor);
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-2xl mx-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-6"
       >
-        <div className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <SwatchIcon className="w-12 h-12 text-primary-600" />
+        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <SwatchIcon className="w-8 h-8 text-blue-600" />
         </div>
-        <h3 className="text-xl font-heading font-semibold text-text-primary mb-2">
+        <h3 className="text-lg font-bold text-gray-900 mb-2 font-sans">
           Personaliza tu Avatar
         </h3>
-        <p className="text-text-muted font-body">
+        <p className="text-sm text-gray-600 font-sans">
           Elige un color que represente tu personalidad
         </p>
       </motion.div>
@@ -56,26 +56,26 @@ export function AvatarStep({ data, onChange, onValidityChange }: AvatarStepProps
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.2 }}
-        className="flex justify-center mb-8"
+        className="flex justify-center mb-6"
       >
         <div className="text-center">
           <div className={`
-            w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg
+            w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-3 shadow-md
             ${selectedColorObj?.bg || 'bg-blue-500'} ${selectedColorObj?.text || 'text-white'}
             transition-all duration-300
           `}>
-            <span className="text-4xl font-heading font-bold">
+            <span className="text-2xl font-bold font-sans">
               {initials}
             </span>
           </div>
           <div className="space-y-1">
-            <p className="font-heading font-semibold text-text-primary">
+            <p className="font-semibold text-gray-900 font-sans text-sm">
               {fullName}
             </p>
-            <p className="font-body text-text-muted text-sm">
+            <p className="font-sans text-gray-600 text-xs">
               @{username}
             </p>
-            <p className="font-body text-primary-600 text-sm">
+            <p className="font-sans text-blue-600 text-xs">
               {selectedColorObj?.name}
             </p>
           </div>
@@ -83,39 +83,39 @@ export function AvatarStep({ data, onChange, onValidityChange }: AvatarStepProps
       </motion.div>
 
       {/* Color Selection Grid */}
-      <div className="space-y-6">
-        <h4 className="text-center font-heading font-semibold text-text-primary">
+      <div className="space-y-4">
+        <h4 className="text-center font-semibold text-gray-900 font-sans text-sm">
           Selecciona tu color favorito
         </h4>
         
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+        <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3">
           {AVATAR_COLORS.map((color, index) => (
             <motion.button
               key={color.id}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 * index }}
+              transition={{ delay: 0.05 * index }}
               onClick={() => handleColorSelect(color.id)}
               className={`
-                relative group p-1 rounded-2xl transition-all duration-200
+                relative group p-1 rounded-xl transition-all duration-200
                 ${selectedColor === color.id 
-                  ? 'ring-4 ring-primary-500 ring-offset-2' 
-                  : 'hover:ring-2 hover:ring-gray-300 hover:ring-offset-1'
+                  ? 'ring-2 ring-blue-500 ring-offset-1' 
+                  : 'hover:ring-1 hover:ring-gray-300 hover:ring-offset-1'
                 }
               `}
             >
               {/* Color Circle */}
               <div className={`
-                w-16 h-16 rounded-xl ${color.bg} flex items-center justify-center
-                shadow-md group-hover:shadow-lg transition-shadow duration-200
+                w-12 h-12 rounded-lg ${color.bg} flex items-center justify-center
+                shadow-sm group-hover:shadow-md transition-shadow duration-200
               `}>
-                <span className={`text-lg font-heading font-bold ${color.text}`}>
+                <span className={`text-sm font-bold font-sans ${color.text}`}>
                   {initials}
                 </span>
               </div>
               
               {/* Color Name */}
-              <p className="text-xs font-body text-text-muted mt-2 text-center leading-tight">
+              <p className="text-xs font-sans text-gray-600 mt-1 text-center leading-tight">
                 {color.name}
               </p>
 
@@ -124,9 +124,9 @@ export function AvatarStep({ data, onChange, onValidityChange }: AvatarStepProps
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-1 -right-1 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center border-2 border-white shadow-md"
+                  className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center border-2 border-white shadow-sm"
                 >
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </motion.div>
@@ -141,27 +141,27 @@ export function AvatarStep({ data, onChange, onValidityChange }: AvatarStepProps
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="mt-8 bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl p-6 border border-primary-200"
+        className="mt-6 bg-blue-50 rounded-xl p-4 border border-blue-200"
       >
-        <h4 className="font-heading font-semibold text-primary-800 mb-4 text-center">
+        <h4 className="font-semibold text-blue-800 mb-3 text-center text-sm font-sans">
           ¡Tu perfil está listo! 🎉
         </h4>
-        <div className="flex items-center justify-center space-x-4">
+        <div className="flex items-center justify-center space-x-3">
           <div className={`
-            w-16 h-16 rounded-full flex items-center justify-center shadow-md
+            w-12 h-12 rounded-full flex items-center justify-center shadow-sm
             ${selectedColorObj?.bg} ${selectedColorObj?.text}
           `}>
-            <span className="text-xl font-heading font-bold">
+            <span className="text-lg font-bold font-sans">
               {initials}
             </span>
           </div>
           <div>
-            <p className="font-body font-semibold text-primary-800">{fullName}</p>
-            <p className="font-body text-primary-600">@{username}</p>
-            <p className="font-body text-primary-500 text-sm">{selectedColorObj?.name}</p>
+            <p className="font-semibold text-blue-800 font-sans text-sm">{fullName}</p>
+            <p className="font-sans text-blue-600 text-xs">@{username}</p>
+            <p className="font-sans text-blue-500 text-xs">{selectedColorObj?.name}</p>
           </div>
         </div>
-        <p className="text-center font-body text-primary-700 text-sm mt-4">
+        <p className="text-center font-sans text-blue-700 text-xs mt-3">
           Podrás cambiar estos datos desde tu perfil en cualquier momento
         </p>
       </motion.div>

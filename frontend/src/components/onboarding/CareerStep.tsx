@@ -26,39 +26,39 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-3xl mx-auto">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-6"
       >
-        <div className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <AcademicCapIcon className="w-12 h-12 text-primary-600" />
+        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <AcademicCapIcon className="w-8 h-8 text-blue-600" />
         </div>
-        <h3 className="text-xl font-heading font-semibold text-text-primary mb-2">
+        <h3 className="text-lg font-bold text-gray-900 mb-2 font-sans">
           ¿Cuál es tu carrera?
         </h3>
-        <p className="text-text-muted font-body">
+        <p className="text-sm text-gray-600 font-sans">
           Selecciona tu área de estudios para personalizar tu experiencia
         </p>
       </motion.div>
 
       {/* Career Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {CAREERS.map((career, index) => (
           <motion.button
             key={career.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: index * 0.05 }}
             onClick={() => handleCareerSelect(career.id)}
             className={`
-              relative p-6 rounded-xl border-2 transition-all duration-200 text-left
-              hover:scale-105 hover:shadow-lg
+              relative p-4 rounded-xl border transition-all duration-200 text-left
+              hover:scale-[1.02] hover:shadow-md
               ${selectedCareer === career.id
-                ? 'border-primary-500 bg-primary-50 shadow-md'
-                : 'border-gray-200 bg-white hover:border-primary-300'
+                ? 'border-blue-500 bg-blue-50 shadow-sm'
+                : 'border-gray-200 bg-white hover:border-blue-300'
               }
             `}
           >
@@ -67,24 +67,24 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="absolute top-3 right-3 w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center"
+                className="absolute top-2 right-2 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center"
               >
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               </motion.div>
             )}
 
             {/* Career icon */}
-            <div className="text-4xl mb-3">{career.icon}</div>
+            <div className="text-2xl mb-2">{career.icon}</div>
             
             {/* Career name */}
-            <h4 className="font-heading font-semibold text-text-primary mb-2">
+            <h4 className="font-semibold text-gray-900 mb-1 text-sm font-sans">
               {career.name}
             </h4>
             
             {/* Career description */}
-            <p className="text-sm font-body text-text-muted">
+            <p className="text-xs font-sans text-gray-600 leading-relaxed">
               {career.description}
             </p>
           </motion.button>
@@ -96,18 +96,18 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-8 bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl p-6 border border-primary-200"
+          className="mt-6 bg-blue-50 rounded-xl p-4 border border-blue-200"
         >
           {(() => {
             const career = CAREERS.find(c => c.id === selectedCareer);
             return career ? (
-              <div className="flex items-center space-x-4">
-                <div className="text-3xl">{career.icon}</div>
+              <div className="flex items-center space-x-3">
+                <div className="text-2xl">{career.icon}</div>
                 <div>
-                  <h4 className="font-heading font-semibold text-primary-800">
+                  <h4 className="font-semibold text-blue-900 text-sm font-sans">
                     Has seleccionado: {career.name}
                   </h4>
-                  <p className="font-body text-primary-600">
+                  <p className="font-sans text-blue-700 text-xs">
                     Te conectaremos con otros estudiantes y contenido relevante para {career.name}
                   </p>
                 </div>
