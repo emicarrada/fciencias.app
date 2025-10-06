@@ -12,8 +12,6 @@ export default function RegisterPage() {
 
   const handleOnboardingComplete = async (data: any) => {
     try {
-      console.log('📝 Datos recibidos del onboarding:', data);
-      
       // Mapear carreras del onboarding al enum del backend
       const careerMapping: Record<string, Career> = {
         'actuaria': Career.ACTUARIA,
@@ -34,8 +32,6 @@ export default function RegisterPage() {
         lastName: data.fullName ? data.fullName.split(' ').slice(1).join(' ') || data.fullName.split(' ')[0] : 'Nuevo',
         career: careerMapping[data.career] || Career.CIENCIAS_COMPUTACION,
       };
-      
-      console.log('🚀 Datos para enviar al backend:', registerData);
 
       const response = await registerUser(registerData);
       toast.success('¡Cuenta creada exitosamente! 🎉');
@@ -52,7 +48,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900">
+    <div className="min-h-screen bg-white">
       <CompleteOnboarding
         onComplete={handleOnboardingComplete}
         onCancel={handleOnboardingCancel}

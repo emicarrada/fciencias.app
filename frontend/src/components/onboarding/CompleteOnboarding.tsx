@@ -93,9 +93,9 @@ export function CompleteOnboarding({ onComplete, onCancel }: CompleteOnboardingP
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         onClick={onCancel}
-        className="absolute top-4 right-4 z-50 w-10 h-10 hover:bg-white/10 rounded-full flex items-center justify-center transition-colors duration-200"
+        className="absolute top-4 right-4 z-50 w-10 h-10 hover:bg-gray-100 rounded-full flex items-center justify-center transition-colors duration-200"
       >
-        <XMarkIcon className="w-6 h-6 text-white" />
+        <XMarkIcon className="w-6 h-6 text-gray-600" />
       </motion.button>
 
       {/* Onboarding Flow */}
