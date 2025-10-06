@@ -46,7 +46,7 @@ export const useGoogleAnalytics = () => {
 
   useEffect(() => {
     if (GA_MEASUREMENT_ID && process.env.NEXT_PUBLIC_ENABLE_ANALYTICS === 'true') {
-      const url = pathname + searchParams.toString();
+      const url = pathname + (searchParams?.toString() || '');
       pageview(url);
     }
   }, [pathname, searchParams]);
