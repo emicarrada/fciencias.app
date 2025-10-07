@@ -13,11 +13,17 @@ interface AuthState {
 }
 
 interface AuthActions {
+  // Legacy actions - will be gradually deprecated
   login: (credentials: LoginRequest) => Promise<void>;
   register: (userData: RegisterRequest) => Promise<{ message: string; email: string }>;
   logout: () => void;
-  clearError: () => void;
+  
+  // New clean actions - only state management
   setUser: (user: User | null) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+  clearError: () => void;
+  setAuthenticated: (authenticated: boolean) => void;
 }
 
 type AuthStore = AuthState & AuthActions;
@@ -103,6 +109,19 @@ export const useAuthStore = create<AuthStore>()(
           user,
           isAuthenticated: !!user,
         });
+      },
+
+      // New clean state management actions
+      setLoading: (loading: boolean) => {
+        set({ isLoading: loading });
+      },
+
+      setError: (error: string | null) => {
+        set({ error });
+      },
+
+      setAuthenticated: (authenticated: boolean) => {
+        set({ isAuthenticated: authenticated });
       },
     }),
     {
