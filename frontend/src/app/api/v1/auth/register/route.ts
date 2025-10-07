@@ -5,6 +5,7 @@ import { Career } from '@prisma/client';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    console.log('📥 Datos recibidos en /api/v1/auth/register:', body);
     
     // Acepta tanto el formato anterior (name, careerId) como el nuevo (firstName, lastName, career)
     const { 

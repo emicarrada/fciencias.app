@@ -148,7 +148,8 @@ export const careerMapping: Record<string, string> = {
   '4': 'BIOLOGIA',
   '5': 'CIENCIAS_TIERRA',
   '6': 'ACTUARIA',
-  '7': 'MATEMATICAS_APLICADAS'
+  '7': 'MATEMATICAS_APLICADAS',
+  '8': 'FISICA_BIOMEDICA'
 };
 
 export function mapCareerIdToEnum(careerId: string): string | null {

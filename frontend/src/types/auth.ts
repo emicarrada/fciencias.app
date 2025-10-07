@@ -37,6 +37,7 @@ export enum Career {
   CIENCIAS_COMPUTACION = 'CIENCIAS_COMPUTACION',
   CIENCIAS_TIERRA = 'CIENCIAS_TIERRA',
   FISICA = 'FISICA',
+  FISICA_BIOMEDICA = 'FISICA_BIOMEDICA',
   MATEMATICAS = 'MATEMATICAS',
   MATEMATICAS_APLICADAS = 'MATEMATICAS_APLICADAS',
   OTRO = 'OTRO'
@@ -54,6 +55,7 @@ export const CAREER_LABELS: Record<Career, string> = {
   [Career.CIENCIAS_COMPUTACION]: 'Ciencias de la Computación',
   [Career.CIENCIAS_TIERRA]: 'Ciencias de la Tierra',
   [Career.FISICA]: 'Física',
+  [Career.FISICA_BIOMEDICA]: 'Física Biomédica',
   [Career.MATEMATICAS]: 'Matemáticas',
   [Career.MATEMATICAS_APLICADAS]: 'Matemáticas Aplicadas',
   [Career.OTRO]: 'Otro'

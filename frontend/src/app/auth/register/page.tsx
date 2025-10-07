@@ -12,6 +12,8 @@ export default function RegisterPage() {
 
   const handleOnboardingComplete = async (data: any) => {
     try {
+      console.log('📝 Datos del onboarding recibidos:', data);
+      
       // Mapear carreras del onboarding al enum del backend
       const careerMapping: Record<string, Career> = {
         'actuaria': Career.ACTUARIA,
@@ -19,10 +21,15 @@ export default function RegisterPage() {
         'computacion': Career.CIENCIAS_COMPUTACION,
         'ciencias-tierra': Career.CIENCIAS_TIERRA,
         'fisica': Career.FISICA,
+        'fisica-biomedica': Career.FISICA_BIOMEDICA,
         'matematicas': Career.MATEMATICAS,
         'matematicas-aplicadas': Career.MATEMATICAS_APLICADAS,
-        
       };
+      
+      // Validar que tenemos todos los datos necesarios
+      if (!data.email || !data.password || !data.career || !data.fullName) {
+        throw new Error('Faltan datos requeridos del onboarding');
+      }
       
       // Convertir datos del onboarding al formato esperado por el backend
       const registerData = {
@@ -32,6 +39,8 @@ export default function RegisterPage() {
         lastName: data.fullName ? data.fullName.split(' ').slice(1).join(' ') || data.fullName.split(' ')[0] : 'Nuevo',
         career: careerMapping[data.career] || Career.CIENCIAS_COMPUTACION,
       };
+
+      console.log('📤 Datos enviados al backend:', registerData);
 
       const response = await registerUser(registerData);
       toast.success('¡Cuenta creada exitosamente! 🎉');
