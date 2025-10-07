@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { AcademicCapIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 import { CAREERS } from '@/types/onboarding';
 
@@ -76,7 +77,17 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
             )}
 
             {/* Career icon */}
-            <div className="text-2xl mb-2">{career.icon}</div>
+            <div className="mb-3 flex justify-center">
+              <div className="w-8 h-8 relative">
+                <Image
+                  src={career.icon}
+                  alt={`${career.name} icon`}
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
+              </div>
+            </div>
             
             {/* Career name */}
             <h4 className="font-semibold text-gray-900 mb-1 text-sm font-sans">
@@ -102,7 +113,15 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
             const career = CAREERS.find(c => c.id === selectedCareer);
             return career ? (
               <div className="flex items-center space-x-3">
-                <div className="text-2xl">{career.icon}</div>
+                <div className="w-6 h-6 relative">
+                  <Image
+                    src={career.icon}
+                    alt={`${career.name} icon`}
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
+                </div>
                 <div>
                   <h4 className="font-semibold text-blue-900 text-sm font-sans">
                     Has seleccionado: {career.name}

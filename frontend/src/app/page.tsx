@@ -704,7 +704,7 @@ function HeroSection() {
           transition={{ duration: 0.8 }}
           className="text-3xl font-bold text-gray-900 leading-tight md:text-5xl font-sans"
         >
-          Conecta con la comunidad de Ciencias UNAM.
+          Conecta con la comunidad de la Facultad de Ciencias UNAM.
         </motion.h1>
 
         {/* Subtítulo */}

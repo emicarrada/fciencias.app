@@ -31,76 +31,68 @@ export interface AvatarColor {
 // Career options for FCiencias
 export const CAREERS: Career[] = [
   {
-    id: 'matematicas',
-    name: 'Matemáticas',
-    shortName: 'MAT',
-    icon: '📐',
-    description: 'Matemáticas puras y aplicadas',
-    color: 'blue'
-  },
-  {
-    id: 'fisica',
-    name: 'Física',
-    shortName: 'FIS',
-    icon: '⚛️',
-    description: 'Física teórica y experimental',
-    color: 'purple'
-  },
-  {
     id: 'actuaria',
     name: 'Actuaría',
     shortName: 'ACT',
-    icon: '📊',
+    icon: '/icons/careers/actuaria.svg',
     description: 'Ciencias actuariales y financieras',
     color: 'green'
-  },
-  {
-    id: 'computacion',
-    name: 'Ciencias de la Computación',
-    shortName: 'CC',
-    icon: '💻',
-    description: 'Programación y sistemas computacionales',
-    color: 'indigo'
   },
   {
     id: 'biologia',
     name: 'Biología',
     shortName: 'BIO',
-    icon: '🧬',
+    icon: '/icons/careers/biologia.svg',
     description: 'Ciencias biológicas y biomédicas',
     color: 'emerald'
+  },
+  {
+    id: 'computacion',
+    name: 'Ciencias de la Computación',
+    shortName: 'CC',
+    icon: '/icons/careers/computacion.svg',
+    description: 'Programación y sistemas computacionales',
+    color: 'indigo'
   },
   {
     id: 'ciencias-tierra',
     name: 'Ciencias de la Tierra',
     shortName: 'CT',
-    icon: '🌍',
+    icon: '/icons/careers/ciencias-tierra.svg',
     description: 'Geología, meteorología y geofísica',
     color: 'amber'
   },
   {
-    id: 'quimica',
-    name: 'Química',
-    shortName: 'QUI',
-    icon: '🧪',
-    description: 'Química teórica y aplicada',
-    color: 'red'
+    id: 'fisica',
+    name: 'Física',
+    shortName: 'FIS',
+    icon: '/icons/careers/fisica.svg',
+    description: 'Física teórica y experimental',
+    color: 'purple'
+  },
+  {
+    id: 'fisica-biomedica',
+    name: 'Física Biomédica',
+    shortName: 'FB',
+    icon: '/icons/careers/fisica-biomedica.svg',
+    description: 'Física aplicada a las ciencias biomédicas',
+    color: 'cyan'
+  },
+  {
+    id: 'matematicas',
+    name: 'Matemáticas',
+    shortName: 'MAT',
+    icon: '/icons/careers/matematicas.svg',
+    description: 'Matemáticas puras y aplicadas',
+    color: 'blue'
   },
   {
     id: 'matematicas-aplicadas',
     name: 'Matemáticas Aplicadas',
     shortName: 'MA',
-    icon: '📈',
+    icon: '/icons/careers/matematicas-aplicadas.svg',
     description: 'Matemáticas aplicadas a la computación',
     color: 'teal'
-  },
-  {
-    id: 'neurobiologia',
-    name: 'Neurobiología',
-    shortName: 'NB',
-    icon: '🧠',
-    description: 'Neurociencias y biología del comportamiento',
-    color: 'rose'
   }
 ];
 
