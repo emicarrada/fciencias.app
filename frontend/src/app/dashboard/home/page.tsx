@@ -1,21 +1,28 @@
 'use client';
 
+import { useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import { PlusIcon, HeartIcon, MessageCircleIcon, ShareIcon } from 'lucide-react';
+import { PlusIcon, MessageCircleIcon, ShareIcon } from 'lucide-react';
+import { ReactionGroup, ReactionType } from '@/components/ui/ReactionButton';
 
 export default function HomePage() {
   const { user } = useAuthStore();
-
-  const mockPosts = [
+  const [posts, setPosts] = useState([
     {
       id: 1,
       author: 'Ana García',
       career: 'Matemáticas',
       time: '2h',
       content: '¿Alguien sabe cuándo publican las fechas de exámenes finales? No encuentro información en la página de la facultad 🤔',
-      likes: 12,
       comments: 5,
-      avatar: 'AG'
+      avatar: 'AG',
+      reactions: {
+        like: { count: 12, isActive: false },
+        dislike: { count: 1, isActive: false },
+        love: { count: 3, isActive: false },
+        surprised: { count: 2, isActive: false },
+        laugh: { count: 0, isActive: false },
+      }
     },
     {
       id: 2,
@@ -23,9 +30,15 @@ export default function HomePage() {
       career: 'Física',
       time: '4h',
       content: 'Acabo de terminar mi proyecto de laboratorio de óptica. ¡Súper interesante el experimento de interferencia! 🔬✨',
-      likes: 24,
       comments: 8,
-      avatar: 'CM'
+      avatar: 'CM',
+      reactions: {
+        like: { count: 24, isActive: false },
+        dislike: { count: 0, isActive: false },
+        love: { count: 8, isActive: false },
+        surprised: { count: 6, isActive: false },
+        laugh: { count: 2, isActive: false },
+      }
     },
     {
       id: 3,
@@ -33,11 +46,54 @@ export default function HomePage() {
       career: 'Ciencias de la Computación',
       time: '6h',
       content: 'Estoy organizando un grupo de estudio para Algoritmos y Estructuras de Datos. ¿Quién se anima? Nos reunimos los martes y jueves 📚',
-      likes: 31,
       comments: 15,
-      avatar: 'MG'
+      avatar: 'MG',
+      reactions: {
+        like: { count: 31, isActive: false },
+        dislike: { count: 0, isActive: false },
+        love: { count: 12, isActive: false },
+        surprised: { count: 4, isActive: false },
+        laugh: { count: 1, isActive: false },
+      }
     }
-  ];
+  ]);
+
+  const handleReaction = (postId: number, reactionType: ReactionType) => {
+    setPosts(prevPosts => 
+      prevPosts.map(post => {
+        if (post.id === postId) {
+          const currentReaction = post.reactions[reactionType];
+          const isCurrentlyActive = currentReaction.isActive;
+          
+          // Reset all reactions for this post
+          const resetReactions = Object.keys(post.reactions).reduce((acc, key) => {
+            acc[key as ReactionType] = {
+              ...post.reactions[key as ReactionType],
+              isActive: false,
+              count: post.reactions[key as ReactionType].isActive ? 
+                Math.max(0, post.reactions[key as ReactionType].count - 1) : 
+                post.reactions[key as ReactionType].count
+            };
+            return acc;
+          }, {} as typeof post.reactions);
+
+          // Set the new reaction if it wasn't active
+          if (!isCurrentlyActive) {
+            resetReactions[reactionType] = {
+              count: resetReactions[reactionType].count + 1,
+              isActive: true
+            };
+          }
+
+          return {
+            ...post,
+            reactions: resetReactions
+          };
+        }
+        return post;
+      })
+    );
+  };
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-6">
@@ -75,7 +131,7 @@ export default function HomePage() {
 
       {/* Feed de publicaciones */}
       <div className="space-y-4">
-        {mockPosts.map((post) => (
+        {posts.map((post) => (
           <div key={post.id} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             {/* Header del post */}
             <div className="flex items-center space-x-3 mb-4">
@@ -91,15 +147,22 @@ export default function HomePage() {
             {/* Contenido del post */}
             <p className="text-gray-800 mb-4 leading-relaxed">{post.content}</p>
 
-            {/* Acciones del post */}
+            {/* Sistema de reacciones */}
+            <div className="mb-4">
+              <ReactionGroup
+                reactions={post.reactions}
+                onReaction={(reactionType) => handleReaction(post.id, reactionType)}
+                size="sm"
+                contentId={post.id.toString()}
+                contentType="announcement"
+              />
+            </div>
+
+            {/* Acciones adicionales */}
             <div className="flex items-center space-x-6 pt-3 border-t border-gray-100">
-              <button className="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition-colors">
-                <HeartIcon size={18} />
-                <span className="text-sm">{post.likes}</span>
-              </button>
               <button className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors">
                 <MessageCircleIcon size={18} />
-                <span className="text-sm">{post.comments}</span>
+                <span className="text-sm">{post.comments} comentarios</span>
               </button>
               <button className="flex items-center space-x-2 text-gray-500 hover:text-green-500 transition-colors">
                 <ShareIcon size={18} />

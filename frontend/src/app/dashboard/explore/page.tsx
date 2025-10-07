@@ -2,9 +2,79 @@
 
 import { useState } from 'react';
 import { SearchIcon, TrendingUpIcon, UsersIcon, BookOpenIcon, CalendarIcon } from 'lucide-react';
+import { ReactionGroup, ReactionType } from '@/components/ui/ReactionButton';
 
 export default function ExplorePage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [featuredPosts, setFeaturedPosts] = useState([
+    {
+      id: 1,
+      title: "Nuevo laboratorio de IA inaugurado",
+      content: "La facultad presenta su nuevo laboratorio de Inteligencia Artificial con equipos de última generación.",
+      author: "Dr. Roberto Silva",
+      time: "1h",
+      category: "Noticias",
+      reactions: {
+        like: { count: 45, isActive: false },
+        dislike: { count: 2, isActive: false },
+        love: { count: 18, isActive: false },
+        surprised: { count: 23, isActive: false },
+        laugh: { count: 5, isActive: false },
+      }
+    },
+    {
+      id: 2,
+      title: "Grupo de estudio para Cálculo Diferencial",
+      content: "Buscamos estudiantes interesados en formar un grupo de estudio. Nos reunimos miércoles y viernes.",
+      author: "Elena Martínez",
+      time: "3h",
+      category: "Estudio",
+      reactions: {
+        like: { count: 28, isActive: false },
+        dislike: { count: 0, isActive: false },
+        love: { count: 12, isActive: false },
+        surprised: { count: 3, isActive: false },
+        laugh: { count: 1, isActive: false },
+      }
+    }
+  ]);
+
+  const handleReaction = (postId: number, reactionType: ReactionType) => {
+    setFeaturedPosts(prevPosts => 
+      prevPosts.map(post => {
+        if (post.id === postId) {
+          const currentReaction = post.reactions[reactionType];
+          const isCurrentlyActive = currentReaction.isActive;
+          
+          // Reset all reactions for this post
+          const resetReactions = Object.keys(post.reactions).reduce((acc, key) => {
+            acc[key as ReactionType] = {
+              ...post.reactions[key as ReactionType],
+              isActive: false,
+              count: post.reactions[key as ReactionType].isActive ? 
+                Math.max(0, post.reactions[key as ReactionType].count - 1) : 
+                post.reactions[key as ReactionType].count
+            };
+            return acc;
+          }, {} as typeof post.reactions);
+
+          // Set the new reaction if it wasn't active
+          if (!isCurrentlyActive) {
+            resetReactions[reactionType] = {
+              count: resetReactions[reactionType].count + 1,
+              isActive: true
+            };
+          }
+
+          return {
+            ...post,
+            reactions: resetReactions
+          };
+        }
+        return post;
+      })
+    );
+  };
 
   const trendingTopics = [
     { name: 'Exámenes Finales', posts: 23, category: 'Académico' },
@@ -85,6 +155,40 @@ export default function ExplorePage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Columna principal */}
         <div className="lg:col-span-2 space-y-6">
+          {/* Publicaciones destacadas */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Publicaciones Destacadas</h2>
+            <div className="space-y-4">
+              {featuredPosts.map((post) => (
+                <div key={post.id} className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h3 className="font-semibold text-gray-900">{post.title}</h3>
+                      <p className="text-sm text-gray-600 mt-1">{post.content}</p>
+                      <div className="flex items-center space-x-2 mt-2 text-xs text-gray-500">
+                        <span>{post.author}</span>
+                        <span>•</span>
+                        <span>{post.time}</span>
+                        <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                          {post.category}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <ReactionGroup
+                      reactions={post.reactions}
+                      onReaction={(reactionType) => handleReaction(post.id, reactionType)}
+                      size="sm"
+                      contentId={post.id.toString()}
+                      contentType="announcement"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Temas trending */}
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center space-x-2 mb-4">
