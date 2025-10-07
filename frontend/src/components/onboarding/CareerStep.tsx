@@ -55,8 +55,9 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
             transition={{ delay: index * 0.05 }}
             onClick={() => handleCareerSelect(career.id)}
             className={`
-              relative p-4 rounded-xl border transition-all duration-200 text-left
-              hover:scale-[1.02] hover:shadow-md
+              relative p-4 md:p-6 rounded-xl border transition-all duration-200 text-center
+              hover:scale-[1.02] hover:shadow-md min-h-[100px] md:min-h-[120px]
+              flex flex-col items-center justify-center
               ${selectedCareer === career.id
                 ? 'border-blue-500 bg-blue-50 shadow-sm'
                 : 'border-gray-200 bg-white hover:border-blue-300'
@@ -78,26 +79,21 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
 
             {/* Career icon */}
             <div className="mb-3 flex justify-center">
-              <div className="w-8 h-8 relative">
+              <div className="w-10 h-10 md:w-12 md:h-12 relative">
                 <Image
                   src={career.icon}
                   alt={`${career.name} icon`}
-                  width={32}
-                  height={32}
+                  width={48}
+                  height={48}
                   className="object-contain"
                 />
               </div>
             </div>
             
             {/* Career name */}
-            <h4 className="font-semibold text-gray-900 mb-1 text-sm font-sans">
+            <h4 className="font-semibold text-gray-900 text-sm md:text-base font-sans text-center">
               {career.name}
             </h4>
-            
-            {/* Career description */}
-            <p className="text-xs font-sans text-gray-600 leading-relaxed">
-              {career.description}
-            </p>
           </motion.button>
         ))}
       </div>
@@ -112,7 +108,7 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
           {(() => {
             const career = CAREERS.find(c => c.id === selectedCareer);
             return career ? (
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center justify-center space-x-3">
                 <div className="w-6 h-6 relative">
                   <Image
                     src={career.icon}
@@ -122,14 +118,9 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
                     className="object-contain"
                   />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-blue-900 text-sm font-sans">
-                    Has seleccionado: {career.name}
-                  </h4>
-                  <p className="font-sans text-blue-700 text-xs">
-                    Te conectaremos con otros estudiantes y contenido relevante para {career.name}
-                  </p>
-                </div>
+                <h4 className="font-semibold text-blue-900 text-sm font-sans">
+                  Has seleccionado: {career.name}
+                </h4>
               </div>
             ) : null;
           })()}
