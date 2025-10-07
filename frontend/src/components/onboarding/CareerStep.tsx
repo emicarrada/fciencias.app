@@ -97,35 +97,6 @@ export function CareerStep({ data, onChange, onValidityChange }: CareerStepProps
           </motion.button>
         ))}
       </div>
-
-      {/* Selected career preview */}
-      {selectedCareer && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-6 bg-blue-50 rounded-xl p-4 border border-blue-200"
-        >
-          {(() => {
-            const career = CAREERS.find(c => c.id === selectedCareer);
-            return career ? (
-              <div className="flex items-center justify-center space-x-3">
-                <div className="w-6 h-6 relative">
-                  <Image
-                    src={career.icon}
-                    alt={`${career.name} icon`}
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                  />
-                </div>
-                <h4 className="font-semibold text-blue-900 text-sm font-sans">
-                  Has seleccionado: {career.name}
-                </h4>
-              </div>
-            ) : null;
-          })()}
-        </motion.div>
-      )}
     </div>
   );
 }
