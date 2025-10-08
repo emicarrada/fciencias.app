@@ -48,6 +48,9 @@ Thumbs.db
 # Prisma
 backend/prisma/migrations/
 
+# Database credentials
+fcienciasDBpassword.txt
+
 # Testing
 coverage/
 .nyc_output/
@@ -57,3 +60,5 @@ coverage/
 *.tar.gz
 .cache/
 .vercel
+# database password
+.fcienciasDBpassword.txt
