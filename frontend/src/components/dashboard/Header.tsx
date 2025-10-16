@@ -3,6 +3,7 @@
 import { Bell, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 interface HeaderProps {
   className?: string;
@@ -35,11 +36,14 @@ export function Header({ className }: HeaderProps) {
       <div className="flex items-center justify-between">
         {/* Logo y título */}
         <div className="flex items-center space-x-3">
-          <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-xs">FC</span>
-          </div>
+          <Image
+            src="/logo-fciencias.png"
+            alt="FCiencias UNAM"
+            width={80}
+            height={24}
+            className="h-6 w-auto"
+          />
           <div className="flex flex-col">
-            <h1 className="text-lg font-bold text-gray-900">fciencias.app</h1>
             <span className="text-xs text-gray-500">{getPageTitle()}</span>
           </div>
         </div>

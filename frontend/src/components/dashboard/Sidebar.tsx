@@ -4,6 +4,7 @@ import { Home, Search, Bell, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 interface SidebarProps {
   className?: string;
@@ -48,10 +49,13 @@ export function Sidebar({ className }: SidebarProps) {
         {/* Logo/Brand */}
         <div className="mb-8">
           <Link href="/dashboard/home" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">FC</span>
-            </div>
-            <h1 className="text-xl font-bold text-gray-900">fciencias.app</h1>
+            <Image
+              src="/logo-fciencias.png"
+              alt="FCiencias UNAM"
+              width={140}
+              height={42}
+              className="h-8 w-auto"
+            />
           </Link>
         </div>
 
