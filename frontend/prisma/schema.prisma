@@ -64,24 +64,31 @@ enum TokenType {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique // Email obligatorio y único
-  username  String?  @unique // Username opcional
-  firstName String?  // Nombre opcional
-  lastName  String?  // Apellido opcional
-  avatarColor String? @default("blue") // Color del avatar personalizable
-  role      Role     @default(STUDENT)
-  career    Career?
-  semester  Int?     // Semestre actual (1-10+)
-  interests String[]
-  isActive  Boolean  @default(true)
-  isEmailVerified Boolean @default(true)
-  emailVerificationToken String?
-  passwordResetToken String?
+  id          String   @id @default(uuid())
+  email       String   @unique // Email obligatorio y único
+  username    String?  @unique // Username opcional - requerido para interacciones públicas
+  firstName   String? // Nombre opcional
+  lastName    String? // Apellido opcional
+  avatarColor String?  @default("blue") // Color del avatar personalizable
+  role        Role     @default(STUDENT)
+  career      Career?
+  semester    Int? // Semestre actual (1-10+)
+  interests   String[]
+  isActive    Boolean  @default(true)
+
+  // Sistema de verificación progresiva
+  isEmailVerified         Boolean   @default(false) // Usuario debe verificar antes de interactuar
+  emailVerificationToken  String? // Token único para verificación
+  emailVerificationSentAt DateTime? // Control de reenvíos y expiración
+
+  // Recuperación de contraseña
+  passwordResetToken   String?
   passwordResetExpires DateTime?
+
+  // Auditoría
   lastLoginAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   // Autenticación
   hashedPassword String
@@ -153,8 +160,8 @@ model Comment {
 }
 
 model Reaction {
-  id             String  @id @default(uuid())
-  type           String  // 'like', 'dislike', 'love', etc.
+  id             String   @id @default(uuid())
+  type           String // 'like', 'dislike', 'love', etc.
   userId         String
   announcementId String?
   commentId      String?
@@ -172,20 +179,20 @@ model Reaction {
 }
 
 model Event {
-  id          String    @id @default(uuid())
-  title       String
-  description String
-  startDate   DateTime
-  endDate     DateTime?
-  location    String?
-  isVirtual   Boolean   @default(false)
-  meetingUrl  String?
+  id           String    @id @default(uuid())
+  title        String
+  description  String
+  startDate    DateTime
+  endDate      DateTime?
+  location     String?
+  isVirtual    Boolean   @default(false)
+  meetingUrl   String?
   maxAttendees Int?
-  organizer   String
-  tags        String[]
-  isPublic    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  organizer    String
+  tags         String[]
+  isPublic     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   @@map("events")
 }
