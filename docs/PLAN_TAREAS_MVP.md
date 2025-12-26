@@ -1,53 +1,127 @@
-# Plan de Tareas MVP fciencias.app
 
-## 1. Publicaciones y Feed
-- [ ] Definir modelo de publicación en la base de datos (texto, fotos, videos, autor, fecha)
-- [ ] Crear endpoint para crear publicaciones
-- [ ] Implementar subida de imágenes/videos
-- [ ] Crear formulario de publicación en frontend
-- [ ] Desarrollar feed principal (todas/seguidos)
-- [ ] Mostrar publicaciones con multimedia
+# 🚀 MVP REALISTA fciencias.app (VERSIÓN REHECHA)
 
-## 2. Función de Seguir/Dejar de Seguir
-- [ ] Definir modelo de relación de seguimiento
-- [ ] Endpoints para seguir/deseguir usuarios
-- [ ] Botón de seguir/deseguir en perfiles y feed
+## 🎯 OBJETIVO DEL MVP
 
-## 3. Perfil de Usuario
-- [ ] Mostrar información básica y publicaciones
-- [ ] Permitir edición de perfil
-- [ ] Mostrar productos publicados
+Que el 5 de febrero un estudiante entre, vea actividad, publique algo sin miedo y sienta
+“esto sí es de la fac”.
 
-## 4. Sección de Tienda
-- [ ] Definir modelo de producto (nombre, descripción, precio, categoría, fotos, vendedor)
-- [ ] Endpoints para crear y listar productos
-- [ ] Formulario para subir producto
-- [ ] Feed de productos con filtros por categoría
-
-## 5. Reseñas de Profesores/Ayudantes
-- [ ] Definir modelo de reseña y de profesor/ayudante
-- [ ] Endpoints para crear y listar reseñas
-- [ ] Pantalla para buscar profesores/ayudantes
-- [ ] Formulario para dejar reseña y calificación
-
-## 6. (Opcional) Mensajes Directos
-- [ ] Definir modelo de chat y mensaje
-- [ ] Endpoints para crear/listar chats y mensajes
-- [ ] Pantalla de lista de chats
-- [ ] Pantalla de chat individual
-
-## 7. Comunidades y Espacios por Carrera
-- [ ] Definir modelo de comunidad (nombre, carrera, descripción, links, anuncios)
-- [ ] Endpoints para listar comunidades por carrera
-- [ ] Pantalla para ver comunidades disponibles por carrera
-- [ ] Sección de anuncios importantes por comunidad
-- [ ] Mostrar links a espacios relevantes de la comunidad (grupos, foros, etc.)
-
-## 8. Navegación y Extras
-- [ ] Menú principal/tab bar
-- [ ] Mejorar documentación técnica
-- [ ] Pruebas básicas de flujo principal
+Nada más.
 
 ---
 
-Este plan cubre los pasos esenciales para el MVP. Se recomienda priorizar los módulos 1 a 4 para la primera entrega funcional.
+## 🧩 MÓDULOS DEL MVP (SOLO LO ESENCIAL)
+
+### 1️⃣ FEED GENERAL (EL CORAZÓN)
+- [ ] Modelo de publicación: texto, hasta 3–5 imágenes, autor (o “Anónimo”), fecha
+- [ ] Endpoint para crear publicación (texto, imágenes, anónimo)
+- [ ] Feed cronológico simple (sin algoritmo)
+- [ ] Mostrar autor o “Anónimo” y fecha
+- [ ] Botón de reportar post
+- [ ] Ocultar contenido reportado (soft delete)
+
+❌ NO incluir: likes, comentarios avanzados, algoritmo, seguir usuarios
+
+### 2️⃣ PERFIL ULTRA BÁSICO
+- [ ] Username
+- [ ] Carrera (opcional)
+- [ ] Lista de posts del usuario
+- [ ] Contador simple de publicaciones
+
+❌ NO incluir: seguidores, biografía larga, fotos de portada, stats complejos
+
+### 3️⃣ TIENDA DE LA FAC
+- [ ] Modelo de producto: nombre, precio, descripción, 1–3 fotos, categoría simple
+- [ ] Endpoint para crear producto
+- [ ] Feed separado solo de productos
+- [ ] Contacto directo (WhatsApp/mensaje externo)
+- [ ] Marcar como “Vendido”
+
+❌ NO incluir: pagos internos, reviews, chat interno
+
+### 4️⃣ RESEÑAS DE PROFESORES
+- [ ] Lista de profesores (pre-cargada)
+- [ ] Modelo de reseña: claridad, dificultad, trato, carga de trabajo, texto corto, anónimo
+- [ ] Endpoint para crear reseña
+- [ ] Feed/lista de reseñas por profesor
+- [ ] Botón de reportar reseña
+- [ ] Ocultar reseña reportada (soft delete)
+
+❌ PROHIBIDO: insultos, ataques personales, nombres de alumnos, acusaciones graves
+
+### 5️⃣ MODERACIÓN + REGLAS
+- [ ] Reglas visibles antes de publicar
+- [ ] Reportar post/reseña/producto
+- [ ] Ocultar contenido reportado (soft delete)
+- [ ] Admin panel mínimo para borrar
+
+### 6️⃣ CONTENIDO SEMILLA (OBLIGATORIO)
+- [ ] 30–50 posts iniciales
+- [ ] 10–15 productos
+- [ ] 15–20 reseñas de profes
+- [ ] 10 preguntas tipo comunidad
+
+---
+
+## ❌ COSAS EXPLÍCITAMENTE FUERA DEL MVP
+
+Estas NO entran antes del 5 de febrero:
+
+❌ Mensajes directos
+❌ Comunidades por carrera
+❌ Seguir usuarios
+❌ Likes / reacciones
+❌ Notificaciones push
+❌ App nativa
+❌ Verificación institucional
+
+No es renuncia. Es estrategia.
+
+---
+
+## 🗓️ ORDEN DE CONSTRUCCIÓN (IMPORTANTE)
+
+**Semana 1**
+- Auth
+- Feed básico
+- Publicar texto
+- Publicar imagen
+- Ver posts
+
+**Semana 2**
+- Tienda
+- Reseñas de profes
+- Perfil básico
+- Moderación mínima
+
+**Semana 3**
+- Contenido semilla
+- Pulir UX
+- Bugs
+- Preparar lanzamiento
+
+---
+
+## 🧠 AJUSTES PSICOLÓGICOS CLAVE QUE APLICAMOS
+
+✔ Reducimos exposición social
+✔ Bajamos miedo a participar
+✔ Creamos utilidad inmediata
+✔ Evitamos drama temprano
+✔ Protegemos tu estabilidad emocional
+✔ Facilitamos hábito diario
+
+---
+
+## 🎯 RESULTADO FINAL
+
+El 5 de febrero tendrás:
+
+- algo usable
+- algo vivo
+- algo útil
+- algo emocionalmente seguro
+- algo que puede crecer
+
+No una “red social completa”.
+Una semilla real.
