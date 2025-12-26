@@ -8,6 +8,12 @@ export interface User {
   career?: Career;
   semester?: number;
   role: UserRole;
+  
+  // Sistema de verificación progresiva
+  isEmailVerified: boolean;
+  emailVerificationSentAt?: string;
+  
+  // Auditoría
   createdAt: string;
   updatedAt: string;
 }
