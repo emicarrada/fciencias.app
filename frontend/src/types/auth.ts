@@ -1,10 +1,11 @@
 // Tipos para autenticación
 export interface User {
   id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  career: Career;
+  username: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  career?: Career;
   semester?: number;
   role: UserRole;
   createdAt: string;
@@ -18,17 +19,13 @@ export interface AuthResponse {
 }
 
 export interface LoginRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
 export interface RegisterRequest {
-  email: string;
+  username: string;
   password: string;
-  firstName: string;
-  lastName: string;
-  career: Career;
-  semester?: number;
 }
 
 export enum Career {

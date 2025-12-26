@@ -3,12 +3,17 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@/hooks/business/useAuth';
-import { LoginRequest } from '@/types/auth';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
+
+interface LoginFormData {
+  username: string;
+  password: string;
+}
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,9 +24,9 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginRequest>();
+  } = useForm<LoginFormData>();
 
-  const onSubmit = async (data: LoginRequest) => {
+  const onSubmit = async (data: LoginFormData) => {
     try {
       clearError();
       await login(data);
@@ -36,7 +41,16 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-8 sm:py-12 px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
-          <h1 className="text-2xl sm:text-3xl font-bold text-blue-600">FCiencias.app</h1>
+          <Link href="/" className="inline-block">
+            <Image
+              src="/logofciez.png"
+              alt="FCiencias"
+              width={220}
+              height={124}
+              className="h-16 w-auto mx-auto"
+              priority
+            />
+          </Link>
           <h2 className="mt-4 sm:mt-6 text-2xl sm:text-3xl font-extrabold text-gray-900">
             Iniciar sesión
           </h2>
@@ -56,18 +70,14 @@ export default function LoginPage() {
         <div className="bg-white py-6 sm:py-8 px-4 sm:px-6 lg:px-10 shadow sm:rounded-lg">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <Input
-              label="Correo electrónico"
-              type="email"
-              autoComplete="email"
+              label="Username"
+              type="text"
+              autoComplete="username"
               required
-              placeholder="tu.email@ciencias.unam.mx"
-              error={errors.email?.message}
-              {...register('email', {
-                required: 'El correo es requerido',
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@ciencias\.unam\.mx$/,
-                  message: 'Debe ser un correo institucional (@ciencias.unam.mx)',
-                },
+              placeholder="tu_username"
+              error={errors.username?.message}
+              {...register('username', {
+                required: 'El username es requerido',
               })}
             />
 

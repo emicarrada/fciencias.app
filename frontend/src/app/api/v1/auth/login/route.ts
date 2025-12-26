@@ -1,30 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { initializePrisma, comparePassword, validateEmail } from '@/lib/api-utils';
+import { initializePrisma, comparePassword } from '@/lib/api-utils';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, password } = body;
+    const { username, password } = body;
 
-    if (!email || !password) {
-      return NextResponse.json({ message: 'Email y contraseña son requeridos' }, { status: 400 });
-    }
-
-    if (!validateEmail(email)) {
-      return NextResponse.json({ message: 'Formato de email inválido' }, { status: 400 });
+    if (!username || !password) {
+      return NextResponse.json({ message: 'Username y contraseña son requeridos' }, { status: 400 });
     }
 
     const db = await initializePrisma();
     const user = await db.user.findUnique({
-      where: { email }
+      where: { username }
     });
 
     if (!user) {
       return NextResponse.json({ message: 'Credenciales inválidas' }, { status: 401 });
-    }
-
-    if (!user.isEmailVerified) {
-      return NextResponse.json({ message: 'Debes verificar tu correo antes de iniciar sesión' }, { status: 401 });
     }
 
     const validPassword = await comparePassword(password, user.hashedPassword);
@@ -38,6 +30,7 @@ export async function POST(request: NextRequest) {
       message: 'Login exitoso',
       user: {
         id: user.id,
+        username: user.username,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,

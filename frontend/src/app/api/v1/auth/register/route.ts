@@ -1,58 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { initializePrisma, sendVerificationEmail, validatePassword, validateEmail, hashPassword, generateVerificationToken, mapCareerIdToEnum } from '@/lib/api-utils';
-import { Career } from '@prisma/client';
+import { initializePrisma, validatePassword, hashPassword } from '@/lib/api-utils';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     console.log('📥 Datos recibidos en /api/v1/auth/register:', body);
     
-    // Acepta tanto el formato anterior (name, careerId) como el nuevo (firstName, lastName, career)
-    const { 
-      name, 
-      firstName, 
-      lastName, 
-      email, 
-      password, 
-      career,
-      careerId 
-    } = body;
-
-    // Determinar firstName y lastName
-    let finalFirstName: string;
-    let finalLastName: string;
-    
-    if (firstName && lastName) {
-      // Formato nuevo del frontend
-      finalFirstName = firstName;
-      finalLastName = lastName;
-    } else if (name) {
-      // Formato anterior con name completo
-      const nameParts = name.trim().split(' ');
-      finalFirstName = nameParts[0] || '';
-      finalLastName = nameParts.slice(1).join(' ') || nameParts[0] || 'Usuario';
-    } else {
-      return NextResponse.json({ 
-        success: false,
-        message: 'Faltan campos requeridos (name o firstName/lastName, email, password, career o careerId)' 
-      }, { status: 400 });
-    }
+    const { username, password } = body;
 
     // Validaciones básicas
-    if (!email || !password || (!career && !careerId)) {
+    if (!username || !password) {
       return NextResponse.json({ 
         success: false,
-        message: 'Faltan campos requeridos (name o firstName/lastName, email, password, career o careerId)' 
+        message: 'Username y password son requeridos' 
       }, { status: 400 });
     }
 
-    if (!validateEmail(email)) {
+    // Validar username (al menos 3 caracteres, alfanumérico)
+    if (username.length < 3) {
       return NextResponse.json({ 
         success: false,
-        message: 'Formato de email inválido' 
+        message: 'El username debe tener al menos 3 caracteres' 
       }, { status: 400 });
     }
 
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      return NextResponse.json({ 
+        success: false,
+        message: 'El username solo puede contener letras, números y guiones bajos' 
+      }, { status: 400 });
+    }
+
+    // Validar password
     const passwordValidation = validatePassword(password);
     if (!passwordValidation.valid) {
       return NextResponse.json({ 
@@ -61,70 +40,18 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    // Validar carrera
-    let finalCareer: Career;
-    
-    if (career) {
-      // El frontend envía el career directamente como enum
-      finalCareer = career as Career;
-    } else if (careerId) {
-      // Formato anterior con careerId
-      const mappedCareer = mapCareerIdToEnum(careerId);
-      if (!mappedCareer) {
-        return NextResponse.json({ 
-          success: false,
-          message: 'Carrera inválida' 
-        }, { status: 400 });
-      }
-      finalCareer = mappedCareer as Career;
-    } else {
-      return NextResponse.json({ 
-        success: false,
-        message: 'Se requiere career o careerId' 
-      }, { status: 400 });
-    }
-
     const db = await initializePrisma();
 
-    // Verificar si el usuario ya existe
+    // Verificar si el username ya existe
     const existingUser = await db.user.findUnique({
-      where: { email }
+      where: { username }
     });
 
     if (existingUser) {
-      if (existingUser.isEmailVerified) {
-        return NextResponse.json({ 
-          success: false,
-          message: 'Este email ya está registrado y verificado' 
-        }, { status: 400 });
-      } else {
-        // Usuario existe pero no verificado, reenviar verificación
-        const verificationToken = generateVerificationToken();
-        
-        await db.verificationToken.deleteMany({
-          where: { 
-            email: email,
-            type: 'EMAIL_VERIFICATION'
-          }
-        });
-
-        await db.verificationToken.create({
-          data: {
-            email,
-            token: verificationToken,
-            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 horas
-            type: 'EMAIL_VERIFICATION'
-          }
-        });
-
-        await sendVerificationEmail(email, verificationToken);
-        
-        return NextResponse.json({
-          success: true,
-          message: 'Se ha reenviado el correo de verificación',
-          email
-        });
-      }
+      return NextResponse.json({ 
+        success: false,
+        message: 'Este username ya está en uso' 
+      }, { status: 400 });
     }
 
     // Hash password
@@ -133,39 +60,22 @@ export async function POST(request: NextRequest) {
     // Crear usuario
     const user = await db.user.create({
       data: {
-        firstName: finalFirstName,
-        lastName: finalLastName,
-        email,
+        username,
         hashedPassword,
-        career: finalCareer,
         role: 'STUDENT',
         avatarColor: getRandomAvatarColor(),
-        isEmailVerified: false
+        isEmailVerified: true, // No requiere verificación de email
+        isActive: true
       }
     });
 
-    // Crear token de verificación
-    const verificationToken = generateVerificationToken();
-    
-    await db.verificationToken.create({
-      data: {
-        email,
-        token: verificationToken,
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 horas
-        type: 'EMAIL_VERIFICATION'
-      }
-    });
-
-    // Enviar email de verificación
-    await sendVerificationEmail(email, verificationToken);
-
-    console.log(`✅ Usuario registrado: ${email}`);
+    console.log(`✅ Usuario registrado: ${username}`);
 
     return NextResponse.json({
       success: true,
-      message: 'Usuario registrado exitosamente. Revisa tu correo para verificar tu cuenta.',
+      message: 'Usuario registrado exitosamente',
       userId: user.id,
-      email: user.email
+      username: user.username
     }, { status: 201 });
 
   } catch (error) {

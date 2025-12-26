@@ -60,5 +60,3 @@ coverage/
 *.tar.gz
 .cache/
 .vercel
-# database password
-.fcienciasDBpassword.txt
