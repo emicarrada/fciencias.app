@@ -6,28 +6,21 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log('📥 Datos recibidos en /api/v1/auth/register:', body);
     
-    const { username, password } = body;
+    const { email, password } = body;
 
     // Validaciones básicas
-    if (!username || !password) {
+    if (!email || !password) {
       return NextResponse.json({ 
         success: false,
-        message: 'Username y password son requeridos' 
+        message: 'Email y password son requeridos' 
       }, { status: 400 });
     }
 
-    // Validar username (al menos 3 caracteres, alfanumérico)
-    if (username.length < 3) {
+    // Validar email básico
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ 
         success: false,
-        message: 'El username debe tener al menos 3 caracteres' 
-      }, { status: 400 });
-    }
-
-    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-      return NextResponse.json({ 
-        success: false,
-        message: 'El username solo puede contener letras, números y guiones bajos' 
+        message: 'Formato de email inválido' 
       }, { status: 400 });
     }
 
@@ -42,15 +35,15 @@ export async function POST(request: NextRequest) {
 
     const db = await initializePrisma();
 
-    // Verificar si el username ya existe
+    // Verificar si el email ya existe
     const existingUser = await db.user.findUnique({
-      where: { username }
+      where: { email }
     });
 
     if (existingUser) {
       return NextResponse.json({ 
         success: false,
-        message: 'Este username ya está en uso' 
+        message: 'Este email ya está en uso' 
       }, { status: 400 });
     }
 
@@ -60,22 +53,22 @@ export async function POST(request: NextRequest) {
     // Crear usuario
     const user = await db.user.create({
       data: {
-        username,
+        email,
         hashedPassword,
         role: 'STUDENT',
         avatarColor: getRandomAvatarColor(),
-        isEmailVerified: true, // No requiere verificación de email
+        isEmailVerified: true,
         isActive: true
       }
     });
 
-    console.log(`✅ Usuario registrado: ${username}`);
+    console.log(`✅ Usuario registrado: ${email}`);
 
     return NextResponse.json({
       success: true,
       message: 'Usuario registrado exitosamente',
       userId: user.id,
-      username: user.username
+      email: user.email
     }, { status: 201 });
 
   } catch (error) {

@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function RegisterPage() {
   const router = useRouter();
   const { register: registerUser, isLoading } = useAuthStore();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -17,7 +17,7 @@ export default function RegisterPage() {
     e.preventDefault();
 
     // Validaciones básicas
-    if (!username || !password || !confirmPassword) {
+    if (!email || !password || !confirmPassword) {
       toast.error('Todos los campos son requeridos');
       return;
     }
@@ -27,18 +27,13 @@ export default function RegisterPage() {
       return;
     }
 
-    if (username.length < 3) {
-      toast.error('El username debe tener al menos 3 caracteres');
-      return;
-    }
-
     if (password.length < 6) {
       toast.error('La contraseña debe tener al menos 6 caracteres');
       return;
     }
 
     try {
-      await registerUser({ username, password });
+      await registerUser({ email, password });
       toast.success('¡Cuenta creada exitosamente! 🎉');
       router.push('/auth/login');
     } catch (error: any) {
@@ -58,18 +53,18 @@ export default function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-              Username
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Correo electrónico
             </label>
             <input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-              placeholder="tu_username"
+              placeholder="tu@email.com"
               disabled={isLoading}
-              autoComplete="username"
+              autoComplete="email"
             />
           </div>
 

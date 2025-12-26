@@ -1,8 +1,8 @@
 // Tipos para autenticación
 export interface User {
   id: string;
-  username: string;
-  email?: string;
+  email: string;
+  username?: string;
   firstName?: string;
   lastName?: string;
   career?: Career;
@@ -19,12 +19,12 @@ export interface AuthResponse {
 }
 
 export interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface RegisterRequest {
-  username: string;
+  email: string;
   password: string;
 }
 

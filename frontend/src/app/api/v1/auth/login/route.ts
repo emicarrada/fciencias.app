@@ -4,15 +4,15 @@ import { initializePrisma, comparePassword } from '@/lib/api-utils';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { username, password } = body;
+    const { email, password } = body;
 
-    if (!username || !password) {
-      return NextResponse.json({ message: 'Username y contraseña son requeridos' }, { status: 400 });
+    if (!email || !password) {
+      return NextResponse.json({ message: 'Email y contraseña son requeridos' }, { status: 400 });
     }
 
     const db = await initializePrisma();
     const user = await db.user.findUnique({
-      where: { username }
+      where: { email }
     });
 
     if (!user) {
@@ -30,8 +30,8 @@ export async function POST(request: NextRequest) {
       message: 'Login exitoso',
       user: {
         id: user.id,
-        username: user.username,
         email: user.email,
+        username: user.username,
         firstName: user.firstName,
         lastName: user.lastName,
         role: user.role

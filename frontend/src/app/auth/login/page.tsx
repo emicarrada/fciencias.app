@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 
 interface LoginFormData {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -70,14 +70,14 @@ export default function LoginPage() {
         <div className="bg-white py-6 sm:py-8 px-4 sm:px-6 lg:px-10 shadow sm:rounded-lg">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <Input
-              label="Username"
-              type="text"
-              autoComplete="username"
+              label="Correo electrónico"
+              type="email"
+              autoComplete="email"
               required
-              placeholder="tu_username"
-              error={errors.username?.message}
-              {...register('username', {
-                required: 'El username es requerido',
+              placeholder="tu@email.com"
+              error={errors.email?.message}
+              {...register('email', {
+                required: 'El correo es requerido',
               })}
             />
 

@@ -65,8 +65,8 @@ enum TokenType {
 
 model User {
   id        String   @id @default(uuid())
-  email     String?  @unique // Email opcional
-  username  String   @unique // Username obligatorio y único
+  email     String   @unique // Email obligatorio y único
+  username  String?  @unique // Username opcional
   firstName String?  // Nombre opcional
   lastName  String?  // Apellido opcional
   avatarColor String? @default("blue") // Color del avatar personalizable
@@ -75,7 +75,7 @@ model User {
   semester  Int?     // Semestre actual (1-10+)
   interests String[]
   isActive  Boolean  @default(true)
-  isEmailVerified Boolean @default(false)
+  isEmailVerified Boolean @default(true)
   emailVerificationToken String?
   passwordResetToken String?
   passwordResetExpires DateTime?
