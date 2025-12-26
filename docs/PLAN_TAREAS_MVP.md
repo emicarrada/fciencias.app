@@ -36,7 +36,14 @@
 - [ ] Pantalla de lista de chats
 - [ ] Pantalla de chat individual
 
-## 7. Navegación y Extras
+## 7. Comunidades y Espacios por Carrera
+- [ ] Definir modelo de comunidad (nombre, carrera, descripción, links, anuncios)
+- [ ] Endpoints para listar comunidades por carrera
+- [ ] Pantalla para ver comunidades disponibles por carrera
+- [ ] Sección de anuncios importantes por comunidad
+- [ ] Mostrar links a espacios relevantes de la comunidad (grupos, foros, etc.)
+
+## 8. Navegación y Extras
 - [ ] Menú principal/tab bar
 - [ ] Mejorar documentación técnica
 - [ ] Pruebas básicas de flujo principal
