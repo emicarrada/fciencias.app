@@ -1,6 +1,8 @@
+'use client';
+
 import dynamic from 'next/dynamic';
 
-const EmailVerificationModalExample = dynamic(() => import('@/components/ui/EmailVerificationModalExample'), { ssr: false });
+const EmailVerificationModalExample = dynamic(() => import('@/components/ui/EmailVerificationModalExample'));
 
 export default function TestEmailVerificationPage() {
   return (
@@ -9,8 +11,3 @@ export default function TestEmailVerificationPage() {
     </main>
   );
 }
-
-export const metadata = {
-  title: 'Test Email Verification Modal | FCiencias',
-  description: 'Página de prueba para el modal de verificación de email',
-};

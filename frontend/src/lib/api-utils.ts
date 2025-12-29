@@ -136,52 +136,6 @@ export async function sendPasswordResetEmail(email: string, token: string) {
     console.error('❌ Failed to send password reset email:', error);
     return { success: false, error };
   }
-}        
-        <div style="text-align: center; margin: 30px 0;">
-          <a href="${verificationUrl}" 
-             style="background-color: #3B82F6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: bold;">
-            Verificar correo electrónico
-          </a>
-        </div>
-        
-        <div style="background-color: #F3F4F6; padding: 16px; border-radius: 8px; margin: 20px 0;">
-          <h3 style="color: #1F2937; margin-top: 0;">🔐 Información importante sobre tu cuenta:</h3>
-          <ul style="color: #4B5563; margin: 10px 0; padding-left: 20px;">
-            <li>Tu contraseña está segura y encriptada en nuestros servidores</li>
-            <li>Nunca enviaremos tu contraseña por email</li>
-            <li>Guarda tu contraseña en un lugar seguro</li>
-            <li>Después de verificar tu email, podrás iniciar sesión con tu correo y contraseña</li>
-          </ul>
-        </div>
-        
-        <p><strong>¿Por qué verificamos tu correo?</strong></p>
-        <p>La verificación nos ayuda a mantener una comunidad segura y auténtica de estudiantes y académicos de la Facultad de Ciencias.</p>
-        
-        <p style="color: #6B7280; font-size: 14px;">
-          Si no solicitaste este registro, puedes ignorar este mensaje.
-          <br><br>
-          Este enlace expirará en 24 horas por seguridad.
-        </p>
-        
-        <hr style="margin: 30px 0; border: none; border-top: 1px solid #E5E7EB;">
-        
-        <p style="color: #6B7280; font-size: 12px; text-align: center;">
-          FCiencias UNAM - Red Social Académica
-          <br>
-          Facultad de Ciencias, Universidad Nacional Autónoma de México
-        </p>
-      </div>
-    `
-  };
-
-  try {
-    const result = await transporter.sendMail(mailOptions);
-    console.log('✅ Verification email sent:', result.messageId);
-    return { success: true, messageId: result.messageId };
-  } catch (error) {
-    console.error('❌ Failed to send verification email:', error);
-    return { success: false, error };
-  }
 }
 
 // Password utilities
