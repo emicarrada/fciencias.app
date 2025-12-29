@@ -33,9 +33,10 @@ export default function RegisterPage() {
     }
 
     try {
-      await registerUser({ email, password });
-      toast.success('¡Cuenta creada exitosamente! 🎉');
-      router.push('/auth/login');
+      const authResponse = await registerUser({ email, password });
+      
+      toast.success('¡Bienvenido a FCiencias! 🎉');
+      router.push('/dashboard');
     } catch (error: any) {
       console.error('❌ Error en registro:', error);
       const errorMessage = error?.response?.data?.message || error?.message || 'Error al crear la cuenta';

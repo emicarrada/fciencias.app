@@ -66,7 +66,7 @@ enum TokenType {
 model User {
   id          String   @id @default(uuid())
   email       String   @unique // Email obligatorio y único
-  username    String?  @unique // Username opcional - requerido para interacciones públicas
+  username    String?  @unique // Username opcional - se puede establecer después
   firstName   String? // Nombre opcional
   lastName    String? // Apellido opcional
   avatarColor String?  @default("blue") // Color del avatar personalizable
@@ -76,8 +76,8 @@ model User {
   interests   String[]
   isActive    Boolean  @default(true)
 
-  // Sistema de verificación progresiva
-  isEmailVerified         Boolean   @default(false) // Usuario debe verificar antes de interactuar
+  // Sistema de verificación (opcional para MVP)
+  isEmailVerified         Boolean   @default(false) // Se puede verificar después del registro
   emailVerificationToken  String? // Token único para verificación
   emailVerificationSentAt DateTime? // Control de reenvíos y expiración
 
@@ -100,6 +100,7 @@ model User {
   reactions     Reaction[]
   reports       Report[]
   notifications Notification[]
+  posts         Post[] // Posts creados por el usuario
 
   @@map("users")
 }
@@ -254,10 +255,29 @@ model VerificationToken {
   id        String    @id @default(uuid())
   token     String    @unique
   email     String
-  type      TokenType
+  type      TokenType @default(EMAIL_VERIFICATION)
   expiresAt DateTime
   used      Boolean   @default(false)
   createdAt DateTime  @default(now())
 
+  @@unique([email, type, used])
   @@map("verification_tokens")
+}
+
+// MODELO POST SIMPLE - Sistema de publicaciones minimalista
+model Post {
+  id          String   @id @default(uuid())
+  content     String   @db.Text
+  imageUrl    String?  // Imagen opcional
+  authorId    String
+  isAnonymous Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relación con usuario
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@map("posts")
+  @@index([createdAt(sort: Desc)]) // Índice para ordenar cronológicamente
+  @@index([authorId]) // Índice para buscar posts por autor
 }

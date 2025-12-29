@@ -14,8 +14,8 @@ export default function DashboardPage() {
       return;
     }
     
-    // Redirigir automáticamente a la sección de inicio
-    router.push('/dashboard/home');
+    // Redirigir automáticamente al feed
+    router.push('/feed');
   }, [isAuthenticated, router]);
 
   // Mostrar loading mientras redirige

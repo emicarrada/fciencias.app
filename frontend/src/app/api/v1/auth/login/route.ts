@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { initializePrisma, comparePassword } from '@/lib/api-utils';
+import { initializePrisma, comparePassword, generateAccessToken, generateRefreshToken } from '@/lib/api-utils';
+import { cookies } from 'next/headers';
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +26,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'Credenciales inválidas' }, { status: 401 });
     }
 
-    // Aquí generarías JWT tokens en una implementación completa
+    // Actualizar último login
+    await db.user.update({
+      where: { id: user.id },
+      data: { lastLoginAt: new Date() }
+    });
+
+    // Generar JWT tokens
+    const tokenPayload = {
+      userId: user.id,
+      email: user.email,
+      role: user.role
+    };
+
+    const accessToken = generateAccessToken(tokenPayload);
+    const refreshToken = generateRefreshToken(tokenPayload);
+
+    // Guardar refresh token en BD
+    await db.refreshToken.create({
+      data: {
+        token: refreshToken,
+        userId: user.id,
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 días
+      }
+    });
+
+    // Establecer cookie httpOnly para el access token
+    const cookieStore = await cookies();
+    cookieStore.set('auth_token', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 // 7 días
+    });
+
     return NextResponse.json({
       message: 'Login exitoso',
       user: {
@@ -34,8 +68,15 @@ export async function POST(request: NextRequest) {
         username: user.username,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.role
-      }
+        role: user.role,
+        isEmailVerified: user.isEmailVerified,
+        avatarColor: user.avatarColor,
+        career: user.career,
+        createdAt: user.createdAt.toISOString(),
+        updatedAt: user.updatedAt.toISOString()
+      },
+      accessToken,
+      refreshToken
     });
 
   } catch (error) {

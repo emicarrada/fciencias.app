@@ -15,7 +15,7 @@ interface AuthState {
 interface AuthActions {
   // Legacy actions - will be gradually deprecated
   login: (credentials: LoginRequest) => Promise<void>;
-  register: (userData: RegisterRequest) => Promise<{ message: string; email: string }>;
+  register: (userData: RegisterRequest) => Promise<AuthResponse>;
   logout: () => void;
   
   // New clean actions - only state management
@@ -24,6 +24,7 @@ interface AuthActions {
   setError: (error: string | null) => void;
   clearError: () => void;
   setAuthenticated: (authenticated: boolean) => void;
+  updateUser: (userData: Partial<User>) => void;
 }
 
 type AuthStore = AuthState & AuthActions;
@@ -70,14 +71,20 @@ export const useAuthStore = create<AuthStore>()(
         try {
           set({ isLoading: true, error: null });
           
-          const response = await authApi.register(userData);
+          const authResponse: AuthResponse = await authApi.register(userData);
+          
+          // Guardar tokens en localStorage
+          localStorage.setItem('accessToken', authResponse.accessToken);
+          localStorage.setItem('refreshToken', authResponse.refreshToken);
           
           set({
+            user: authResponse.user,
+            isAuthenticated: true,
             isLoading: false,
             error: null,
           });
           
-          return response;
+          return authResponse;
         } catch (error: any) {
           const errorMessage = error.response?.data?.message || 'Error al registrar usuario';
           set({
@@ -122,6 +129,15 @@ export const useAuthStore = create<AuthStore>()(
 
       setAuthenticated: (authenticated: boolean) => {
         set({ isAuthenticated: authenticated });
+      },
+
+      updateUser: (userData: Partial<User>) => {
+        const currentUser = get().user;
+        if (currentUser) {
+          set({
+            user: { ...currentUser, ...userData },
+          });
+        }
       },
     }),
     {

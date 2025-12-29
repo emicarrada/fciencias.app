@@ -1,15 +1,16 @@
 // Tipos para autenticación
 export interface User {
   id: string;
-  email: string;
-  username?: string;
+  email: string; // Obligatorio en el registro
+  username?: string; // Opcional - se puede establecer después
   firstName?: string;
   lastName?: string;
   career?: Career;
   semester?: number;
   role: UserRole;
+  avatarColor?: string;
   
-  // Sistema de verificación progresiva
+  // Sistema de verificación (opcional)
   isEmailVerified: boolean;
   emailVerificationSentAt?: string;
   
