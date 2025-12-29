@@ -192,6 +192,7 @@ export class EventHandlerManager {
         career: Career.MATEMATICAS,
         semester: 5,
         role: UserRole.STUDENT,
+        isEmailVerified: true,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };

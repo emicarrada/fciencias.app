@@ -9,9 +9,9 @@ import { initializePrisma, verifyToken } from '@/lib/api-utils';
 import { cookies } from 'next/headers';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 // GET - Obtener post por ID
@@ -20,7 +20,7 @@ export async function GET(
   { params }: RouteParams
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const prisma = await initializePrisma();
 
@@ -93,7 +93,7 @@ export async function PUT(
   { params }: RouteParams
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const cookieStore = await cookies();
     const authToken = cookieStore.get('auth_token')?.value;
@@ -194,7 +194,7 @@ export async function DELETE(
   { params }: RouteParams
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const cookieStore = await cookies();
     const authToken = cookieStore.get('auth_token')?.value;

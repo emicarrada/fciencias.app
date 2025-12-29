@@ -84,8 +84,8 @@ export const useAuth = () => {
         throw new Error(result.error || 'Registration failed');
       }
     } catch (error) {
-      // For now, fall back to store register to maintain compatibility
-      return await storeRegister(userData);
+      console.error('Registration error:', error);
+      throw error;
     }
   };
 

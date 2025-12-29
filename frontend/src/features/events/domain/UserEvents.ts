@@ -8,8 +8,8 @@ export class UserRegisteredEvent extends DomainEvent {
   public readonly data: {
     userId: string;
     email: string;
-    firstName: string;
-    lastName: string;
+    firstName?: string;
+    lastName?: string;
     career?: string;
     registrationMethod: 'email' | 'google' | 'github' | 'facebook';
     ipAddress?: string;
@@ -53,8 +53,9 @@ export class UserRegisteredEvent extends DomainEvent {
       throw new Error('UserRegisteredEvent: email is required and must be a string');
     }
 
-    if (!data.firstName || typeof data.firstName !== 'string') {
-      throw new Error('UserRegisteredEvent: firstName is required and must be a string');
+    // firstName is now optional
+    if (data.firstName !== undefined && typeof data.firstName !== 'string') {
+      throw new Error('UserRegisteredEvent: firstName must be a string if provided');
     }
 
     const validMethods = ['email', 'google', 'github', 'facebook'];

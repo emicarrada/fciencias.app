@@ -1,7 +1,7 @@
 import { IAuthService } from '@/services/interfaces/IAuthService';
 import { IEventBus } from '@/features/events/infrastructure/EventBusInterfaces';
 import { UserRegisteredEvent } from '@/features/events/domain/UserEvents';
-import { RegisterRequest, UserRole } from '@/types/auth';
+import { RegisterRequest, UserRole, User } from '@/types/auth';
 
 export interface RegisterResult {
   success: boolean;
@@ -39,13 +39,10 @@ export class RegisterUseCase {
         try {
           // Create a user object for the event
           // In a real app, the register response would include the created user
-          const userForEvent = {
+          const userForEvent: User = {
             id: `temp_${Date.now()}`, // Would be the actual user ID from response
             email: userData.email,
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            career: userData.career,
-            semester: userData.semester,
+            isEmailVerified: false,
             role: UserRole.STUDENT,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
@@ -90,10 +87,10 @@ export class RegisterUseCase {
 
   private validateRegistrationData(userData: RegisterRequest): { isValid: boolean; error?: string } {
     // Required fields
-    if (!userData.firstName || !userData.lastName || !userData.email || !userData.password) {
+    if (!userData.email || !userData.password) {
       return {
         isValid: false,
-        error: 'Nombre, apellido, email y contraseña son requeridos'
+        error: 'Email y contraseña son requeridos'
       };
     }
 
@@ -106,34 +103,11 @@ export class RegisterUseCase {
       };
     }
 
-    // Name validation
-    if (userData.firstName.length < 2) {
-      return {
-        isValid: false,
-        error: 'El nombre debe tener al menos 2 caracteres'
-      };
-    }
-
-    if (userData.lastName.length < 2) {
-      return {
-        isValid: false,
-        error: 'El apellido debe tener al menos 2 caracteres'
-      };
-    }
-
     // Password validation
     if (userData.password.length < 6) {
       return {
         isValid: false,
         error: 'La contraseña debe tener al menos 6 caracteres'
-      };
-    }
-
-    // Career validation
-    if (!userData.career) {
-      return {
-        isValid: false,
-        error: 'La carrera es requerida'
       };
     }
 

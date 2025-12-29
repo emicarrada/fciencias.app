@@ -57,6 +57,12 @@
     "src/types/**/*.d.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/__tests__/**",
+    "playwright.config.ts",
+    "jest.config.cjs",
+    "jest.setup.cjs"
   ]
 }

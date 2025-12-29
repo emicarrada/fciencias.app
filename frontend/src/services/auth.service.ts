@@ -168,8 +168,8 @@ export class AuthService {
       const user = await this.prisma.user.create({
         data: {
           email,
-          password: hashedPassword,
-          emailVerified: false,
+          hashedPassword,
+          isEmailVerified: false,
         },
       });
 
@@ -179,7 +179,7 @@ export class AuthService {
 
       await this.prisma.verificationToken.create({
         data: {
-          userId: user.id,
+          email: user.email,
           token: verificationToken,
           expiresAt,
         },
@@ -196,7 +196,7 @@ export class AuthService {
         user: {
           id: user.id,
           email: user.email,
-          emailVerified: user.emailVerified,
+          isEmailVerified: user.isEmailVerified,
         },
       };
     } catch (error: any) {
@@ -219,7 +219,7 @@ export class AuthService {
   private async validateCredentials(
     email: string,
     password: string
-  ): Promise<User | null> {
+  ): Promise<any | null> {
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -228,7 +228,7 @@ export class AuthService {
       return null;
     }
 
-    const isValidPassword = await checkPassword(password, user.password);
+    const isValidPassword = await checkPassword(user.hashedPassword);
 
     return isValidPassword ? user : null;
   }
@@ -237,12 +237,17 @@ export class AuthService {
    * COMMAND: Generate authentication tokens
    * Pure function - no side effects, just creates tokens
    */
-  private generateAuthTokens(userId: string): {
+  private generateAuthTokens(user: any): {
     accessToken: string;
     refreshToken: string;
   } {
-    const accessToken = generateAccessToken(userId);
-    const refreshToken = generateRefreshToken(userId);
+    const tokenPayload = { 
+      userId: user.id,
+      email: user.email,
+      role: user.role || 'user'
+    };
+    const accessToken = generateAccessToken(tokenPayload);
+    const refreshToken = generateRefreshToken(tokenPayload);
 
     return { accessToken, refreshToken };
   }
@@ -280,7 +285,7 @@ export class AuthService {
       }
 
       // COMMAND: Generate tokens (pure function)
-      const { accessToken, refreshToken } = this.generateAuthTokens(user.id);
+      const { accessToken, refreshToken } = this.generateAuthTokens(user);
 
       // COMMAND: Store refresh token (side effect)
       await this.storeRefreshToken(user.id, refreshToken);
@@ -291,7 +296,7 @@ export class AuthService {
           id: user.id,
           email: user.email,
           username: user.username,
-          emailVerified: user.emailVerified,
+          isEmailVerified: user.isEmailVerified,
         },
         accessToken,
         refreshToken,
@@ -315,19 +320,25 @@ export class AuthService {
             gt: new Date(),
           },
         },
-        include: {
-          user: true,
-        },
       });
 
       if (!verificationToken) {
         return { success: false, error: 'Invalid or expired token' };
       }
 
+      // Find user by email
+      const user = await this.prisma.user.findUnique({
+        where: { email: verificationToken.email },
+      });
+
+      if (!user) {
+        return { success: false, error: 'User not found' };
+      }
+
       // Update user
       await this.prisma.user.update({
-        where: { id: verificationToken.userId },
-        data: { emailVerified: true },
+        where: { id: user.id },
+        data: { isEmailVerified: true },
       });
 
       // Mark token as used
@@ -339,9 +350,9 @@ export class AuthService {
       return {
         success: true,
         user: {
-          id: verificationToken.user.id,
-          email: verificationToken.user.email,
-          emailVerified: true,
+          id: user.id,
+          email: user.email,
+          isEmailVerified: true,
         },
       };
     } catch (error: any) {
@@ -418,7 +429,7 @@ export class AuthService {
       await this.prisma.user.update({
         where: { id: user.id },
         data: {
-          password: hashedPassword,
+          hashedPassword: hashedPassword,
           passwordResetToken: null,
           passwordResetExpires: null,
         },
