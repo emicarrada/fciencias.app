@@ -689,77 +689,45 @@ function PreviewSocialSection() {
   );
 }
 
-// Componente Hero moderno estilo red social
+// Hero Section - Minimalista y centrado en reducir ansiedad
 function HeroSection() {
   return (
     <section 
       role="banner" 
-      className="flex flex-col items-center justify-center min-h-[90vh] mt-16 px-4 text-center"
+      className="flex flex-col items-center justify-center min-h-[85vh] px-6 text-center"
     >
-      <div className="max-w-2xl mx-auto space-y-6">
-        {/* Slogan Principal */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl font-bold text-gray-900 leading-tight md:text-5xl font-sans"
-        >
-          Conecta con la comunidad de la Facultad de Ciencias UNAM.
-        </motion.h1>
+      <div className="max-w-xl mx-auto space-y-8">
+        {/* Headline */}
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+          Donde Ciencias habla sin filtros.
+        </h1>
 
-        {/* Subtítulo */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-gray-600 text-base md:text-lg font-sans"
-        >
-          Notas, eventos, proyectos y todo lo que pasa en la Fac. en un solo lugar.
-        </motion.p>
+        {/* Subtítulo con salto de línea */}
+        <div className="space-y-2">
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+            Un espacio para estudiantes y exalumnos de Ciencias.
+          </p>
+          <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+            Publica, opina y pregunta. Puedes hacerlo de forma anónima.
+          </p>
+        </div>
 
-        {/* Botón CTA Principal */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
+        {/* CTA Principal */}
+        <div className="pt-4">
           <Link href="/auth/register">
             <button
-              aria-label="Crear cuenta gratuita"
-              className="w-11/12 sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold shadow-md transition-all duration-200 hover:shadow-lg hover:scale-105 font-sans"
+              aria-label="Entrar ahora"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3.5 rounded-lg font-medium text-lg transition-colors duration-200"
             >
-              Crea tu cuenta gratis
+              Entrar ahora
             </button>
           </Link>
-        </motion.div>
-
-        {/* Mockup/Imagen ilustrativa */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-10 flex justify-center"
-        >
-          <div className="w-3/4 max-w-sm">
-            <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg p-6 text-white">
-              <div className="space-y-3">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-white/20 rounded-full"></div>
-                  <div className="h-4 bg-white/20 rounded flex-1"></div>
-                </div>
-                <div className="h-3 bg-white/20 rounded w-3/4"></div>
-                <div className="h-3 bg-white/20 rounded w-1/2"></div>
-                <div className="space-y-2 pt-2">
-                  <div className="h-2 bg-white/20 rounded"></div>
-                  <div className="h-2 bg-white/20 rounded w-5/6"></div>
-                </div>
-              </div>
-            </div>
-            <p className="text-xs text-gray-500 mt-2 font-sans">
-              Vista previa del feed de la comunidad
-            </p>
-          </div>
-        </motion.div>
+          
+          {/* Texto secundario de bajo compromiso */}
+          <p className="text-xs text-gray-500 mt-3">
+            Toma menos de un minuto
+          </p>
+        </div>
       </div>
     </section>
   );

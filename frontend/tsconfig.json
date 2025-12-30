@@ -64,6 +64,10 @@
     "**/__tests__/**",
     "playwright.config.ts",
     "jest.config.cjs",
-    "jest.setup.cjs"
+    "jest.setup.cjs",
+    "e2e/**"
+  ],
+  "references": [
+    { "path": "./tsconfig.test.json" }
   ]
 }

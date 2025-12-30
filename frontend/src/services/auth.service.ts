@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import {
   hashPassword,
-  validatePassword as checkPassword,
+  comparePassword,
   generateAccessToken,
   generateRefreshToken,
   sendVerificationEmail,
@@ -228,7 +228,7 @@ export class AuthService {
       return null;
     }
 
-    const isValidPassword = await checkPassword(user.hashedPassword);
+    const isValidPassword = await comparePassword(password, user.hashedPassword);
 
     return isValidPassword ? user : null;
   }

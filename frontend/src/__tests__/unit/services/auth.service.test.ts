@@ -26,11 +26,11 @@ jest.mock('@prisma/client', () => {
 // Mock utility functions
 jest.mock('@/lib/api-utils', () => ({
   hashPassword: jest.fn((password) => Promise.resolve(`hashed_${password}`)),
-  validatePassword: jest.fn((password, hash) => 
+  comparePassword: jest.fn((password, hash) => 
     Promise.resolve(hash === `hashed_${password}`)
   ),
-  generateAccessToken: jest.fn((userId) => `access_token_${userId}`),
-  generateRefreshToken: jest.fn((userId) => `refresh_token_${userId}`),
+  generateAccessToken: jest.fn((payload) => `access_token_${payload.userId}`),
+  generateRefreshToken: jest.fn((payload) => `refresh_token_${payload.userId}`),
   sendVerificationEmail: jest.fn(() => Promise.resolve({ success: true })),
   sendPasswordResetEmail: jest.fn(() => Promise.resolve({ success: true })),
 }));
@@ -87,7 +87,7 @@ describe('AuthService', () => {
         id: 'user123',
         email: registerData.email,
         password: 'hashed_password123',
-        emailVerified: false,
+        isEmailVerified: false,
       });
       mockPrisma.verificationToken.create.mockResolvedValue({
         id: 'token123',
@@ -101,13 +101,13 @@ describe('AuthService', () => {
       expect(result.user).toEqual({
         id: 'user123',
         email: registerData.email,
-        emailVerified: false,
+        isEmailVerified: false,
       });
       expect(mockPrisma.user.create).toHaveBeenCalledWith({
         data: {
           email: registerData.email,
-          password: 'hashed_password123',
-          emailVerified: false,
+          hashedPassword: 'hashed_password123',
+          isEmailVerified: false,
         },
       });
     });
@@ -161,9 +161,9 @@ describe('AuthService', () => {
       mockPrisma.user.findUnique.mockResolvedValue({
         id: 'user123',
         email: loginData.email,
-        password: 'hashed_password123',
+        hashedPassword: 'hashed_password123',
         username: 'testuser',
-        emailVerified: true,
+        isEmailVerified: true,
       });
       mockPrisma.refreshToken.create.mockResolvedValue({
         id: 'refresh123',
@@ -177,7 +177,7 @@ describe('AuthService', () => {
         id: 'user123',
         email: loginData.email,
         username: 'testuser',
-        emailVerified: true,
+        isEmailVerified: true,
       });
       expect(result.accessToken).toBe('access_token_user123');
       expect(result.refreshToken).toBe('refresh_token_user123');
@@ -220,28 +220,28 @@ describe('AuthService', () => {
       mockPrisma.verificationToken.findFirst.mockResolvedValue({
         id: 'token123',
         token: mockToken,
-        userId: 'user123',
+        email: 'test@example.com',
         used: false,
         expiresAt: futureDate,
-        user: {
-          id: 'user123',
-          email: 'test@example.com',
-          emailVerified: false,
-        },
+      });
+      mockPrisma.user.findUnique.mockResolvedValue({
+        id: 'user123',
+        email: 'test@example.com',
+        isEmailVerified: false,
       });
       mockPrisma.user.update.mockResolvedValue({
         id: 'user123',
-        emailVerified: true,
+        isEmailVerified: true,
       });
       mockPrisma.verificationToken.update.mockResolvedValue({});
 
       const result = await authService.verifyEmail(mockToken);
 
       expect(result.success).toBe(true);
-      expect(result.user?.emailVerified).toBe(true);
+      expect(result.user?.isEmailVerified).toBe(true);
       expect(mockPrisma.user.update).toHaveBeenCalledWith({
         where: { id: 'user123' },
-        data: { emailVerified: true },
+        data: { isEmailVerified: true },
       });
     });
 
@@ -315,7 +315,7 @@ describe('AuthService', () => {
       expect(mockPrisma.user.update).toHaveBeenCalledWith({
         where: { id: 'user123' },
         data: {
-          password: 'hashed_newpassword123',
+          hashedPassword: 'hashed_newpassword123',
           passwordResetToken: null,
           passwordResetExpires: null,
         },

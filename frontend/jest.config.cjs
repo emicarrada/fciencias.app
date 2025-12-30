@@ -21,7 +21,7 @@ const customJestConfig = {
     '!src/app/layout.tsx', // Layout files usually don't need coverage
     '!src/middleware.ts', // Middleware is hard to test in isolation
   ],
-  coverageThresholds: {
+  coverageThreshold: {
     global: {
       branches: 70,
       functions: 75,
