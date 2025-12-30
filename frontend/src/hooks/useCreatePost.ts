@@ -4,11 +4,12 @@
  * Separado de la UI siguiendo SRP (Single Responsibility Principle)
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { CreatePostResponse } from '@/types/post';
 import { logger } from '@/lib/logger';
+import { VALIDATION } from '@/lib/constants';
 
 interface UseCreatePostReturn {
   // Estado del formulario
@@ -43,6 +44,41 @@ export function useCreatePost(onSuccess?: () => void): UseCreatePostReturn {
   const [showVerificationModal, setShowVerificationModal] = useState(false);
   const [showUsernameModal, setShowUsernameModal] = useState(false);
 
+  // Recuperar texto guardado al montar
+  useEffect(() => {
+    const savedContent = localStorage.getItem('draft_post_content');
+    const savedImageUrl = localStorage.getItem('draft_post_image');
+    const savedIsAnonymous = localStorage.getItem('draft_post_anonymous');
+    
+    if (savedContent) {
+      setContent(savedContent);
+      logger.info('Post draft recovered from localStorage');
+    }
+    if (savedImageUrl) setImageUrl(savedImageUrl);
+    if (savedIsAnonymous) setIsAnonymous(savedIsAnonymous === 'true');
+  }, []);
+
+  // Guardar texto en localStorage cuando cambia
+  useEffect(() => {
+    if (content.trim()) {
+      localStorage.setItem('draft_post_content', content);
+    } else {
+      localStorage.removeItem('draft_post_content');
+    }
+  }, [content]);
+
+  useEffect(() => {
+    if (imageUrl.trim()) {
+      localStorage.setItem('draft_post_image', imageUrl);
+    } else {
+      localStorage.removeItem('draft_post_image');
+    }
+  }, [imageUrl]);
+
+  useEffect(() => {
+    localStorage.setItem('draft_post_anonymous', String(isAnonymous));
+  }, [isAnonymous]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -54,6 +90,21 @@ export function useCreatePost(onSuccess?: () => void): UseCreatePostReturn {
     if (content.length > 5000) {
       toast.error('El contenido no puede exceder 5000 caracteres');
       return;
+    }
+
+    // Validar URL de imagen si se proporciona
+    if (imageUrl.trim()) {
+      try {
+        const url = new URL(imageUrl);
+        // Verificar que sea http o https
+        if (!['http:', 'https:'].includes(url.protocol)) {
+          toast.error('La URL de la imagen debe usar http:// o https://');
+          return;
+        }
+      } catch {
+        toast.error('URL de imagen inválida');
+        return;
+      }
     }
 
     setIsSubmitting(true);
@@ -70,6 +121,10 @@ export function useCreatePost(onSuccess?: () => void): UseCreatePostReturn {
         setContent('');
         setImageUrl('');
         setIsAnonymous(false);
+        // Limpiar borradores guardados
+        localStorage.removeItem('draft_post_content');
+        localStorage.removeItem('draft_post_image');
+        localStorage.removeItem('draft_post_anonymous');
         onSuccess?.();
       }
     } catch (error: any) {

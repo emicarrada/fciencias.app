@@ -46,9 +46,15 @@ export default function UsernameModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg p-6 max-w-md w-full">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">Configura tu nombre de usuario</h3>
-        <p className="text-gray-700 mb-4">
-          Para publicar de forma no anónima, necesitas un nombre de usuario.
+        <div className="text-center mb-4">
+          <div className="text-5xl mb-2">👤</div>
+          <h3 className="text-xl font-bold text-gray-900">Elige tu nombre de usuario</h3>
+        </div>
+        <p className="text-gray-700 mb-2">
+          <strong>Tu post está guardado</strong> - no se perderá 💾
+        </p>
+        <p className="text-gray-600 mb-4 text-sm">
+          Así la comunidad podrá reconocerte y seguir tus aportes. Puedes cambiarlo después desde tu perfil.
         </p>
         <input
           type="text"

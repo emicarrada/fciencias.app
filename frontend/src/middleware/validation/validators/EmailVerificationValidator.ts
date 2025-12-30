@@ -19,7 +19,7 @@ export class EmailVerificationValidator extends ValidationHandler {
     if (!context.user.isEmailVerified) {
       return {
         isValid: false,
-        error: 'Debes verificar tu correo para publicar',
+        error: '📧 Verifica tu correo para participar. Esto nos ayuda a mantener una comunidad segura y auténtica.',
         statusCode: 403,
         additionalData: {
           requiresVerification: true,

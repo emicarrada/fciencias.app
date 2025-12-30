@@ -22,9 +22,15 @@ export default function VerificationModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg p-6 max-w-md w-full">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">Verificación requerida</h3>
-        <p className="text-gray-700 mb-6">
-          Debes verificar tu correo electrónico antes de publicar. ¿Quieres que te reenviemos el correo de verificación?
+        <div className="text-center mb-4">
+          <div className="text-5xl mb-2">📧</div>
+          <h3 className="text-xl font-bold text-gray-900">Verifica tu correo</h3>
+        </div>
+        <p className="text-gray-700 mb-2">
+          <strong>Tu post está guardado</strong> - no se perderá 💾
+        </p>
+        <p className="text-gray-600 mb-6 text-sm">
+          Para participar en la comunidad, necesitamos verificar tu correo. Esto nos ayuda a mantener un espacio seguro y auténtico para todos.
         </p>
         <div className="flex flex-col gap-3">
           {/* Botón de verificación rápida (solo desarrollo) */}

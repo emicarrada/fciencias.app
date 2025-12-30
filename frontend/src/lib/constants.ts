@@ -4,6 +4,10 @@ export const VALIDATION = {
   POST_MAX_LENGTH: 5000,
   POST_MIN_LENGTH: 1,
   
+  // Images
+  MAX_IMAGE_SIZE: 5 * 1024 * 1024, // 5MB
+  MAX_IMAGE_SIZE_MB: 5,
+  
   // Username
   USERNAME_MIN_LENGTH: 3,
   USERNAME_MAX_LENGTH: 20,

@@ -10,6 +10,7 @@ export type { ValidationContext, ValidationResult } from './types';
 // Export concrete validators for testing
 export { ContentRequiredValidator } from './validators/ContentRequiredValidator';
 export { ContentLengthValidator } from './validators/ContentLengthValidator';
+export { ImageUrlValidator } from './validators/ImageUrlValidator';
 export { AuthenticationValidator } from './validators/AuthenticationValidator';
 export { EmailVerificationValidator } from './validators/EmailVerificationValidator';
 export { UsernameRequiredValidator } from './validators/UsernameRequiredValidator';

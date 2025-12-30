@@ -8,6 +8,7 @@ import { ValidationHandler } from './ValidationHandler';
 import { ValidationContext, ValidationResult } from './types';
 import { ContentRequiredValidator } from './validators/ContentRequiredValidator';
 import { ContentLengthValidator } from './validators/ContentLengthValidator';
+import { ImageUrlValidator } from './validators/ImageUrlValidator';
 import { AuthenticationValidator } from './validators/AuthenticationValidator';
 import { EmailVerificationValidator } from './validators/EmailVerificationValidator';
 import { UsernameRequiredValidator } from './validators/UsernameRequiredValidator';
@@ -19,6 +20,7 @@ export class ValidationChain {
     // Build the chain: each validator is linked to the next
     const contentRequired = new ContentRequiredValidator();
     const contentLength = new ContentLengthValidator();
+    const imageUrl = new ImageUrlValidator();
     const authentication = new AuthenticationValidator();
     const emailVerification = new EmailVerificationValidator();
     const usernameRequired = new UsernameRequiredValidator();
@@ -26,6 +28,7 @@ export class ValidationChain {
     // Chain them together
     contentRequired
       .setNext(contentLength)
+      .setNext(imageUrl)
       .setNext(authentication)
       .setNext(emailVerification)
       .setNext(usernameRequired);

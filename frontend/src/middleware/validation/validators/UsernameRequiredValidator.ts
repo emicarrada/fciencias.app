@@ -24,7 +24,7 @@ export class UsernameRequiredValidator extends ValidationHandler {
     if (!context.user.username) {
       return {
         isValid: false,
-        error: 'Debes configurar tu nombre de usuario para publicar',
+        error: '👤 Configura tu nombre de usuario para publicar. Así la comunidad podrá reconocerte y seguir tus aportes.',
         statusCode: 403,
         additionalData: {
           requiresUsername: true,
