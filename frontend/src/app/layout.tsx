@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Providers from '@/components/Providers';
 import Header from '@/components/layout/Header';
+import BottomNav from '@/components/navigation/BottomNav';
 import '../styles/globals.css';
 
 export const metadata: Metadata = {
@@ -65,9 +66,10 @@ export default function RootLayout({
     <html lang="es">
       <body className="font-body">
         <Providers>
-          <div className="min-h-screen flex flex-col">
+          <BottomNav />
+          <div className="min-h-screen flex flex-col md:ml-64">
             <Header />
-            <main id="root" className="flex-1">{children}</main>
+            <main id="root" className="flex-1 pb-20 md:pb-0">{children}</main>
           </div>
           <Toaster
             position="top-right"
