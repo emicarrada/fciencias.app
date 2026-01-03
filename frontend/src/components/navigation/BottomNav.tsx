@@ -26,7 +26,7 @@ export default function BottomNav() {
     {
       name: 'Perfil',
       href: '/perfil',
-      icon: '/icons/icons8-user-liquid-glass/icons8-user-48.png',
+      icon: '/icons/icons8-profile-liquid-glass/icons8-profile-48.png',
     },
   ];
 
