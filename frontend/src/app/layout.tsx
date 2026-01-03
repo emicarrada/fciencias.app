@@ -4,6 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import Providers from '@/components/Providers';
 import Header from '@/components/layout/Header';
 import BottomNav from '@/components/navigation/BottomNav';
+import AppLayout from '@/components/navigation/AppLayout';
 import '../styles/globals.css';
 
 export const metadata: Metadata = {
@@ -67,10 +68,10 @@ export default function RootLayout({
       <body className="font-body">
         <Providers>
           <BottomNav />
-          <div className="min-h-screen flex flex-col md:ml-64">
+          <AppLayout>
             <Header />
-            <main id="root" className="flex-1 pb-20 md:pb-0">{children}</main>
-          </div>
+            <main id="root" className="flex-1">{children}</main>
+          </AppLayout>
           <Toaster
             position="top-right"
             toastOptions={{

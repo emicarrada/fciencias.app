@@ -7,6 +7,20 @@ import { usePathname } from 'next/navigation';
 export default function BottomNav() {
   const pathname = usePathname();
 
+  // Solo mostrar navbar en rutas de la app principal
+  const shouldShowNav = pathname?.startsWith('/feed') || 
+                        pathname?.startsWith('/perfil') || 
+                        pathname?.startsWith('/tienda') || 
+                        pathname?.startsWith('/publicar') ||
+                        pathname?.startsWith('/dashboard') ||
+                        pathname?.startsWith('/anuncios') ||
+                        pathname?.startsWith('/comunidades') ||
+                        pathname?.startsWith('/eventos');
+
+  if (!shouldShowNav) {
+    return null;
+  }
+
   const navItems = [
     {
       name: 'Inicio',
@@ -46,17 +60,10 @@ export default function BottomNav() {
                 <Image
                   src={item.icon}
                   alt={item.name}
-                  width={24}
-                  height={24}
-                  className={`mb-1 ${isActive ? 'opacity-100' : 'opacity-60'}`}
+                  width={28}
+                  height={28}
+                  className={isActive ? 'opacity-100' : 'opacity-60'}
                 />
-                <span
-                  className={`text-xs ${
-                    isActive ? 'text-blue-600 font-semibold' : 'text-gray-600'
-                  }`}
-                >
-                  {item.name}
-                </span>
                 {/* Active indicator bar */}
                 {isActive && (
                   <div className="absolute top-0 left-0 right-0 h-1 bg-blue-600 rounded-b-full" />
