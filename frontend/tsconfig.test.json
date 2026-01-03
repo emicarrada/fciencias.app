@@ -11,8 +11,7 @@
     "src/**/*.test.tsx",
     "src/**/*.spec.ts",
     "src/**/*.spec.tsx",
-    "src/__tests__/**/*",
-    "jest.setup.cjs"
+    "src/__tests__/**/*"
   ],
   "exclude": ["node_modules"]
 }
