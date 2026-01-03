@@ -277,19 +277,19 @@ function YourSpaceSection() {
 function WhatIsSection() {
   const features = [
     {
-      emoji: "💬",
+      iconSrc: "/icons/icons8-chat-bubble-pixels/icons8-chat-bubble-32.png",
       text: "Hablar de lo que pasa en la facultad"
     },
     {
-      emoji: "👻",
+      iconSrc: "/icons/icons8-anonymous-mask-pixels/icons8-anonymous-mask-32.png",
       text: "Publicar de forma anónima si lo prefieres"
     },
     {
-      emoji: "📚",
+      iconSrc: "/icons/icons8-books-pixels/icons8-books-32.png",
       text: "Compartir dudas, consejos y experiencias"
     },
     {
-      emoji: "🛍️",
+      iconSrc: "/icons/icons8-get-cash-pixels/icons8-get-cash-32.png",
       text: "Comprar y vender entre estudiantes de Ciencias"
     }
   ];
@@ -339,9 +339,13 @@ function WhatIsSection() {
               viewport={{ once: true }}
               className="flex items-start space-x-3"
             >
-              <span className="text-2xl flex-shrink-0" aria-hidden="true">
-                {feature.emoji}
-              </span>
+              <Image
+                src={feature.iconSrc}
+                alt=""
+                width={32}
+                height={32}
+                className="flex-shrink-0"
+              />
               <span className="text-base text-gray-800 leading-relaxed pt-1">
                 {feature.text}
               </span>
