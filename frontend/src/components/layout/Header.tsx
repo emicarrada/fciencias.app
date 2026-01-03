@@ -3,12 +3,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 interface HeaderProps {
   className?: string;
 }
 
 export default function Header({ className = '' }: HeaderProps) {
+  const pathname = usePathname();
+  
+  // Solo mostrar el header en la landing page
+  if (pathname !== '/') {
+    return null;
+  }
+  
   return (
     <header className={`sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100 ${className}`}>
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6">
