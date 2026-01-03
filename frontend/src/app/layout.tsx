@@ -22,12 +22,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon.png', sizes: '1563x1563', type: 'image/png' },
+      { url: '/logo prometeo - fciencias.png', sizes: 'any', type: 'image/png' },
     ],
     apple: [
-      { url: '/favicon.png', sizes: '1563x1563', type: 'image/png' },
+      { url: '/logo prometeo - fciencias.png', sizes: 'any', type: 'image/png' },
     ],
   },
   manifest: '/site.webmanifest',
