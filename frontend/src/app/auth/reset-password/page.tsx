@@ -6,6 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
 import { API_ROUTES, UI_MESSAGES, VALIDATION } from '@/lib/constants';
+import Loader from '@/components/ui/Loader';
 
 function ResetPasswordForm() {
   const router = useRouter();
@@ -152,7 +153,7 @@ export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <Loader size={48} />
       </div>
     }>
       <ResetPasswordForm />

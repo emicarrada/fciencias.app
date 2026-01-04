@@ -7,6 +7,7 @@ import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { useAuthStore } from '@/store/authStore';
 import toast from 'react-hot-toast';
+import Loader from '@/components/ui/Loader';
 
 interface VerificationResult {
   success: boolean;
@@ -85,7 +86,7 @@ function VerifyContent() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+          <Loader size={48} />
           <p className="mt-4 text-gray-600">Verificando tu correo...</p>
         </div>
       </div>
@@ -192,7 +193,7 @@ export default function VerifyPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <Loader size={48} />
       </div>
     }>
       <VerifyContent />

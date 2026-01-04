@@ -14,7 +14,7 @@ export function FooterNav({ className }: FooterNavProps) {
   
   const navigationLinks = [
     { 
-      href: '/dashboard/home', 
+      href: '/feed', 
       icon: Home, 
       label: 'Inicio'
     },

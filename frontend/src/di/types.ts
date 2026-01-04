@@ -23,7 +23,6 @@ export const SERVICE_TOKENS = {
   LOGIN_USE_CASE: 'loginUseCase',
   REGISTER_USE_CASE: 'registerUseCase',
   LOGOUT_USE_CASE: 'logoutUseCase',
-  CREATE_POST_USE_CASE: 'createPostUseCase',
   REACT_TO_POST_USE_CASE: 'reactToPostUseCase',
   GET_POSTS_USE_CASE: 'getPostsUseCase',
   

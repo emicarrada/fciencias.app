@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { UserIcon, AtSymbolIcon } from '@heroicons/react/24/outline';
 import { Input } from '@/components/ui/Input';
+import Loader from '@/components/ui/Loader';
 
 interface ProfileStepProps {
   data?: { fullName: string; username: string };
@@ -151,7 +152,7 @@ export function ProfileStep({ data, onChange, onValidityChange }: ProfileStepPro
             {/* Loading indicator */}
             {isCheckingUsername && (
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                <Loader size={16} />
               </div>
             )}
             

@@ -15,7 +15,7 @@ export function Header({ className }: HeaderProps) {
   // Mapear rutas a títulos
   const getPageTitle = () => {
     switch (pathname) {
-      case '/dashboard/home':
+      case '/feed':
         return 'Inicio';
       case '/dashboard/explore':
         return 'Explorar';

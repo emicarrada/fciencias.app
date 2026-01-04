@@ -5,4 +5,3 @@
  */
 
 export { RequireVerification } from './RequireVerification';
-export { RequireVerificationExample } from './RequireVerificationExample';

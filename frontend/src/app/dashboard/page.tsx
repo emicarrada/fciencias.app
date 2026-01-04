@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Loader from '@/components/ui/Loader';
 import { useAuthStore } from '@/store/authStore';
 
 export default function DashboardPage() {
@@ -22,7 +23,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+        <Loader size={48} />
         <p className="mt-4 text-gray-600">Cargando dashboard...</p>
       </div>
     </div>

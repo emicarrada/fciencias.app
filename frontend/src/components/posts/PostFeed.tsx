@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FeedResponse, SimplePost } from '@/types/post';
 import PostCard from './PostCard';
 import { toast } from 'react-hot-toast';
+import Loader from '@/components/ui/Loader';
 
 export default function PostFeed() {
   const [posts, setPosts] = useState<SimplePost[]>([]);
@@ -40,7 +41,7 @@ export default function PostFeed() {
   if (isLoading) {
     return (
       <div className="bg-white rounded-lg shadow-md p-12 text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+        <Loader size={48} />
         <p className="text-gray-600 mt-4">Cargando publicaciones...</p>
       </div>
     );
@@ -64,7 +65,6 @@ export default function PostFeed() {
     return (
       <div className="bg-white rounded-lg shadow-md p-12 text-center">
         <p className="text-gray-600 text-lg">No hay publicaciones aún</p>
-        <p className="text-gray-500 mt-2">¡Sé el primero en compartir algo!</p>
       </div>
     );
   }

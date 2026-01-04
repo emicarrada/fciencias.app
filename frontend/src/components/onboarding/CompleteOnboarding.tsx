@@ -6,6 +6,7 @@ import { OnboardingFlow } from './OnboardingFlow';
 import { onboardingSteps, createOnboardingData } from './onboardingConfig';
 import { Button } from '@/components/ui/Button';
 import { XMarkIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import Loader from '@/components/ui/Loader';
 
 interface CompleteOnboardingProps {
   onComplete: (userData: any) => void;
@@ -57,7 +58,7 @@ export function CompleteOnboarding({ onComplete, onCancel }: CompleteOnboardingP
             Tu cuenta ha sido creada exitosamente
           </p>
           <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-4 border-white border-t-transparent"></div>
+            <Loader size={32} className="brightness-0 invert" />
           </div>
         </motion.div>
       </div>
@@ -73,7 +74,7 @@ export function CompleteOnboarding({ onComplete, onCancel }: CompleteOnboardingP
           className="text-center"
         >
           <div className="w-24 h-24 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary-600 border-t-transparent"></div>
+            <Loader size={48} />
           </div>
           <h3 className="text-xl font-heading font-semibold text-white mb-2">
             Creando tu cuenta...

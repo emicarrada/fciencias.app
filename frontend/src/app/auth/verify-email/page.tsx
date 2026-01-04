@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { EnvelopeIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import Loader from '@/components/ui/Loader';
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
@@ -127,7 +128,7 @@ export default function VerifyEmailPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <Loader size={48} />
       </div>
     }>
       <VerifyEmailContent />

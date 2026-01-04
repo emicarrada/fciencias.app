@@ -15,7 +15,7 @@ export function Sidebar({ className }: SidebarProps) {
   
   const navigationLinks = [
     { 
-      href: '/dashboard/home', 
+      href: '/feed', 
       icon: Home, 
       label: 'Inicio',
       description: 'Feed principal'
@@ -48,7 +48,7 @@ export function Sidebar({ className }: SidebarProps) {
       <div className="p-6">
         {/* Logo/Brand */}
         <div className="mb-8">
-          <Link href="/dashboard/home" className="flex items-center space-x-2">
+          <Link href="/feed" className="flex items-center space-x-2">
             <Image
               src="/logo-fciencias.png"
               alt="FCiencias UNAM"

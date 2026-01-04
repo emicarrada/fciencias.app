@@ -32,11 +32,10 @@ export default function PerfilPage() {
   const loadMyPosts = async () => {
     try {
       setIsLoadingPosts(true);
-      const response = await axios.get('/api/v1/posts/feed');
+      // Usar el nuevo endpoint que filtra por usuario autenticado
+      const response = await axios.get('/api/v1/posts/my-posts');
       
       if (response.data.success) {
-        // Filtrar solo los posts del usuario (necesitaríamos el ID del usuario)
-        // Por ahora mostramos todos
         setMyPosts(response.data.posts);
       }
     } catch (error) {
@@ -169,7 +168,7 @@ export default function PerfilPage() {
           
           {isLoadingPosts ? (
             <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+              <Loader size={32} />
               <p className="text-gray-600 mt-2">Cargando...</p>
             </div>
           ) : myPosts.length === 0 ? (

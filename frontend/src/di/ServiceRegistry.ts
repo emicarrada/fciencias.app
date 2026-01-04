@@ -16,7 +16,6 @@ import { EventBusFactory } from '../features/events/infrastructure/EventBusFacto
 import { LoginUseCase } from '../domain/use-cases/auth/LoginUseCase';
 import { RegisterUseCase } from '../domain/use-cases/auth/RegisterUseCase';
 import { LogoutUseCase } from '../domain/use-cases/auth/LogoutUseCase';
-import { CreatePostUseCase } from '../domain/use-cases/posts/CreatePostUseCase';
 import { ReactToPostUseCase } from '../domain/use-cases/posts/ReactToPostUseCase';
 import { GetPostsUseCase } from '../domain/use-cases/posts/GetPostsUseCase';
 
@@ -95,12 +94,6 @@ export function configureServices(): void {
     return new LogoutUseCase(authService, eventBus);
   });
 
-  container.singleton(SERVICE_TOKENS.CREATE_POST_USE_CASE, () => {
-    const postRepository = container.resolve<IPostRepository>(SERVICE_TOKENS.POST_REPOSITORY);
-    const eventBus = container.resolve<IEventBus>(SERVICE_TOKENS.EVENT_BUS);
-    return new CreatePostUseCase(postRepository, eventBus);
-  });
-
   container.singleton(SERVICE_TOKENS.REACT_TO_POST_USE_CASE, () => {
     const reactionRepository = container.resolve<IReactionRepository>(SERVICE_TOKENS.REACTION_REPOSITORY);
     const eventBus = container.resolve<IEventBus>(SERVICE_TOKENS.EVENT_BUS);
@@ -148,9 +141,6 @@ export const ServiceLocator = {
 
   getLogoutUseCase: (): LogoutUseCase =>
     container.resolve<LogoutUseCase>(SERVICE_TOKENS.LOGOUT_USE_CASE),
-
-  getCreatePostUseCase: (): CreatePostUseCase =>
-    container.resolve<CreatePostUseCase>(SERVICE_TOKENS.CREATE_POST_USE_CASE),
 
   getReactToPostUseCase: (): ReactToPostUseCase =>
     container.resolve<ReactToPostUseCase>(SERVICE_TOKENS.REACT_TO_POST_USE_CASE),

@@ -15,21 +15,6 @@ export interface SimplePost {
   createdAt: string;
 }
 
-export interface CreatePostRequest {
-  content: string;
-  imageUrl?: string;
-  isAnonymous?: boolean;
-}
-
-export interface CreatePostResponse {
-  success: boolean;
-  message: string;
-  post?: SimplePost;
-  requiresVerification?: boolean;
-  requiresUsername?: boolean;
-  error?: string;
-}
-
 export interface FeedResponse {
   success: boolean;
   posts: SimplePost[];
